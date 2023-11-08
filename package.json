@@ -2,7 +2,8 @@
     "private": true,
     "scripts": {
         "dev": "vite",
-        "build": "vite build"
+        "build": "vite build",
+        "afterclone": "composer install && npm install && php artisan migrate"
     },
     "devDependencies": {
         "@alpinejs/focus": "^3.10.5",
