@@ -27,7 +27,7 @@
     <x-banner />
 
     <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
-        @livewire('navigation-menu')
+
 
         <!-- Page Heading -->
         @if (isset($header))
@@ -39,8 +39,14 @@
         @endif
 
         <!-- Page Content -->
-        <main>
-            {{ $slot }}
+        <main class="flex-1">
+            <div class="flex h-screen">
+                <div class="sidebar h-full w-[10px]  bg-gray-100 dark:bg-gray-900">
+                    <x-sidebar-component></x-sidebar-component>
+                <div class="flex-1">
+                    {{ $slot }}
+                </div>
+            </div>
         </main>
     </div>
 
