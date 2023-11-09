@@ -4,7 +4,7 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class form-control extends Component
+class FormControl extends Component
 {
     /**
      * Create a new component instance.
