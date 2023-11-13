@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Livewire\Event\NewComponent;
+use App\Http\Livewire\Event\ShowComponent;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,4 +27,7 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+
+    Route::get("/events", ShowComponent::class)->name("events.show");
+    Route::get("/events/new", NewComponent::class)->name("events.new");
 });
