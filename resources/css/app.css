@@ -6,4 +6,19 @@
     body {
         @apply bg-base-100;
     }
+
+    /* width */
+    ::-webkit-scrollbar {
+        @apply w-1 md:w-2;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+        @apply bg-base-100;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        @apply bg-primary rounded;
+    }
 }
