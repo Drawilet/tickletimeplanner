@@ -29,7 +29,7 @@
     <div class="min-h-screen">
         <x-navbar-component />
 
-        <main class="">
+        <main class="py-2 px-5">
             {{ $slot }}
         </main>
     </div>
