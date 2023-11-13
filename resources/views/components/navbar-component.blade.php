@@ -1,4 +1,4 @@
-<div class="navbar bg-base-200 sticky top-0">
+<div class="navbar bg-base-200 sticky top-0 z-50">
     <div class="flex-none">
         <x-sidebar-component />
     </div>
