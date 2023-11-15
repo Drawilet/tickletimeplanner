@@ -10,8 +10,10 @@
         </label>
     </div>
     <div class="drawer-side">
-        <label for="sidebar" aria-label="close sidebar" class="drawer-overlay"></label>
+        <label for="sidebar" aria-label="close sidebar" class="drawer-overlay">
+        </label>
         <ul class="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
+            <a class="btn btn-ghost normal-case text-xl">Menu</a>
             <!-- Sidebar content here -->
                 <div class="w-full flex items-center gap-x-1.5 group select-none">
                     <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
