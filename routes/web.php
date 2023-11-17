@@ -6,6 +6,9 @@ use App\Http\Livewire\Event\ShowComponent as EventShowComponent;
 use App\Http\Livewire\Settings\Show as SettingsShowComponent;
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Livewire\Clientcomponent;
+use App\Http\Livewire\Customercomponent;
+use App\Http\Livewire\CustomerModelscomponent;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,8 +22,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('welcome');});
 
 Route::middleware([
     'auth:sanctum',
@@ -30,9 +32,14 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+  
+  
+    Route::get('/customers', Customercomponent::class)->name('customers.show');
 
-    Route::get("/events", EventNewComponent::class)->name("events.show");
-    Route::get("/events/new", EventShowComponent::class)->name("events.new");
+    Route::get("/events", EventShowComponent::class)->name("events.show");
+    Route::get("/events/new", EventNewComponent::class)->name("events.new");
 
     Route::get("/settings", SettingsShowComponent::class)->name("settings.show");
+
 });
+

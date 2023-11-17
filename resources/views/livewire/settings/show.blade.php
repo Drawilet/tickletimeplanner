@@ -1,4 +1,4 @@
-<div>
+<div class="max-w-lg mx-auto">
     <section class="mb-3">
         <h2 class="text-xl">General</h2>
         <x-form-control>
