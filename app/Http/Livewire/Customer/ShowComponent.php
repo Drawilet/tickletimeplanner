@@ -1,14 +1,13 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Customer;
 
 use Livewire\Component;
 use App\Models\Customer;
-use Livewire\Request;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
 
-class Customercomponent extends Component
+class ShowComponent extends Component
 {
     use WithFileUploads,  WithPagination;
     public $set;
@@ -21,12 +20,7 @@ class Customercomponent extends Component
 
     public function render()
 {
-    if($this->search){
-        $Customer = Customer::where('buisinessname', 'like', '%' . $this->search . '%');
-    } else {
-        $Customer = Customer::query();
-    }
-    return view('livewire.Customer-component', [
+    return view('livewire.customer.show-component', [
         'Customer' =>Customer::paginate(1),
     ]);
 }
