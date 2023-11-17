@@ -3,7 +3,9 @@
         <x-sidebar-component />
     </div>
     <div class="flex-1">
-        <a class="btn btn-ghost normal-case text-xl" href="/dashboard">{{ config('app.name') }}</a>
+        <a class="btn btn-ghost normal-case text-xl" href="/dashboard">
+            <img src="favicon-96x96.png" alt="Logo" class="h-12">
+            {{ config('app.name') }}</a>
     </div>
 
     <div>
