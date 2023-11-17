@@ -31,8 +31,8 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 
-    Route::get("/events", EventNewComponent::class)->name("events.show");
-    Route::get("/events/new", EventShowComponent::class)->name("events.new");
+    Route::get("/events", EventShowComponent::class)->name("events.show");
+    Route::get("/events/new", EventNewComponent::class)->name("events.new");
 
     Route::get("/settings", SettingsShowComponent::class)->name("settings.show");
 });
