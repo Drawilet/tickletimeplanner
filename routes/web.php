@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Livewire\Clientcomponent;
+use App\Http\Livewire\Customercomponent;
+use App\Http\Livewire\CustomerModelscomponent;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,15 +17,15 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('welcome');});
+    
+
+Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])->group(function () {
+Route::get('/dashboard', function () {return view('dashboard');})->name('dashboard');
+Route::get('/CustomerModelscomponent', Customercomponent::class)->name('Clientes');
+
+
+
+
 });
 
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified'
-])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
-});
