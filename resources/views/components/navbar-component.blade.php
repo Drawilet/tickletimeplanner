@@ -3,7 +3,7 @@
         <x-sidebar-component />
     </div>
     <div class="flex-1">
-        <a class="btn btn-ghost normal-case text-xl" href="/dashboard">{{ config('app.name', 'Laravel') }}</a>
+        <a class="btn btn-ghost normal-case text-xl" href="/dashboard">{{ config('app.name') }}</a>
     </div>
 
     <div>

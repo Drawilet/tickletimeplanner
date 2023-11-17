@@ -13,7 +13,7 @@
         <label for="sidebar" aria-label="close sidebar" class="drawer-overlay">
         </label>
         <ul class="menu p-4 w-80 min-h-full bg-base-200 text-base-truncate">
-            <a class="btn btn-ghost normal-case text-xl">Content</a>
+            <a class="btn btn-ghost normal-case text-xl">{{ config('app.name') }}</a>
             <!-- Sidebar content here -->
             <a class="btn btn-xs sm:btn-sm md:btn-md lg:btn-sm flex justify-start items-center" href="">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
