@@ -1,7 +1,10 @@
 <?php
 
-use App\Http\Livewire\Event\NewComponent;
-use App\Http\Livewire\Event\ShowComponent;
+use App\Http\Livewire\Event\NewComponent as EventNewComponent;
+use App\Http\Livewire\Event\ShowComponent as EventShowComponent;
+
+use App\Http\Livewire\Settings\Show as SettingsShowComponent;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,6 +31,8 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 
-    Route::get("/events", ShowComponent::class)->name("events.show");
-    Route::get("/events/new", NewComponent::class)->name("events.new");
+    Route::get("/events", EventNewComponent::class)->name("events.show");
+    Route::get("/events/new", EventShowComponent::class)->name("events.new");
+
+    Route::get("/settings", SettingsShowComponent::class)->name("settings.show");
 });
