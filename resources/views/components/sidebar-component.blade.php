@@ -82,6 +82,7 @@
                 <label class="cursor-pointer label">
                     <input type="checkbox" class="toggle toggle-accent" data-toggle-theme="retro,dark" checked />
                 </label>
+            </a>
     </div>
     </ul>
 </div>
