@@ -1,9 +1,10 @@
 <div>
     <div class="overflow-x-auto">
-        
-        <table class="table  mx-20" style="width:85%">
+      
+        <table id="product" class="table  mx-20 my-5" style="width:85%">
           <!-- head -->
-          <x-CreateButton wire:click="create()"></x-CreateButton>
+          
+          
           @if($modal)
               @include('livewire.create')            
           @endif
@@ -19,8 +20,16 @@
             </tr>
           </thead>
           <tbody>
-            <!-- row 1 -->
-            @foreach ( $allproducts as $product)
+            <!-- row 1 --> 
+             
+            <div class="ml-auto mt-3" style="width: 30%;">
+              <form wire:submit="search">
+                  <button type="submit"></button>
+                  <input type="text" placeholder="Search" class="input input-bordered input-warning w-full max-w-xs " wire:model="query">
+              </form>
+            </div> 
+            <x-CreateButton wire:click="create()"></x-CreateButton>
+            @foreach ( $products as $product)
             <tr >
                 <td>{{$product->id}}</td>
                 <td>{{$product->code}}</td>
@@ -34,7 +43,12 @@
               </tr>
                 @endforeach
             
-          </tbody>
+          </tbody>  
         </table>
+          @if ($products->hasPages())
+             <div class="px-10 py-10 mx-10 my-10">  
+             {{ $products->links() }}
+            </div>
+          @endif
+   
       </div>
-
