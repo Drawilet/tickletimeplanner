@@ -2,74 +2,37 @@
 
 namespace App\Http\Livewire\Customer;
 
-use Livewire\Component;
+use App\Events\CustomerEvent;
+use App\Http\Livewire\Util\CrudComponent;
 use App\Models\Customer;
-use Livewire\WithFileUploads;
-use Livewire\WithPagination;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Validator;
 
-class ShowComponent extends Component
+class ShowComponent extends CrudComponent
 {
-    use WithFileUploads,  WithPagination;
-    public $set;
-    public $photo, $buisinessname, $tradename;
-    public $id_Customer;
-    public $search;
-    public $modal;
-    public $user;
-    public $photoPath;
+    protected $listeners =  ["socket" => "socketHandler"];
 
-    public function render()
-{
-    return view('livewire.customer.show-component', [
-        'Customer' =>Customer::paginate(1),
-    ]);
-}
-
-    public function OpenModal()
+    public function mount()
     {
-        $this->modal = true;
+        $this->setup(Customer::class, CustomerEvent::class, [
+            "primaryKey" => "tradename",
+            "keys" => ["logo", "tradename", "businessname"],
+            "initialData" => [
+                "logo" => "",
+                "tradename" => "",
+                "businessname" => "",
+            ],
+            "files" => ["logo" => "img"],
+        ]);
+        $this->items = $this->Model::all();
     }
 
-    public function Offmodal()
+    protected function rules()
     {
-        $this->modal = false;
-    }
-
-    public function cleanfields()
-    {
-        $this->photo = '';
-        $this->buisinessname = '';
-        $this->tradename = '';
-    }
-    public function edit($id)
-    {
-        $Customer = Customer::findOrFail($id);
-        $this->id_Customer = $id;
-        $this->photo = $Customer->photo;
-        $this->buisinessname = $Customer->buisinessname;
-        $this->tradename = $Customer->tradename;
-        $this->OpenModal();
-    }
-
-    public function delete($id)
-    {
-        $this->user=Customer::find($id);
-        $this->user->delete();
-    }
-
-    public function save()
-    {
-
-        if ($this->photo) {
-
-            $photoPath = $this->photo->storeAs("public/Imagenes", uniqid() . '-' . $this->photo->getClientOriginalName());
-            Customer::updateOrCreate(['id' => $this->id_Customer], [
-                'photo' => $photoPath,
-                'buisinessname' => $this->buisinessname,
-                'tradename' => $this->tradename,
-            ]);
-        }
-        $this->cleanfields();
-        $this->Offmodal();
+        return Validator::make($this->data, [
+            "logo" => [Rule::requiredIf(isset($this->data["id"])), "image", "max:1024"],
+            "tradename" => ["required", "string", "max:255"],
+            "businessname" => ["required", "string", "max:255"],
+        ]);
     }
 }

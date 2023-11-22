@@ -2,7 +2,6 @@
     <br>
     <div class="max-w-7xl mx-auto sm:px6 lg:px-8">
         <div class="bg-base-100 overflow-hidden shadow-xl sm:rounded-lg px-4 py-4">
-
             <div class="mockup-browser border border-base-300">
                 <div class="mockup-browser-toolbar flex items-center">
                     <input class="input border border-base-300" wire:model="search" type="text" placeholder="Search">
