@@ -23,7 +23,12 @@ class CrudComponent extends Component
         "error" => false
     ];
 
-    public $items, $count = 0;
+    public $items, $showingItems, $count = 0;
+
+    public $initialFilter = [
+        "search" => ""
+    ], $filter;
+
 
     public function setup($Model, $ItemEvent, array $params)
     {
@@ -39,10 +44,23 @@ class CrudComponent extends Component
 
         $this->Name = class_basename($this->Model);
         $this->name = strtolower($this->Name);
+
+        $this->filter = $this->initialFilter;
     }
 
     public function render()
     {
+        $this->showingItems = $this->items->filter(function ($item) {
+            $search = $this->filter["search"];
+            if ($search == "") return true;
+
+            if (isset($item[$this->primaryKey])) {
+                $value = $item[$this->primaryKey];
+                if (stripos($value, $search) !== false) return true;
+            }
+
+            return false;
+        });
         return view('livewire.util.crud-component');
     }
 

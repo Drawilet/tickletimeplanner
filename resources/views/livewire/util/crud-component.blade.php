@@ -57,7 +57,7 @@
         <div class="bg-base-100 overflow-hidden shadow-xl sm:rounded-lg px-4 py-4">
             <div class="mockup-browser border border-base-300">
                 <div class="mockup-browser-toolbar flex items-center">
-                    <input class="input border border-base-300" wire:model="search" type="text" placeholder="Search">
+                    <input class="input border border-base-300" wire:model="filter.search" type="text" placeholder="Search">
                     <button wire:click="Modal('save', true)"
                         class=" btn btn-ghost bg-base-100 hover:bg-base-300 text-black hover:text-blue-50 py-2 px-4 ml-2">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -79,7 +79,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($items as $item)
+                    @foreach ($showingItems as $item)
                         <tr>
                             <td>{{ $item->id }}</td>
                             @foreach ($keys as $key)
