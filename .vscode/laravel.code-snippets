@@ -1,0 +1,13 @@
+{
+    "Create a question": {
+        "scope": "blade",
+        "prefix": "question",
+        "body": [
+            "<x-form-control>",
+            "\t<x-label for=\"$1\" value=\"{{ __('$2') }}\" />",
+            "\t<x-input id=\"$1\" name=\"$1\" wire:model=\"$1\"/>",
+            "</x-form-control>"
+        ],
+        "description": "Create a question form"
+    }
+}

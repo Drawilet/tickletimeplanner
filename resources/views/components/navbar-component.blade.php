@@ -1,9 +1,11 @@
-<div class="navbar bg-base-200">
+<div class="navbar bg-base-200 sticky top-0 z-50">
     <div class="flex-none">
         <x-sidebar-component />
     </div>
     <div class="flex-1">
-        <a class="btn btn-ghost normal-case text-xl" href="/dashboard">{{ config('app.name', 'Laravel') }}</a>
+        <a class="btn btn-ghost normal-case text-xl" href="/dashboard">
+            <x-application-mark />
+        </a>
     </div>
 
     <div>
