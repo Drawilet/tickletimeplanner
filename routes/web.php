@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Livewire\Customer\ShowComponent as ShowCustomersComponent;
+use App\Http\Livewire\Product\ShowComponent as ShowProductsComponent;
+
 
 use App\Http\Livewire\Event\NewComponent as NewEventComponent;
 use App\Http\Livewire\Event\ShowComponent as ShowEventsComponent;
@@ -33,6 +35,9 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+
+    Route::get('products', ShowProductsComponent::class)->name('products.show');
+
     Route::get('/customers', ShowCustomersComponent::class)->name('customers.show');
 
     Route::get("/events", ShowEventsComponent::class)->name("events.show");

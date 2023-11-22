@@ -3,7 +3,6 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use App\Models\CustomerModels;
 
 return new class extends Migration
 {
@@ -14,12 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('customers', function (Blueprint $table) {
+        Schema::create('products', function (Blueprint $table) {
             $table->id();
 
-            $table->string('logo');
-            $table->string('businessname');
-            $table->string('tradename');
+            $table->string('photo');
+            $table->string('name');
+            $table->string('description');
+            $table->decimal("cost");
+            $table->decimal("price");
 
             $table->timestamps();
         });
@@ -32,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('customers');
+        Schema::dropIfExists('products');
     }
 };

@@ -65,6 +65,6 @@ return [
             'driver' => 'null',
         ],
 
-    ],
+    ]
 
 ];
