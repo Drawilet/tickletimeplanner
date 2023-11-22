@@ -10,7 +10,9 @@
                     <x-form-control class="mt-4">
                         <x-label>{{ ucfirst($key) }}</x-label>
                         <x-input id="{{ $key }}" wire:model="data.{{ $key }}"
-                            type="{{ gettype($value) == 'integer' ? 'number' : 'string' }}" />
+                            class="{{ isset($files[$key]) ? 'file-input' : '' }}"
+                            type="{{ $this->getInputType($key, $value) }}" />
+                        <x-input-error for="data.{{ $key }}" class="mt-2" />
                     </x-form-control>
                 @endif
             @endforeach
@@ -79,17 +81,23 @@
                 <tbody>
                     @foreach ($items as $item)
                         <tr>
-                            <td class="  ">{{ $item->id }}</td>
+                            <td>{{ $item->id }}</td>
                             @foreach ($keys as $key)
-                                <td class="  ">{{ $item[$key] }}</td>
+                                <td class="  ">
+                                    @if (isset($files[$key]))
+                                        <img src="{{ $item[$key] }}" alt="" class="w-10 h-10 rounded-full">
+                                    @else
+                                        {{ $item[$key] }}
+                                    @endif
+                                </td>
                             @endforeach
 
                             <td>
-                                <button wire:click="Modal('save', true, '{{ $item->id }}')" class="">
+                                <button wire:click="Modal('save', true, '{{ $item->id }}')">
                                     @component('components.icons.pencil-square')
                                     @endcomponent
                                 </button>
-                                <button wire:click="Modal('delete', true, '{{ $item->id }}')" class="">
+                                <button wire:click="Modal('delete', true, '{{ $item->id }}')">
                                     @component('components.icons.trash')
                                     @endcomponent
                                 </button>

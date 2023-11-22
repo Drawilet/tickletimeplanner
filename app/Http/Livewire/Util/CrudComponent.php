@@ -3,15 +3,19 @@
 namespace App\Http\Livewire\Util;
 
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class CrudComponent extends Component
 {
-    public $primaryKey;
-    public $keys;
+    use WithFileUploads;
+
+    public $primaryKey, $keys;
     public $Model, $ItemEvent;
     public  $Name, $name;
 
-    public $initialData, $data;
+    public $initialData, $data, $files;
+
+    protected $rules = [];
 
     public $modals = [
         "save" => false,
@@ -21,16 +25,17 @@ class CrudComponent extends Component
 
     public $items, $count = 0;
 
-    public function setup($Model, $ItemEvent, $keys, $initialData, $primaryKey)
+    public function setup($Model, $ItemEvent, array $params)
     {
         $this->Model = $Model;
         $this->ItemEvent = $ItemEvent;
-        $this->keys = $keys;
-        $this->initialData = $initialData;
+        $this->keys = $params['keys'];
+        $this->initialData = $params['initialData'];
         $this->initialData["id"] = "";
-        $this->data = $initialData;
+        $this->data = $params['initialData'];
+        $this->files = $params["files"];
 
-        $this->primaryKey = $primaryKey;
+        $this->primaryKey = $params["primaryKey"] ?? $params['keys'][0];
 
         $this->Name = class_basename($this->Model);
         $this->name = strtolower($this->Name);
@@ -114,11 +119,24 @@ class CrudComponent extends Component
     {
         $item = $this->Model::updateOrCreate(["id" => $this->data["id"]], $this->data);
 
+        $name = $this->name;
+        $id = $item->id;
+        foreach ($this->files as $key => $data) {
+            if (!isset($this->data[$key])) continue;
+            if (gettype($this->data[$key]) == "string") continue;
+
+            $file = $this->data[$key];
+
+            $fileName = $file->getClientOriginalName();
+            $file->storeAs("/public/$name/$id/$key", $fileName);
+            $item->$key = "/storage/$name/$id/$key/$fileName";
+        }
+        $item->save();
+
         event(new $this->ItemEvent($this->data["id"] ? "update" : "create", $item));
 
         $this->Modal("save", false);
     }
-
     public function delete()
     {
         $this->Modal("delete", false);
@@ -132,5 +150,11 @@ class CrudComponent extends Component
         $item->delete();
 
         event(new $this->ItemEvent("delete", $this->data));
+    }
+
+    public function getInputType($key, $value)
+    {
+        if (isset($this->files[$key])) return "file";
+        return gettype($value) == 'integer' ? 'number' : 'string';
     }
 }
