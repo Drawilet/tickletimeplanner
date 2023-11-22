@@ -13,7 +13,7 @@ class SidebarComponent extends Component
         ],
         "Products" => [
             "icon" => "shopping-bag",
-            "route" => "customers.show"
+            "route" => "products.show"
         ],
         "Events" => [
             "icon" => "calendar",
