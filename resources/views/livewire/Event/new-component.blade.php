@@ -7,6 +7,10 @@
                 <x-label for="customer_id" value="{{ __('Customer') }}" />
                 <select class="select select-bordered">
                     <option disabled>Pick one</option>
+                    @foreach ($customers as $customer)
+                        <option value="{{ $customer->id }}">{{ $customer->tradename }} ({{ $customer->businessname }})
+                        </option>
+                    @endforeach
                 </select>
             </x-form-control>
 
@@ -50,7 +54,7 @@
 
         {{-- PRODUCTS MODAL --}}
         <label for="products_modal" class="md:hidden btn">Add product</label>
-        <input type="checkbox" id="products_modal" class="modal-toggle"/>
+        <input type="checkbox" id="products_modal" class="modal-toggle" />
         <div class="modal modal-bottom">
             <div class="modal-box">
                 <h2 class="text-xl text-center mb-2">Add product</h2>
