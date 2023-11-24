@@ -34,12 +34,12 @@ class CrudComponent extends Component
     {
         $this->Model = $Model;
         $this->ItemEvent = $ItemEvent;
-        $this->keys = $params['keys'];
+        $this->keys = $params['keys'] ;
         $this->initialData = $params['initialData'];
         $this->initialData["id"] = "";
         $this->data = $params['initialData'];
-        $this->specialInputs = $params["specialInputs"];
-        $this->files = $params["files"];
+        $this->specialInputs = $params["specialInputs"] ?? [];
+        $this->files = $params["files"] ?? [];
 
         $this->primaryKey = $params["primaryKey"] ?? $params['keys'][0];
 
