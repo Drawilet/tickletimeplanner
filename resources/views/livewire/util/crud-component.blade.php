@@ -1,8 +1,9 @@
 <div class="overflow-x-auto">
     <x-dialog-modal wire:model="modals.save">
         <x-slot name="title">
-
+            {{ gettype($data['id']) == 'string' ? 'Create' : 'Update' }} {{ $name }}
         </x-slot>
+
         <x-slot name="content">
 
             @foreach ($initialData as $key => $value)
@@ -40,6 +41,7 @@
             @endforeach
 
         </x-slot>
+
         <x-slot name="footer">
             <button wire:click="Modal('save', false)" type="button" class="btn btn-neutral w-28 mr-2">Cancel</button>
             <button wire:click="save" class=" btn btn-accent w-28">Save</button>
