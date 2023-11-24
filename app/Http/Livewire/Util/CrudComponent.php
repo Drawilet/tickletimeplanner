@@ -36,7 +36,7 @@ class CrudComponent extends Component
         $this->keys = $params['keys'];
         $this->initialData = $params['initialData'];
         $this->initialData["id"] = "";
-        $this->data = $params['initialData'];
+        $this->data = $this->initialData;
         $this->specialInputs = $params["specialInputs"] ?? [];
         $this->foreignFiles = $params["foreignFiles"] ?? [];
 
