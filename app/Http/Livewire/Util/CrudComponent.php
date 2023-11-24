@@ -13,12 +13,12 @@ class CrudComponent extends Component
     public $Model, $ItemEvent;
     public  $Name, $name;
 
-    public $initialData, $data, $files;
+    public $initialData, $data, $specialInputs, $files;
 
     protected $rules = [];
 
     public $modals = [
-        "save" => false,
+        "save" => true,
         "delete" => false,
         "error" => false
     ];
@@ -38,6 +38,7 @@ class CrudComponent extends Component
         $this->initialData = $params['initialData'];
         $this->initialData["id"] = "";
         $this->data = $params['initialData'];
+        $this->specialInputs = $params["specialInputs"];
         $this->files = $params["files"];
 
         $this->primaryKey = $params["primaryKey"] ?? $params['keys'][0];

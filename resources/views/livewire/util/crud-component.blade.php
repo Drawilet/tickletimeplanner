@@ -9,9 +9,15 @@
                 @if ($key != 'id')
                     <x-form-control class="mt-4">
                         <x-label>{{ ucfirst($key) }}</x-label>
-                        <x-input id="{{ $key }}" wire:model="data.{{ $key }}"
-                            class="{{ isset($files[$key]) ? 'file-input' : '' }}"
-                            type="{{ $this->getInputType($key, $value) }}" />
+                        @if (isset($specialInputs[$key]))
+                            @if ($specialInputs[$key] === 'textarea')
+                                <textarea id="{{ $key }}" wire:model="data.{{ $key }}" class="textarea textarea-bordered"></textarea>
+                            @endif
+                        @else
+                            <x-input id="{{ $key }}" wire:model="data.{{ $key }}"
+                                class="{{ isset($files[$key]) ? 'file-input' : '' }}"
+                                type="{{ $this->getInputType($key, $value) }}" />
+                        @endif
                         <x-input-error for="data.{{ $key }}" class="mt-2" />
                     </x-form-control>
                 @endif
@@ -68,7 +74,6 @@
                     </button>
                 </div>
             </div>
-
 
             @if ($items->isNotEmpty())
                 <table class="table">
