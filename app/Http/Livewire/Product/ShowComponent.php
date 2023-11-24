@@ -13,7 +13,7 @@ class ShowComponent extends CrudComponent
     public function mount()
     {
         $this->setup(Product::class, ProductEvent::class, [
-            "primaryKey" => "name",
+            "mainKey" => "name",
             "keys" => ["photo", "name", "description", "cost", "price"],
             "initialData" => [
                 "photo" => "",
@@ -22,7 +22,13 @@ class ShowComponent extends CrudComponent
                 "cost" => 0,
                 "price" => 0,
             ],
-            "files" => ["photo" => "img"],
+            "specialInputs" => [
+                "photo" => [
+                    "type" => "file",
+                    "max" => 1,
+                    "accept" => ["image/jpeg", "image/png"],
+                ],
+            ],
         ]);
         $this->items = $this->Model::all();
     }

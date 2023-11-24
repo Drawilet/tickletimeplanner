@@ -15,14 +15,20 @@ class ShowComponent extends CrudComponent
     public function mount()
     {
         $this->setup(Customer::class, CustomerEvent::class, [
-            "primaryKey" => "tradename",
+            "mainKey" => "tradename",
             "keys" => ["logo", "tradename", "businessname"],
             "initialData" => [
                 "logo" => "",
                 "tradename" => "",
                 "businessname" => "",
             ],
-            "files" => ["logo" => "img"],
+            "specialInputs" => [
+                "logo" => [
+                    "type" => "file",
+                    "max" => 1,
+                    "accept" => ["image/jpeg", "image/png"],
+                ],
+            ],
         ]);
         $this->items = $this->Model::all();
     }

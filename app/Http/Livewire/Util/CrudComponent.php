@@ -9,11 +9,11 @@ class CrudComponent extends Component
 {
     use WithFileUploads;
 
-    public $primaryKey, $keys;
+    public $mainKey, $keys;
     public $Model, $ItemEvent;
     public  $Name, $name;
 
-    public $initialData, $data, $files;
+    public $initialData, $data, $specialInputs, $foreignFiles;
 
     protected $rules = [];
 
@@ -23,7 +23,11 @@ class CrudComponent extends Component
         "error" => false
     ];
 
-    public $items, $count = 0;
+    public $items, $showingItems, $count = 0;
+
+    public $initialFilter = [
+        "search" => ""
+    ], $filter;
 
     public function setup($Model, $ItemEvent, array $params)
     {
@@ -33,16 +37,30 @@ class CrudComponent extends Component
         $this->initialData = $params['initialData'];
         $this->initialData["id"] = "";
         $this->data = $params['initialData'];
-        $this->files = $params["files"];
+        $this->specialInputs = $params["specialInputs"] ?? [];
+        $this->foreignFiles = $params["foreignFiles"] ?? [];
 
-        $this->primaryKey = $params["primaryKey"] ?? $params['keys'][0];
+        $this->mainKey = $params["mainKey"] ?? $params['keys'][0];
 
         $this->Name = class_basename($this->Model);
         $this->name = strtolower($this->Name);
+
+        $this->filter = $this->initialFilter;
     }
 
     public function render()
     {
+        $this->showingItems = $this->items->filter(function ($item) {
+            $search = $this->filter["search"];
+            if ($search == "") return true;
+
+            if (isset($item[$this->mainKey])) {
+                $value = $item[$this->mainKey];
+                if (stripos($value, $search) !== false) return true;
+            }
+
+            return false;
+        });
         return view('livewire.util.crud-component');
     }
 
@@ -80,7 +98,7 @@ class CrudComponent extends Component
 
         $this->emit("notify", [
             "type" => "info",
-            "message" =>  $data[$this->primaryKey] . " $this->name " . $action . "d"
+            "message" =>  $data[$this->mainKey] . " $this->name " . $action . "d"
         ]);
     }
 
@@ -121,15 +139,33 @@ class CrudComponent extends Component
 
         $name = $this->name;
         $id = $item->id;
-        foreach ($this->files as $key => $data) {
+        foreach ($this->specialInputs as $key => $data) {
+            if ($data["type"] != "file") continue;
+
             if (!isset($this->data[$key])) continue;
             if (gettype($this->data[$key]) == "string") continue;
 
-            $file = $this->data[$key];
+            $files = gettype($this->data[$key]) == "array" ? $this->data[$key] : [$this->data[$key]];
+            foreach ($files as $file) {
+                $fileName = $file->getClientOriginalName();
+                $file->storeAs("/public/$name/$id/$key", $fileName);
 
-            $fileName = $file->getClientOriginalName();
-            $file->storeAs("/public/$name/$id/$key", $fileName);
-            $item->$key = "/storage/$name/$id/$key/$fileName";
+                $path = "/storage/$name/$id/$key/$fileName";
+
+                if (isset($this->foreignFiles[$key])) {
+                    $foreignFile = $this->foreignFiles[$key];
+                    $model = $foreignFile["model"];
+                    $foreign_key = $foreignFile["key"];
+                    $foreign_name = $foreignFile["name"];
+
+                    $model::create([
+                        $foreign_key => $id,
+                        $foreign_name => $path
+                    ]);
+                } else {
+                    $item->$key = $path;
+                }
+            }
         }
         $item->save();
 
@@ -152,9 +188,14 @@ class CrudComponent extends Component
         event(new $this->ItemEvent("delete", $this->data));
     }
 
-    public function getInputType($key, $value)
+    public function parseValue($value)
     {
-        if (isset($this->files[$key])) return "file";
-        return gettype($value) == 'integer' ? 'number' : 'string';
+        switch (gettype($value)) {
+            case 'array':
+                return implode(", ", $value);
+
+            default:
+                return $value;
+        }
     }
 }
