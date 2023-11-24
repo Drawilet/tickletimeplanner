@@ -75,7 +75,7 @@
         </x-slot>
     </x-dialog-modal> --}}
 
-    <div class="max-w-7xl mx-auto sm:px6 lg:px-8">
+    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-base-100 overflow-hidden shadow-xl sm:rounded-lg px-4 py-4">
             <div class="mockup-browser border border-base-300">
                 <div class="mockup-browser-toolbar flex items-center">
@@ -97,7 +97,7 @@
                         <tr>
                             <th></th>
                             @foreach ($keys as $key)
-                                <th class="capitalize">{{ $key }}</th>
+                                <th class="capitalize {{ $mainKey == $key ? '' : '' }}">{{ $key }}</th>
                             @endforeach
                             <th>Actions</th>
                         </tr>
@@ -111,11 +111,47 @@
                                         @if (isset($specialInputs[$key]))
                                             @switch($specialInputs[$key]["type"])
                                                 @case('file')
-                                                    <img src="{{ $item[$key] }}" alt=""
-                                                        class="w-10 h-10 rounded-full">
+                                                    @if (gettype($item[$key]) == 'string')
+                                                        <img src="{{ $item[$key] }}" alt=""
+                                                            class="w-10 h-10 rounded-full">
+                                                    @else
+                                                        <button class="btn btn-ghost"
+                                                            onclick="{{ $key }}Modal.showModal()">
+                                                            @component('components.icons.arrows-pointing-out')
+                                                            @endcomponent
+                                                        </button>
+                                                        <dialog id="{{ $key }}Modal"
+                                                            class="modal modal-bottom md:modal-middle">
+                                                            <div class="modal-box md:w-11/12 md:max-w-5xl">
+                                                                <h3 class="font-bold text-lg mb-2">{{ $Name }}
+                                                                    {{ $key }}</h3>
+                                                                <div class="flex flex-wrap gap-2">
+                                                                    @foreach ($item[$key] as $file)
+                                                                        <img src="{{ $file['url'] }}" alt=""
+                                                                            class="h-36  rounded border border-base-300">
+                                                                    @endforeach
+                                                                </div>
+
+                                                                <div class="modal-action">
+                                                                    <form method="dialog">
+                                                                        <button class="btn">Close</button>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                            <form method="dialog" class="modal-backdrop">
+                                                                <button>close</button>
+                                                            </form>
+                                                        </dialog>
+                                                    @endif
+                                                @break
+
+                                                @case('textarea')
+                                                    <span>{{ \Illuminate\Support\Str::limit($item[$key], 50) }}</span>
                                                 @break
 
                                                 @default
+                                                    {{ $item[$key] }}
+                                                @break
                                             @endswitch
                                         @else
                                             {{ $item[$key] }}

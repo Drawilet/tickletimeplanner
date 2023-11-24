@@ -13,7 +13,7 @@ class CrudComponent extends Component
     public $Model, $ItemEvent;
     public  $Name, $name;
 
-    public $initialData, $data, $specialInputs;
+    public $initialData, $data, $specialInputs, $foreignFiles;
 
     protected $rules = [];
 
@@ -38,6 +38,7 @@ class CrudComponent extends Component
         $this->initialData["id"] = "";
         $this->data = $params['initialData'];
         $this->specialInputs = $params["specialInputs"] ?? [];
+        $this->foreignFiles = $params["foreignFiles"] ?? [];
 
         $this->mainKey = $params["mainKey"] ?? $params['keys'][0];
 
@@ -144,11 +145,27 @@ class CrudComponent extends Component
             if (!isset($this->data[$key])) continue;
             if (gettype($this->data[$key]) == "string") continue;
 
-            $file = $this->data[$key];
+            $files = gettype($this->data[$key]) == "array" ? $this->data[$key] : [$this->data[$key]];
+            foreach ($files as $file) {
+                $fileName = $file->getClientOriginalName();
+                $file->storeAs("/public/$name/$id/$key", $fileName);
 
-            $fileName = $file->getClientOriginalName();
-            $file->storeAs("/public/$name/$id/$key", $fileName);
-            $item->$key = "/storage/$name/$id/$key/$fileName";
+                $path = "/storage/$name/$id/$key/$fileName";
+
+                if (isset($this->foreignFiles[$key])) {
+                    $foreignFile = $this->foreignFiles[$key];
+                    $model = $foreignFile["model"];
+                    $foreign_key = $foreignFile["key"];
+                    $foreign_name = $foreignFile["name"];
+
+                    $model::create([
+                        $foreign_key => $id,
+                        $foreign_name => $path
+                    ]);
+                } else {
+                    $item->$key = $path;
+                }
+            }
         }
         $item->save();
 
