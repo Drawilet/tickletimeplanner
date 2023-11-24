@@ -72,7 +72,7 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        <th></th>
                         @foreach ($keys as $key)
                             <th class="capitalize">{{ $key }}</th>
                         @endforeach
