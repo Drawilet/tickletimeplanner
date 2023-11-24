@@ -9,11 +9,11 @@ class CrudComponent extends Component
 {
     use WithFileUploads;
 
-    public $primaryKey, $keys;
+    public $mainKey, $keys;
     public $Model, $ItemEvent;
     public  $Name, $name;
 
-    public $initialData, $data, $specialInputs, $files;
+    public $initialData, $data, $specialInputs;
 
     protected $rules = [];
 
@@ -29,19 +29,17 @@ class CrudComponent extends Component
         "search" => ""
     ], $filter;
 
-
     public function setup($Model, $ItemEvent, array $params)
     {
         $this->Model = $Model;
         $this->ItemEvent = $ItemEvent;
-        $this->keys = $params['keys'] ;
+        $this->keys = $params['keys'];
         $this->initialData = $params['initialData'];
         $this->initialData["id"] = "";
         $this->data = $params['initialData'];
         $this->specialInputs = $params["specialInputs"] ?? [];
-        $this->files = $params["files"] ?? [];
 
-        $this->primaryKey = $params["primaryKey"] ?? $params['keys'][0];
+        $this->mainKey = $params["mainKey"] ?? $params['keys'][0];
 
         $this->Name = class_basename($this->Model);
         $this->name = strtolower($this->Name);
@@ -55,8 +53,8 @@ class CrudComponent extends Component
             $search = $this->filter["search"];
             if ($search == "") return true;
 
-            if (isset($item[$this->primaryKey])) {
-                $value = $item[$this->primaryKey];
+            if (isset($item[$this->mainKey])) {
+                $value = $item[$this->mainKey];
                 if (stripos($value, $search) !== false) return true;
             }
 
@@ -99,7 +97,7 @@ class CrudComponent extends Component
 
         $this->emit("notify", [
             "type" => "info",
-            "message" =>  $data[$this->primaryKey] . " $this->name " . $action . "d"
+            "message" =>  $data[$this->mainKey] . " $this->name " . $action . "d"
         ]);
     }
 
@@ -140,7 +138,9 @@ class CrudComponent extends Component
 
         $name = $this->name;
         $id = $item->id;
-        foreach ($this->files as $key => $data) {
+        foreach ($this->specialInputs as $key => $data) {
+            if ($data["type"] != "file") continue;
+
             if (!isset($this->data[$key])) continue;
             if (gettype($this->data[$key]) == "string") continue;
 
@@ -171,9 +171,14 @@ class CrudComponent extends Component
         event(new $this->ItemEvent("delete", $this->data));
     }
 
-    public function getInputType($key, $value)
+    public function parseValue($value)
     {
-        if (isset($this->files[$key])) return "file";
-        return gettype($value) == 'integer' ? 'number' : 'string';
+        switch (gettype($value)) {
+            case 'array':
+                return implode(", ", $value);
+
+            default:
+                return $value;
+        }
     }
 }

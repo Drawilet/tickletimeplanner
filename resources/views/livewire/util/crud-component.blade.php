@@ -10,13 +10,29 @@
                     <x-form-control class="mt-4">
                         <x-label>{{ ucfirst($key) }}</x-label>
                         @if (isset($specialInputs[$key]))
-                            @if ($specialInputs[$key] === 'textarea')
-                                <textarea id="{{ $key }}" wire:model="data.{{ $key }}" class="textarea textarea-bordered"></textarea>
-                            @endif
+                            @switch($specialInputs[$key]["type"])
+                                @case('textarea')
+                                    <textarea id="{{ $key }}" wire:model="data.{{ $key }}" class="textarea textarea-bordered"
+                                        @foreach ($specialInputs[$key] as $type => $value)
+                                            @if ($type != 'type')
+                                                {{ $type }}="{{ $value }}"
+                                            @endif @endforeach></textarea>
+                                @break
+
+                                @case('file')
+                                    <input id="{{ $key }}" wire:model="data.{{ $key }}" type="file"
+                                        class="file-input file-input-bordered"
+                                        @foreach ($specialInputs[$key] as $type => $value)
+                                        @if ($type != 'type')
+                                            {{ $type }}="{{ $this->parseValue($value) }}"
+                                        @endif @endforeach>
+                                @break
+
+                                @default
+                            @endswitch
                         @else
                             <x-input id="{{ $key }}" wire:model="data.{{ $key }}"
-                                class="{{ isset($files[$key]) ? 'file-input' : '' }}"
-                                type="{{ $this->getInputType($key, $value) }}" />
+                                type="{{ gettype($value) == 'integer' ? 'number' : 'string' }}" />
                         @endif
                         <x-input-error for="data.{{ $key }}" class="mt-2" />
                     </x-form-control>
@@ -36,7 +52,7 @@
         </x-slot>
         <x-slot name="content">
 
-            <h2>¿Are you sure you want do delete "{{ $data[$primaryKey] }}" {{ $name }}?</h2>
+            <h2>¿Are you sure you want do delete "{{ $data[$mainKey] }}" {{ $name }}?</h2>
         </x-slot>
         <x-slot name="footer">
             <button wire:click="Modal('delete', false)" type="button" class="btn btn-neutral w-28">Cancel</button>
@@ -92,9 +108,15 @@
                                 <td>{{ $item->id }}</td>
                                 @foreach ($keys as $key)
                                     <td class="  ">
-                                        @if (isset($files[$key]))
-                                            <img src="{{ $item[$key] }}" alt=""
-                                                class="w-10 h-10 rounded-full">
+                                        @if (isset($specialInputs[$key]))
+                                            @switch($specialInputs[$key]["type"])
+                                                @case('file')
+                                                    <img src="{{ $item[$key] }}" alt=""
+                                                        class="w-10 h-10 rounded-full">
+                                                @break
+
+                                                @default
+                                            @endswitch
                                         @else
                                             {{ $item[$key] }}
                                         @endif
