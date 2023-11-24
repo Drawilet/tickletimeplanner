@@ -69,45 +69,59 @@
                 </div>
             </div>
 
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th></th>
-                        @foreach ($keys as $key)
-                            <th class="capitalize">{{ $key }}</th>
-                        @endforeach
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($showingItems as $item)
+
+            @if ($items->isNotEmpty())
+                <table class="table">
+                    <thead>
                         <tr>
-                            <td>{{ $item->id }}</td>
+                            <th></th>
                             @foreach ($keys as $key)
-                                <td class="  ">
-                                    @if (isset($files[$key]))
-                                        <img src="{{ $item[$key] }}" alt="" class="w-10 h-10 rounded-full">
-                                    @else
-                                        {{ $item[$key] }}
-                                    @endif
-                                </td>
+                                <th class="capitalize">{{ $key }}</th>
                             @endforeach
-
-                            <td>
-                                <button wire:click="Modal('save', true, '{{ $item->id }}')">
-                                    @component('components.icons.pencil-square')
-                                    @endcomponent
-                                </button>
-                                <button wire:click="Modal('delete', true, '{{ $item->id }}')">
-                                    @component('components.icons.trash')
-                                    @endcomponent
-                                </button>
-                            </td>
-
+                            <th>Actions</th>
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        @foreach ($showingItems as $item)
+                            <tr>
+                                <td>{{ $item->id }}</td>
+                                @foreach ($keys as $key)
+                                    <td class="  ">
+                                        @if (isset($files[$key]))
+                                            <img src="{{ $item[$key] }}" alt=""
+                                                class="w-10 h-10 rounded-full">
+                                        @else
+                                            {{ $item[$key] }}
+                                        @endif
+                                    </td>
+                                @endforeach
+
+                                <td>
+                                    <button wire:click="Modal('save', true, '{{ $item->id }}')">
+                                        @component('components.icons.pencil-square')
+                                        @endcomponent
+                                    </button>
+                                    <button wire:click="Modal('delete', true, '{{ $item->id }}')">
+                                        @component('components.icons.trash')
+                                        @endcomponent
+                                    </button>
+                                </td>
+
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            @else
+                <div class="flex flex-col items-center justify-center mt-5">
+                    <h2 class="text-2xl opacity-90">No {{ $name }}s found</h2>
+                    <button wire:click="Modal('save', true)" class=" btn btn-primary py-2 px-4 mt-4">
+                        @component('components.icons.plus')
+                        @endcomponent
+                        Create {{ $name }}
+                    </button>
+                </div>
+
+            @endif
         </div>
     </div>
 
