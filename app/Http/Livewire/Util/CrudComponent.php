@@ -18,7 +18,7 @@ class CrudComponent extends Component
     protected $rules = [];
 
     public $modals = [
-        "save" => true,
+        "save" => false,
         "delete" => false,
         "error" => false
     ];
