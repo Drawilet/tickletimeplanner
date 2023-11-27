@@ -14,20 +14,16 @@ class ShowComponent extends CrudComponent
     {
         $this->setup(Product::class, ProductEvent::class, [
             "mainKey" => "name",
-            "keys" => ["photo", "name", "description", "cost", "price"],
-            "initialData" => [
-                "photo" => "",
-                "name" => "",
-                "description" => "",
-                "cost" => 0,
-                "price" => 0,
-            ],
-            "specialInputs" => [
+            "types" => [
                 "photo" => [
                     "type" => "file",
                     "max" => 1,
                     "accept" => ["image/jpeg", "image/png"],
                 ],
+                "name" => ["type" => "text"],
+                "description" => ["type" => "textarea",  "rows" => 4],
+                "cost" => ["type" => "number"],
+                "price" => ["type" => "number"],
             ],
         ]);
         $this->items = $this->Model::all();

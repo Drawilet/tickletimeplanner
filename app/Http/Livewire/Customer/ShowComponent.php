@@ -16,18 +16,13 @@ class ShowComponent extends CrudComponent
     {
         $this->setup(Customer::class, CustomerEvent::class, [
             "mainKey" => "tradename",
-            "keys" => ["logo", "tradename", "businessname"],
-            "initialData" => [
-                "logo" => "",
-                "tradename" => "",
-                "businessname" => "",
-            ],
-            "specialInputs" => [
-                "logo" => [
+            "types" => [
+                "logo" =>     [
                     "type" => "file",
-                    "max" => 1,
                     "accept" => ["image/jpeg", "image/png"],
                 ],
+                "tradename" => ["type" => "text"],
+                "businessname" => ["type" => "text"]
             ],
         ]);
         $this->items = $this->Model::all();
