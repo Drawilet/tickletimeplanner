@@ -8,8 +8,6 @@ use App\Models\Product;
 
 class ShowComponent extends CrudComponent
 {
-    protected $listeners =  ["socket" => "socketHandler"];
-
     public function mount()
     {
         $this->setup(Product::class, ProductEvent::class, [
@@ -26,11 +24,5 @@ class ShowComponent extends CrudComponent
                 "price" => ["type" => "number"],
             ],
         ]);
-        $this->items = $this->Model::all();
-    }
-
-    protected function rules()
-    {
-        return [];
     }
 }
