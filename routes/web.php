@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Livewire\Space\ShowComponent as ShowSpacesComponent;
+
 use App\Http\Livewire\Customer\ShowComponent as ShowCustomersComponent;
 use App\Http\Livewire\Product\ShowComponent as ShowProductsComponent;
 
@@ -37,6 +39,8 @@ Route::middleware([
     })->name('dashboard');
 
     Route::get('products', ShowProductsComponent::class)->name('products.show');
+
+    Route::get("/spaces", ShowSpacesComponent::class)->name("spaces.show");
 
     Route::get('/customers', ShowCustomersComponent::class)->name('customers.show');
 

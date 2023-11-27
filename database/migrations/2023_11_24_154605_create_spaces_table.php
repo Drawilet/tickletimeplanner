@@ -3,7 +3,6 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use App\Models\CustomerModels;
 
 return new class extends Migration
 {
@@ -14,14 +13,18 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('customers', function (Blueprint $table) {
+        Schema::create('spaces', function (Blueprint $table) {
             $table->id();
 
-            $table->string('firstname');
-            $table->string('lastname');
-            $table->string('email')->unique();
-            $table->string('phone');
-            $table->text("address");
+            $table->string("name");
+            $table->text("description");
+
+            $table->string("address");
+            $table->string("city");
+            $table->string("state");
+            $table->string("country");
+
+            $table->json("schedule");
 
             $table->timestamps();
         });
@@ -34,6 +37,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('customers');
+        Schema::dropIfExists('spaces');
     }
 };

@@ -2,20 +2,30 @@
 
 namespace App\Http\Livewire\Util;
 
+use App\Models\Space;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
 class CrudComponent extends Component
 {
+    protected $listeners =  ["socket" => "handleSocket", "update-data" => "handleData"];
+
     use WithFileUploads;
 
     public $mainKey, $keys;
     public $Model, $ItemEvent;
     public  $Name, $name;
 
-    public $initialData, $data, $specialInputs, $foreignFiles;
+    public $initialData, $data, $initialFiles, $files;
+    public $types;
 
     protected $rules = [];
+    public $defaultValues = [
+        "text" => "",
+        "textarea" => "",
+        "file" => ""
+    ];
 
     public $modals = [
         "save" => false,
@@ -33,12 +43,19 @@ class CrudComponent extends Component
     {
         $this->Model = $Model;
         $this->ItemEvent = $ItemEvent;
-        $this->keys = $params['keys'];
-        $this->initialData = $params['initialData'];
-        $this->initialData["id"] = "";
-        $this->data = $params['initialData'];
-        $this->specialInputs = $params["specialInputs"] ?? [];
-        $this->foreignFiles = $params["foreignFiles"] ?? [];
+
+        $this->initialData = ["id"  => ""];
+        $this->initialFiles = [];
+        foreach ($params["types"] as $key => $type) {
+            if (isset($type["hidden"]) && $type["hidden"] == true) continue;
+            $this->keys[] = $key;
+            if ($type["type"] == "file") $this->initialFiles[$key] = [];
+            $this->initialData[$key] = $type["default"] ?? $this->defaultValues[$type["type"]] ?? "";
+        }
+        $this->data = $this->initialData;
+        $this->files = $this->initialFiles;
+
+        $this->types = $params["types"];
 
         $this->mainKey = $params["mainKey"] ?? $params['keys'][0];
 
@@ -46,6 +63,8 @@ class CrudComponent extends Component
         $this->name = strtolower($this->Name);
 
         $this->filter = $this->initialFilter;
+
+        $this->items = $this->Model::all();
     }
 
     public function render()
@@ -64,7 +83,7 @@ class CrudComponent extends Component
         return view('livewire.util.crud-component');
     }
 
-    public function socketHandler($e)
+    public function handleSocket($e)
     {
         $action = $e["action"];
         $data = $e["data"];
@@ -102,10 +121,16 @@ class CrudComponent extends Component
         ]);
     }
 
+    public function handleData($data)
+    {
+        $this->data = array_merge($this->data, $data);
+    }
+
     /*<──  ───────    UTILS   ───────  ──>*/
     public function clean()
     {
         $this->data = $this->initialData;
+        $this->files = $this->initialFiles;
     }
 
     public function Modal($modal, $value, $id = null)
@@ -129,6 +154,8 @@ class CrudComponent extends Component
                     # code...
                     break;
             }
+
+            $this->emit("update-data", $this->data);
         }
         $this->modals[$modal] = $value;
     }
@@ -139,21 +166,41 @@ class CrudComponent extends Component
 
         $name = $this->name;
         $id = $item->id;
-        foreach ($this->specialInputs as $key => $data) {
-            if ($data["type"] != "file") continue;
+        foreach ($this->types as $key => $type) {
+            if ($type["type"] != "file") continue;
 
-            if (!isset($this->data[$key])) continue;
-            if (gettype($this->data[$key]) == "string") continue;
+            if (!isset($this->files[$key])) continue;
+            if (gettype($this->files[$key]) == "string") continue;
 
-            $files = gettype($this->data[$key]) == "array" ? $this->data[$key] : [$this->data[$key]];
+            $files = gettype($this->files[$key]) == "array" ? $this->files[$key] : [$this->files[$key]];
+            if ($this->data["id"] && count($files) != 0) {
+                $oldFiles = $item->$key;
+                if (gettype($oldFiles) == "string") {
+                } else if (isset($this->types[$key]["foreign"])) {
+                    $foreignFile = $this->types[$key]["foreign"];
+                    $model = $foreignFile["model"];
+                    $foreign_key = $foreignFile["key"];
+                    $foreign_name = $foreignFile["name"];
+
+                    foreach ($oldFiles as $oldFile) {
+                        $_file = $oldFile->$foreign_name;
+                        $_file = str_replace("/storage", "public", $_file);
+
+                        Storage::delete($_file);
+
+                        $model::where($foreign_key, $id)->where($foreign_name, $oldFile[$foreign_name])->delete();
+                    }
+                }
+            }
+
             foreach ($files as $file) {
                 $fileName = $file->getClientOriginalName();
                 $file->storeAs("/public/$name/$id/$key", $fileName);
 
                 $path = "/storage/$name/$id/$key/$fileName";
 
-                if (isset($this->foreignFiles[$key])) {
-                    $foreignFile = $this->foreignFiles[$key];
+                if (isset($this->types[$key]["foreign"])) {
+                    $foreignFile = $this->types[$key]["foreign"];
                     $model = $foreignFile["model"];
                     $foreign_key = $foreignFile["key"];
                     $foreign_name = $foreignFile["name"];
@@ -177,11 +224,6 @@ class CrudComponent extends Component
     {
         $this->Modal("delete", false);
         $item = $this->Model::find($this->data["id"]);
-
-        /*   $this->count = $item->products->count();
-        if ($this->count > 0) {
-            return $this->Modal("error", true);
-        } */
 
         $item->delete();
 
