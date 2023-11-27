@@ -14,9 +14,14 @@ class CrudComponent extends Component
     public $Model, $ItemEvent;
     public  $Name, $name;
 
-    public $initialData, $data, $specialInputs, $foreignFiles;
+    public $initialData, $data, $types;
 
     protected $rules = [];
+    public $defaultValues = [
+        "text" => "",
+        "textarea" => "",
+        "file" => [],
+    ];
 
     public $modals = [
         "save" => false,
@@ -34,12 +39,14 @@ class CrudComponent extends Component
     {
         $this->Model = $Model;
         $this->ItemEvent = $ItemEvent;
-        $this->keys = $params['keys'];
-        $this->initialData = $params['initialData'];
-        $this->initialData["id"] = "";
+
+        $this->initialData = ["id"  => ""];
+        foreach ($params["types"] as $key => $type) {
+            $this->keys[] = $key;
+            $this->initialData[$key] = $type["default"] ?? $this->defaultValues[$type["type"]] ?? "";
+        }
         $this->data = $this->initialData;
-        $this->specialInputs = $params["specialInputs"] ?? [];
-        $this->foreignFiles = $params["foreignFiles"] ?? [];
+        $this->types = $params["types"];
 
         $this->mainKey = $params["mainKey"] ?? $params['keys'][0];
 
@@ -140,8 +147,8 @@ class CrudComponent extends Component
 
         $name = $this->name;
         $id = $item->id;
-        foreach ($this->specialInputs as $key => $data) {
-            if ($data["type"] != "file") continue;
+        foreach ($this->types as $key => $type) {
+            if ($type["type"] != "file") continue;
 
             if (!isset($this->data[$key])) continue;
             if (gettype($this->data[$key]) == "string") continue;
@@ -150,8 +157,8 @@ class CrudComponent extends Component
             if ($this->data["id"] && count($files) != 0) {
                 $oldFiles = $item->$key;
                 if (gettype($oldFiles) == "string") {
-                } else if (isset($this->foreignFiles[$key])) {
-                    $foreignFile = $this->foreignFiles[$key];
+                } else if (isset($this->types[$key]["foreign"])) {
+                    $foreignFile = $this->types[$key]["foreign"];
                     $model = $foreignFile["model"];
                     $foreign_key = $foreignFile["key"];
                     $foreign_name = $foreignFile["name"];
@@ -173,8 +180,8 @@ class CrudComponent extends Component
 
                 $path = "/storage/$name/$id/$key/$fileName";
 
-                if (isset($this->foreignFiles[$key])) {
-                    $foreignFile = $this->foreignFiles[$key];
+                if (isset($this->types[$key]["foreign"])) {
+                    $foreignFile = $this->types[$key]["foreign"];
                     $model = $foreignFile["model"];
                     $foreign_key = $foreignFile["key"];
                     $foreign_name = $foreignFile["name"];
@@ -198,11 +205,6 @@ class CrudComponent extends Component
     {
         $this->Modal("delete", false);
         $item = $this->Model::find($this->data["id"]);
-
-        /*   $this->count = $item->products->count();
-        if ($this->count > 0) {
-            return $this->Modal("error", true);
-        } */
 
         $item->delete();
 
