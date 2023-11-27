@@ -14,13 +14,14 @@ class CrudComponent extends Component
     public $Model, $ItemEvent;
     public  $Name, $name;
 
-    public $initialData, $data, $types;
+    public $initialData, $data, $initialFiles, $files;
+    public $types;
 
     protected $rules = [];
     public $defaultValues = [
         "text" => "",
         "textarea" => "",
-        "file" => [],
+        "file" => ""
     ];
 
     public $modals = [
@@ -41,11 +42,15 @@ class CrudComponent extends Component
         $this->ItemEvent = $ItemEvent;
 
         $this->initialData = ["id"  => ""];
+        $this->initialFiles = [];
         foreach ($params["types"] as $key => $type) {
             $this->keys[] = $key;
+            if ($type["type"] == "file") $this->initialFiles[$key] = [];
             $this->initialData[$key] = $type["default"] ?? $this->defaultValues[$type["type"]] ?? "";
         }
         $this->data = $this->initialData;
+        $this->files = $this->initialFiles;
+
         $this->types = $params["types"];
 
         $this->mainKey = $params["mainKey"] ?? $params['keys'][0];
@@ -114,6 +119,7 @@ class CrudComponent extends Component
     public function clean()
     {
         $this->data = $this->initialData;
+        $this->files = $this->initialFiles;
     }
 
     public function Modal($modal, $value, $id = null)
@@ -150,10 +156,10 @@ class CrudComponent extends Component
         foreach ($this->types as $key => $type) {
             if ($type["type"] != "file") continue;
 
-            if (!isset($this->data[$key])) continue;
-            if (gettype($this->data[$key]) == "string") continue;
+            if (!isset($this->files[$key])) continue;
+            if (gettype($this->files[$key]) == "string") continue;
 
-            $files = gettype($this->data[$key]) == "array" ? $this->data[$key] : [$this->data[$key]];
+            $files = gettype($this->files[$key]) == "array" ? $this->files[$key] : [$this->files[$key]];
             if ($this->data["id"] && count($files) != 0) {
                 $oldFiles = $item->$key;
                 if (gettype($oldFiles) == "string") {

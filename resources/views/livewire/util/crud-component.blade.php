@@ -18,7 +18,7 @@
                         @break
 
                         @case('file')
-                            <input id="{{ $key }}" wire:model="data.{{ $key }}" type="file"
+                            <input id="{{ $key }}" wire:model="files.{{ $key }}" type="file"
                                 class="file-input file-input-bordered"
                                 @foreach ($type as $key => $value)
                         @if ($key != 'type')
