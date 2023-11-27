@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Util;
 
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -146,6 +147,26 @@ class CrudComponent extends Component
             if (gettype($this->data[$key]) == "string") continue;
 
             $files = gettype($this->data[$key]) == "array" ? $this->data[$key] : [$this->data[$key]];
+            if ($this->data["id"] && count($files) != 0) {
+                $oldFiles = $item->$key;
+                if (gettype($oldFiles) == "string") {
+                } else if (isset($this->foreignFiles[$key])) {
+                    $foreignFile = $this->foreignFiles[$key];
+                    $model = $foreignFile["model"];
+                    $foreign_key = $foreignFile["key"];
+                    $foreign_name = $foreignFile["name"];
+
+                    foreach ($oldFiles as $oldFile) {
+                        $_file = $oldFile->$foreign_name;
+                        $_file = str_replace("/storage", "public", $_file);
+
+                        Storage::delete($_file);
+
+                        $model::where($foreign_key, $id)->where($foreign_name, $oldFile[$foreign_name])->delete();
+                    }
+                }
+            }
+
             foreach ($files as $file) {
                 $fileName = $file->getClientOriginalName();
                 $file->storeAs("/public/$name/$id/$key", $fileName);
