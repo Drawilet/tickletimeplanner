@@ -11,14 +11,13 @@ class ShowComponent extends CrudComponent
     public function mount()
     {
         $this->setup(Customer::class, CustomerEvent::class, [
-            "mainKey" => "tradename",
+            "mainKey" => "firstname",
             "types" => [
-                "logo" =>     [
-                    "type" => "file",
-                    "accept" => ["image/jpeg", "image/png"],
-                ],
-                "tradename" => ["type" => "text"],
-                "businessname" => ["type" => "text"]
+                "firstname" => ["type" => "text"],
+                "lastname" => ["type" => "text"],
+                "email" => ["type" => "email"],
+                "phone" => ["type" => "text"],
+                "address" => ["type" => "textarea",  "rows" => 4],
             ],
         ]);
     }
