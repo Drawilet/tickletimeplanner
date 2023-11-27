@@ -19,5 +19,9 @@ cp .env.example .env
 echo "Running migrations"
 php artisan migrate:fresh --seed
 
+# LINK STORAGE
+echo "Linking storage"
+php artisan storage:link
+
 # END: Setup Commands
 echo "Tickletime Planner setup complete."
