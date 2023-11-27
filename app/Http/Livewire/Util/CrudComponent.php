@@ -2,12 +2,15 @@
 
 namespace App\Http\Livewire\Util;
 
+use App\Models\Space;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
 class CrudComponent extends Component
 {
+    protected $listeners =  ["socket" => "handleSocket", "update-data" => "handleData"];
+
     use WithFileUploads;
 
     public $mainKey, $keys;
@@ -44,6 +47,7 @@ class CrudComponent extends Component
         $this->initialData = ["id"  => ""];
         $this->initialFiles = [];
         foreach ($params["types"] as $key => $type) {
+            if (isset($type["hidden"]) && $type["hidden"] == true) continue;
             $this->keys[] = $key;
             if ($type["type"] == "file") $this->initialFiles[$key] = [];
             $this->initialData[$key] = $type["default"] ?? $this->defaultValues[$type["type"]] ?? "";
@@ -59,6 +63,8 @@ class CrudComponent extends Component
         $this->name = strtolower($this->Name);
 
         $this->filter = $this->initialFilter;
+
+        $this->items = $this->Model::all();
     }
 
     public function render()
@@ -77,7 +83,7 @@ class CrudComponent extends Component
         return view('livewire.util.crud-component');
     }
 
-    public function socketHandler($e)
+    public function handleSocket($e)
     {
         $action = $e["action"];
         $data = $e["data"];
@@ -115,6 +121,11 @@ class CrudComponent extends Component
         ]);
     }
 
+    public function handleData($data)
+    {
+        $this->data = array_merge($this->data, $data);
+    }
+
     /*<──  ───────    UTILS   ───────  ──>*/
     public function clean()
     {
@@ -143,6 +154,8 @@ class CrudComponent extends Component
                     # code...
                     break;
             }
+
+            $this->emit("update-data", $this->data);
         }
         $this->modals[$modal] = $value;
     }

@@ -6,30 +6,36 @@
 
         <x-slot name="content">
             @foreach ($types as $key => $type)
-                <x-form-control>
+                <x-form-control class="mt-2">
                     <x-label for="" value="{{ __(ucFirst($key)) }}" />
-                    @switch($type["type"])
-                        @case('textarea')
-                            <textarea id="{{ $key }}" wire:model="data.{{ $key }}" class="textarea textarea-bordered"
-                                @foreach ($type as $key => $value)
-                            @if ($key != 'type')
-                                {{ $key }}="{{ $value }}"
-                            @endif @endforeach></textarea>
-                        @break
 
-                        @case('file')
-                            <input id="{{ $key }}" wire:model="files.{{ $key }}" type="file"
-                                class="file-input file-input-bordered"
-                                @foreach ($type as $key => $value)
-                        @if ($key != 'type')
-                            {{ $key }}="{{ $this->parseValue($value) }}"
-                        @endif @endforeach>
-                        @break
+                    @if (isset($type['component']))
+                        @livewire($type['component'])
+                    @else
+                        @switch($type["type"])
+                            @case('textarea')
+                                <textarea id="{{ $key }}" wire:model="data.{{ $key }}" class="textarea textarea-bordered"
+                                    @foreach ($type as $key => $value)
+                                        @if ($key != 'type')
+                                         {{ $key }}="{{ $value }}"
+                                           @endif @endforeach></textarea>
+                            @break
 
-                        @default
-                            <x-input id="{{ $key }}" wire:model="data.{{ $key }}"
-                                type="{{ $type['type'] }}" />
-                    @endswitch
+                            @case('file')
+                                <input id="{{ $key }}" wire:model="files.{{ $key }}" type="file"
+                                    class="file-input file-input-bordered"
+                                    @foreach ($type as $key => $value)
+                                       @if ($key != 'type')
+                                            {{ $key }}="{{ $this->parseValue($value) }}"
+                                        @endif @endforeach>
+                            @break
+
+                            @default
+                                <x-input id="{{ $key }}" wire:model="data.{{ $key }}"
+                                    type="{{ $type['type'] }}" />
+                        @endswitch
+                    @endif
+
                 </x-form-control>
             @endforeach
         </x-slot>
@@ -103,51 +109,70 @@
                                     <td>{{ $item->id }}</td>
 
                                     @foreach ($types as $key => $type)
+                                        @isset($type['hidden'])
+                                            @continue
+                                        @endisset
+
                                         <td>
-                                            @switch($type["type"])
-                                                @case('file')
-                                                    @if (gettype($item[$key]) == 'string')
-                                                        <img src="{{ $item[$key] }}" alt=""
-                                                            class="w-10 h-10 rounded-full">
-                                                    @else
-                                                        <button class="btn btn-ghost"
-                                                            onclick="{{ $key }}{{ $item["id"] }}Modal.showModal()">
-                                                            @component('components.icons.arrows-pointing-out')
-                                                            @endcomponent
-                                                        </button>
-                                                        <dialog id="{{ $key }}{{ $item["id"] }}Modal"
-                                                            class="modal modal-bottom md:modal-middle">
-                                                            <div class="modal-box md:w-11/12 md:max-w-5xl">
-                                                                <h3 class="font-bold text-lg mb-2">{{ $Name }}
-                                                                    {{ $key }}</h3>
-                                                                <div class="flex flex-wrap gap-2">
-                                                                    @foreach ($item[$key] as $file)
-                                                                        <img src="{{ $file['url'] }}" alt=""
-                                                                            class="h-36  rounded border border-base-300">
-                                                                    @endforeach
+                                            @if (isset($type['parser']))
+                                                @php
+                                                    $value = $type['parser']($item[$key]);
+                                                @endphp
+                                                @if (gettype($value) == 'string')
+                                                    {{ $value }}
+                                                @else
+                                                    @foreach ($value as $v)
+                                                        {{ $v }} <br>
+                                                    @endforeach
+                                                @endif
+                                            @else
+                                                @switch($type["type"])
+                                                    @case('file')
+                                                        @if (gettype($item[$key]) == 'string')
+                                                            <img src="{{ $item[$key] }}" alt=""
+                                                                class="w-10 h-10 rounded-full">
+                                                        @else
+                                                            <button class="btn btn-ghost"
+                                                                onclick="{{ $key }}{{ $item['id'] }}Modal.showModal()">
+                                                                @component('components.icons.arrows-pointing-out')
+                                                                @endcomponent
+                                                            </button>
+                                                            <dialog id="{{ $key }}{{ $item['id'] }}Modal"
+                                                                class="modal modal-bottom md:modal-middle">
+                                                                <div class="modal-box md:w-11/12 md:max-w-5xl">
+                                                                    <h3 class="font-bold text-lg mb-2">{{ $Name }}
+                                                                        {{ $key }}</h3>
+                                                                    <div class="flex flex-wrap gap-2">
+                                                                        @foreach ($item[$key] as $file)
+                                                                            <img src="{{ $file['url'] }}" alt=""
+                                                                                class="h-36  rounded border border-base-300">
+                                                                        @endforeach
+                                                                    </div>
+
+                                                                    <div class="modal-action">
+                                                                        <form method="dialog">
+                                                                            <button class="btn">Close</button>
+                                                                        </form>
+                                                                    </div>
                                                                 </div>
+                                                                <form method="dialog" class="modal-backdrop">
+                                                                    <button>close</button>
+                                                                </form>
+                                                            </dialog>
+                                                        @endif
+                                                    @break
 
-                                                                <div class="modal-action">
-                                                                    <form method="dialog">
-                                                                        <button class="btn">Close</button>
-                                                                    </form>
-                                                                </div>
-                                                            </div>
-                                                            <form method="dialog" class="modal-backdrop">
-                                                                <button>close</button>
-                                                            </form>
-                                                        </dialog>
-                                                    @endif
-                                                @break
+                                                    @case('textarea')
+                                                        <span>{{ \Illuminate\Support\Str::limit($item[$key], 50) }}</span>
+                                                    @break
 
-                                                @case('textarea')
-                                                    <span>{{ \Illuminate\Support\Str::limit($item[$key], 50) }}</span>
-                                                @break
+                                                    @default
+                                                        {{ $item[$key] }}
+                                                    @break
+                                                @endswitch
+                                            @endif
 
-                                                @default
-                                                    {{ $item[$key] }}
-                                                @break
-                                            @endswitch
+
                                         </td>
                                     @endforeach
 
