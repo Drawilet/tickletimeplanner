@@ -30,7 +30,8 @@ class ScheduleComponent extends Component
 
     public function handleData($data)
     {
-        $this->data = $data;
+        if (isset($data["schedule"]))
+            $this->data["schedule"] = $data["schedule"];
     }
 
     public function handleScheduleChange()
