@@ -1,10 +1,10 @@
 <?php
 
-namespace App\View\Components\Icons;
+namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class PencilSquare extends Component
+class Twitter extends Component
 {
     /**
      * Create a new component instance.
@@ -23,6 +23,6 @@ class PencilSquare extends Component
      */
     public function render()
     {
-        return view('components.icons.pencil-square');
+        return view('components.icons.twitter');
     }
 }

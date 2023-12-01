@@ -37,6 +37,7 @@
         integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+
     <!-- Styles -->
     @livewireStyles
 </head>
@@ -51,8 +52,8 @@
             {{ $slot }}
         </main>
     </div>
-
     @stack('modals')
+    @stack('scripts')
 
     @livewireScripts
     <script>
