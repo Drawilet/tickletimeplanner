@@ -4,7 +4,7 @@ use App\Http\Livewire\Customer\ShowComponent as ShowCustomersComponent;
 
 use App\Http\Livewire\Event\NewComponent as NewEventComponent;
 use App\Http\Livewire\Event\ShowComponent as ShowEventsComponent;
-
+use App\Http\Livewire\Iconoscomponent;
 use App\Http\Livewire\Settings\Show as ShowSettingsComponent;
 
 use Illuminate\Support\Facades\Route;
@@ -37,6 +37,5 @@ Route::middleware([
 
     Route::get("/events", ShowEventsComponent::class)->name("events.show");
     Route::get("/events/new", NewEventComponent::class)->name("events.new");
-
     Route::get("/settings", ShowSettingsComponent::class)->name("settings.show");
 });
