@@ -56,6 +56,14 @@
     @stack('scripts')
 
     @livewireScripts
-</body>
+    <script>
+    
+    const savedTheme = localStorage.getItem('theme');
 
+    if (savedTheme) {
+      
+        document.documentElement.setAttribute('data-theme', savedTheme);
+    }
+</script>
+    </body>
 </html>

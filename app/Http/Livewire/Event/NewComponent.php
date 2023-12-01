@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire\Event;
 
+use App\Models\Customer;
+use App\Models\Product;
 use Livewire\Component;
 
 class NewComponent extends Component
@@ -15,37 +17,13 @@ class NewComponent extends Component
     ];
     public $data;
 
-    public $products = [
-        [
-            "name" => "Balloons",
-            "description" => "A bunch of balloons",
-            "price" => 10,
-            "photo" => "https://www.creativefabrica.com/wp-content/uploads/2021/04/27/birthday-ballon-Graphics-11408204-1-580x387.png"
-        ],        [
-            "name" => "Balloons",
-            "description" => "A bunch of balloons",
-            "price" => 10,
-            "photo" => "https://www.creativefabrica.com/wp-content/uploads/2021/04/27/birthday-ballon-Graphics-11408204-1-580x387.png"
-        ],        [
-            "name" => "Balloons",
-            "description" => "A bunch of balloons",
-            "price" => 10,
-            "photo" => "https://www.creativefabrica.com/wp-content/uploads/2021/04/27/birthday-ballon-Graphics-11408204-1-580x387.png"
-        ],        [
-            "name" => "Balloons",
-            "description" => "A bunch of balloons",
-            "price" => 10,
-            "photo" => "https://www.creativefabrica.com/wp-content/uploads/2021/04/27/birthday-ballon-Graphics-11408204-1-580x387.png"
-        ],        [
-            "name" => "Balloons",
-            "description" => "A bunch of balloons",
-            "price" => 10,
-            "photo" => "https://www.creativefabrica.com/wp-content/uploads/2021/04/27/birthday-ballon-Graphics-11408204-1-580x387.png"
-        ]
-    ];
+    public $products, $customers;
 
     public function mount()
     {
+        $this->customers = Customer::all();
+        $this->products = Product::all();
+
         $this->data = $this->initialData;
     }
 

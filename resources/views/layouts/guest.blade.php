@@ -13,6 +13,7 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <script src="https://cdn.jsdelivr.net/npm/theme-change@2.0.2/index.js"></script>
     </head>
     <body>
         <div class="font-sansantialiased">

@@ -6,6 +6,37 @@ use Illuminate\View\Component;
 
 class SidebarComponent extends Component
 {
+    public $sidebar = [
+        "Dashboard" => [
+            "icon" => "home",
+            "route" => "dashboard"
+        ],
+        "Customers" => [
+            "icon" => "user-group",
+            "route" => "customers.show"
+        ],
+        "Spaces" => [
+            "icon" => "map-pin",
+            "route" => "spaces.show"
+        ],
+        "Products" => [
+            "icon" => "shopping-bag",
+            "route" => "products.show"
+        ],
+        "Events" => [
+            "icon" => "calendar",
+            "route" => "events.show",
+
+            "sub" => [
+                "New Event" => [
+                    "icon" => "plus",
+                    "route" => "events.new"
+                ],
+            ]
+        ]
+
+    ];
+
     /**
      * Create a new component instance.
      *
