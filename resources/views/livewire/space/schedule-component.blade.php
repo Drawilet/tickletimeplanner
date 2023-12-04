@@ -1,5 +1,4 @@
 <div class="flex flex-col">
-
     <div class="join">
         @foreach ($days as $day)
             <button wire:click='toggleDay("{{ $day }}")'
@@ -40,6 +39,5 @@
             </x-button>
         </div>
     @endisset
-
 
 </div>
