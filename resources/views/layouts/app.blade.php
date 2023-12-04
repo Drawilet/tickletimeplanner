@@ -56,14 +56,16 @@
     @stack('scripts')
 
     @livewireScripts
-    <script>
-    
-    const savedTheme = localStorage.getItem('theme');
+    @livewireCalendarScripts
 
-    if (savedTheme) {
-      
-        document.documentElement.setAttribute('data-theme', savedTheme);
-    }
-</script>
-    </body>
+    <script>
+        const savedTheme = localStorage.getItem('theme');
+
+        if (savedTheme) {
+
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        }
+    </script>
+</body>
+
 </html>
