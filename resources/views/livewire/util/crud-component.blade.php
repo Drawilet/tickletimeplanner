@@ -204,9 +204,6 @@
         </div>
     </div>
 
-    <script type="module">
-        Echo.channel("global").listen('{{ $Name }}Event', (e) => {
-            window.livewire.emit('socket', e)
-        })
-    </script>
+    @component('components.util.crud-socket-scripts', ['socketListeners' => $socketListeners])
+    @endcomponent
 </div>
