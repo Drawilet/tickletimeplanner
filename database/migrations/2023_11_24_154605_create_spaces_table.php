@@ -26,6 +26,8 @@ return new class extends Migration
 
             $table->json("schedule");
 
+            $table->string("color");
+
             $table->timestamps();
         });
     }
