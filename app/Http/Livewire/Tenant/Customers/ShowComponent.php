@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Customer;
+namespace App\Http\Livewire\Tenant\Customers;
 
 use App\Events\CustomerEvent;
 use App\Http\Livewire\Util\CrudComponent;

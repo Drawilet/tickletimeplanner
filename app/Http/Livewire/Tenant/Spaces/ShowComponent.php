@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Http\Livewire\Space;
+namespace App\Http\Livewire\Tenant\Spaces;
+
+use App\Http\Livewire\Tenant\Spaces\ScheduleComponent;
+use App\Http\Livewire\Util\CrudComponent;
 
 use App\Events\SpaceEvent;
-use App\Http\Livewire\Util\CrudComponent;
 use App\Models\Space;
 use App\Models\SpacePhoto;
 
@@ -33,7 +35,7 @@ class ShowComponent extends CrudComponent
                 "country" => ["type" => "text"],
                 "schedule" => [
                     "type" => "array",
-                    "component" => "space.schedule-component",
+                    "component" => ScheduleComponent::class,
                     "hidden" => true
                 ],
                 "color" => ["type" => "color"],

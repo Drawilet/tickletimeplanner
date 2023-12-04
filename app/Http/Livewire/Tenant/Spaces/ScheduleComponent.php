@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Space;
+namespace App\Http\Livewire\Tenant\Spaces;
 
 use Livewire\Component;
 
@@ -25,7 +25,7 @@ class ScheduleComponent extends Component
 
     public function render()
     {
-        return view('livewire.space.schedule-component');
+        return view('livewire.tenant.spaces.schedule-component');
     }
 
     public function handleData($data)

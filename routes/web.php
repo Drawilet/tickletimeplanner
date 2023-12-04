@@ -2,10 +2,10 @@
 
 use App\Http\Livewire\Dashboard\ShowComponent as DashboardComponent;
 
-use App\Http\Livewire\Space\ShowComponent as ShowSpacesComponent;
+use App\Http\Livewire\Tenant\Spaces\ShowComponent as ShowSpacesComponent;
 
-use App\Http\Livewire\Customer\ShowComponent as ShowCustomersComponent;
-use App\Http\Livewire\Product\ShowComponent as ShowProductsComponent;
+use App\Http\Livewire\Tenant\Customers\ShowComponent as ShowCustomersComponent;
+use App\Http\Livewire\Tenant\Products\ShowComponent as ShowProductsComponent;
 
 use App\Http\Livewire\Settings\Show as ShowSettingsComponent;
 
@@ -23,22 +23,26 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+$middleware = [
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+];
+
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified'
-])->group(function () {
+Route::middleware($middleware)->group(function () {
     Route::get('/dashboard', DashboardComponent::class)->name('dashboard.show');
 
+    Route::get("/settings", ShowSettingsComponent::class)->name("settings.show");
+});
+
+Route::prefix("tenant")->name("tenant.")->middleware($middleware)->group(function () {
     Route::get('products', ShowProductsComponent::class)->name('products.show');
 
-    Route::get("/spaces", ShowSpacesComponent::class)->name("spaces.show");
+    Route::get("spaces", ShowSpacesComponent::class)->name("spaces.show");
 
-    Route::get('/customers', ShowCustomersComponent::class)->name('customers.show');
-
-    Route::get("/settings", ShowSettingsComponent::class)->name("settings.show");
+    Route::get('customers', ShowCustomersComponent::class)->name('customers.show');
 });
