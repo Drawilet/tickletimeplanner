@@ -25,7 +25,7 @@ class SpaceSeeder extends Seeder
                 "city" => "New York",
                 "state" => "NY",
                 "country" => "USA",
-                "schedule" => json_encode([
+                "schedule" => [
                     "monday" => [
                         "opening" => "09:00",
                         "closing" => "17:00"
@@ -54,7 +54,7 @@ class SpaceSeeder extends Seeder
                         "opening" => "09:00",
                         "closing" => "17:00"
                     ]
-                ]),
+                ],
                 "color" => "#ff0000",
             ],
             [
@@ -64,7 +64,7 @@ class SpaceSeeder extends Seeder
                 "city" => "New York",
                 "state" => "NY",
                 "country" => "USA",
-                "schedule" => json_encode([
+                "schedule" => [
                     "monday" => [
                         "opening" => "09:00",
                         "closing" => "17:00"
@@ -93,7 +93,7 @@ class SpaceSeeder extends Seeder
                         "opening" => "09:00",
                         "closing" => "17:00"
                     ]
-                ]),
+                ],
                 "color" => "#00ff00",
             ]
         ];
