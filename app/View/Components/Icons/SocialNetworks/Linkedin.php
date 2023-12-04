@@ -1,10 +1,10 @@
 <?php
 
-namespace App\View\Components\Icons;
+namespace App\View\Components\icons;
 
 use Illuminate\View\Component;
 
-class Instagram extends Component
+class Linkedin extends Component
 {
     /**
      * Create a new component instance.
@@ -23,6 +23,6 @@ class Instagram extends Component
      */
     public function render()
     {
-        return view('components.icons.instagram');
+        return view('components.icons.social-networks.linkedin');
     }
 }

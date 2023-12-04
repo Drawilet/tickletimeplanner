@@ -4,7 +4,7 @@ namespace App\View\Components\Icons;
 
 use Illuminate\View\Component;
 
-class Tiktok extends Component
+class Instagram extends Component
 {
     /**
      * Create a new component instance.
@@ -23,6 +23,6 @@ class Tiktok extends Component
      */
     public function render()
     {
-        return view('components.icons.tiktok');
+        return view('components.icons.social-networks.instagram');
     }
 }

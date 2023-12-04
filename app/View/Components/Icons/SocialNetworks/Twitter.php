@@ -1,9 +1,10 @@
 <?php
-namespace App\View\Components\Icons;
+
+namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class Facebook extends Component
+class Twitter extends Component
 {
     /**
      * Create a new component instance.
@@ -22,6 +23,6 @@ class Facebook extends Component
      */
     public function render()
     {
-        return view('components.icons.facebook');
+        return view('components.social-networks.icons.twitter');
     }
 }

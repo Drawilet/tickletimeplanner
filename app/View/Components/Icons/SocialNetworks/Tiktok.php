@@ -1,10 +1,10 @@
 <?php
 
-namespace App\View\Components\icons;
+namespace App\View\Components\Icons;
 
 use Illuminate\View\Component;
 
-class Linkedin extends Component
+class Tiktok extends Component
 {
     /**
      * Create a new component instance.
@@ -23,6 +23,6 @@ class Linkedin extends Component
      */
     public function render()
     {
-        return view('components.icons.linkedin');
+        return view('components.social-networks.icons.tiktok');
     }
 }
