@@ -13,20 +13,20 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('spaces', function (Blueprint $table) {
+        Schema::create('events', function (Blueprint $table) {
             $table->id();
 
-            $table->string("name");
-            $table->text("description");
+            $table->string('name');
+            $table->foreignId('space_id')->constrained();
+            $table->foreignId('customer_id')->constrained();
 
-            $table->string("address");
-            $table->string("city");
-            $table->string("state");
-            $table->string("country");
+            $table->date('date');
+            $table->time('start_time');
+            $table->time('end_time');
 
-            $table->json("schedule");
+            $table->decimal("price");
 
-            $table->string("color");
+            $table->text('notes')->nullable();
 
             $table->timestamps();
         });
@@ -39,6 +39,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('spaces');
+        Schema::dropIfExists('events');
     }
 };

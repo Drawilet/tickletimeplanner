@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Util;
 
-use App\Models\Space;
+use App\Http\Socket\WithCrudSockets;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -11,7 +11,7 @@ class CrudComponent extends Component
 {
     protected $listeners =  ["socket" => "handleSocket", "update-data" => "handleData"];
 
-    use WithFileUploads;
+    use WithFileUploads, WithCrudSockets;
 
     public $mainKey, $keys;
     public $Model, $ItemEvent;
@@ -44,6 +44,8 @@ class CrudComponent extends Component
         $this->Model = $Model;
         $this->ItemEvent = $ItemEvent;
 
+        $this->addSocketListener(class_basename($this->Model), ["get" => true]);
+
         $this->initialData = ["id"  => ""];
         $this->initialFiles = [];
         foreach ($params["types"] as $key => $type) {
@@ -63,8 +65,6 @@ class CrudComponent extends Component
         $this->name = strtolower($this->Name);
 
         $this->filter = $this->initialFilter;
-
-        $this->items = $this->Model::all();
     }
 
     public function render()
@@ -81,44 +81,6 @@ class CrudComponent extends Component
             return false;
         });
         return view('livewire.util.crud-component');
-    }
-
-    public function handleSocket($e)
-    {
-        $action = $e["action"];
-        $data = $e["data"];
-
-        switch ($action) {
-            case 'create':
-                $item = $this->Model::make($data);
-                $item->id = $data["id"];
-
-                $this->items->push($item);
-                break;
-
-            case "update":
-                $item = $this->items->first(function ($item) use ($data) {
-                    return $item->id === $data["id"];
-                });
-                if ($item) {
-                    $item->fill($data);
-                }
-                break;
-
-            case "delete":
-                $this->items = $this->items->filter(function ($item) use ($data) {
-                    return $item->id != $data["id"];
-                });
-                break;
-            default:
-                # code...
-                break;
-        }
-
-        $this->emit("notify", [
-            "type" => "info",
-            "message" =>  $data[$this->mainKey] . " $this->name " . $action . "d"
-        ]);
     }
 
     public function handleData($data)

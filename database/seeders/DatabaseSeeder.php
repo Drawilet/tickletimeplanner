@@ -2,14 +2,14 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
     public function cleanStorageDir()
     {
-        $dir = public_path("storage/");
+        $dir = base_path("storage/app/public/");
+
         if (file_exists($dir)) {
             $it = new \RecursiveDirectoryIterator($dir, \RecursiveDirectoryIterator::SKIP_DOTS);
             $files = new \RecursiveIteratorIterator(
@@ -25,6 +25,8 @@ class DatabaseSeeder extends Seeder
             }
             rmdir($dir);
         }
+
+        mkdir($dir);
     }
 
 
@@ -38,7 +40,12 @@ class DatabaseSeeder extends Seeder
         $this->cleanStorageDir();
 
         $this->call(
-            UserSeeder::class
+            [
+                UserSeeder::class,
+                ProductSeeder::class,
+                CustomerSeeder::class,
+                SpaceSeeder::class,
+            ]
         );
     }
 }

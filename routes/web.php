@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Livewire\Dashboard\ShowComponent as DashboardComponent;
+
 use App\Http\Livewire\Space\ShowComponent as ShowSpacesComponent;
 
 use App\Http\Livewire\Customer\ShowComponent as ShowCustomersComponent;
@@ -34,9 +36,7 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified'
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', DashboardComponent::class)->name('dashboard.show');
 
     Route::get('products', ShowProductsComponent::class)->name('products.show');
 
