@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Http\Livewire\Settings;
+namespace App\Http\Livewire\Tenant\Settings;
 
-use App\Models\Setting;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Illuminate\Http\Request;
 
-class Show extends Component
+class ShowComponent extends Component
 {
     use WithFileUploads;
 
@@ -29,7 +28,7 @@ class Show extends Component
 
     public function render()
     {
-        return view('livewire.settings.show');
+        return view('livewire.tenant.settings.show-component');
     }
 
     public function addSocialNet()

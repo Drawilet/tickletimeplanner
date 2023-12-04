@@ -7,7 +7,7 @@ use App\Http\Livewire\Tenant\Spaces\ShowComponent as ShowSpacesComponent;
 use App\Http\Livewire\Tenant\Customers\ShowComponent as ShowCustomersComponent;
 use App\Http\Livewire\Tenant\Products\ShowComponent as ShowProductsComponent;
 
-use App\Http\Livewire\Settings\Show as ShowSettingsComponent;
+use App\Http\Livewire\Tenant\Settings\ShowComponent as ShowSettingsComponent;
 
 use Illuminate\Support\Facades\Route;
 
@@ -36,13 +36,12 @@ Route::get('/', function () {
 Route::middleware($middleware)->group(function () {
     Route::get('/dashboard', DashboardComponent::class)->name('dashboard.show');
 
-    Route::get("/settings", ShowSettingsComponent::class)->name("settings.show");
 });
 
 Route::prefix("tenant")->name("tenant.")->middleware($middleware)->group(function () {
+    Route::get("settings", ShowSettingsComponent::class)->name("settings.show");
+
     Route::get('products', ShowProductsComponent::class)->name('products.show');
-
     Route::get("spaces", ShowSpacesComponent::class)->name("spaces.show");
-
     Route::get('customers', ShowCustomersComponent::class)->name('customers.show');
 });
