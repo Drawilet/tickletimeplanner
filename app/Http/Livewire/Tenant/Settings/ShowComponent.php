@@ -94,5 +94,7 @@ class ShowComponent extends Component
             $user->tenant_id = $tenant->id;
             $user->save();
         }
+
+        $this->emit('toast', 'success', 'Data saved successfully');
     }
 }
