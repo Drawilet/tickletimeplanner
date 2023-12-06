@@ -17,6 +17,7 @@ class Space extends Model
         "state",
         "country",
         "schedule",
+        "color",
     ];
 
     public function photos()

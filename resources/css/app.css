@@ -22,3 +22,8 @@
         @apply bg-primary rounded;
     }
 }
+
+.swal2-popup {
+    @apply bg-base-200 !important;
+}
+

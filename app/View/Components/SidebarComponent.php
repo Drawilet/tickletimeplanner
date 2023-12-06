@@ -9,32 +9,23 @@ class SidebarComponent extends Component
     public $sidebar = [
         "Dashboard" => [
             "icon" => "home",
-            "route" => "dashboard"
+            "route" => "dashboard.show"
         ],
+
+        "More",
+
         "Customers" => [
             "icon" => "user-group",
-            "route" => "customers.show"
+            "route" => "tenant.customers.show"
         ],
         "Spaces" => [
             "icon" => "map-pin",
-            "route" => "spaces.show"
+            "route" => "tenant.spaces.show"
         ],
         "Products" => [
             "icon" => "shopping-bag",
-            "route" => "products.show"
+            "route" => "tenant.products.show"
         ],
-        "Events" => [
-            "icon" => "calendar",
-            "route" => "events.show",
-
-            "sub" => [
-                "New Event" => [
-                    "icon" => "plus",
-                    "route" => "events.new"
-                ],
-            ]
-        ]
-
     ];
 
     /**

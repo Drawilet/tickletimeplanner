@@ -3,7 +3,7 @@
     "scripts": {
         "dev": "vite",
         "build": "vite build",
-        "afterclone": "composer install && npm install && php artisan migrate"
+        "afterclone": "bash ./setup.sh"
     },
     "devDependencies": {
         "@alpinejs/focus": "^3.10.5",

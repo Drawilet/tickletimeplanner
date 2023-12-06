@@ -56,14 +56,20 @@
     @stack('scripts')
 
     @livewireScripts
-    <script>
-    
-    const savedTheme = localStorage.getItem('theme');
+    @livewireCalendarScripts
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <x-livewire-alert::scripts />
 
-    if (savedTheme) {
-      
-        document.documentElement.setAttribute('data-theme', savedTheme);
-    }
-</script>
-    </body>
+    <script>
+        const savedTheme = localStorage.getItem('theme');
+
+        if (savedTheme) {
+
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        }
+    </script>
+
+    @livewire('toaster-component')
+</body>
+
 </html>

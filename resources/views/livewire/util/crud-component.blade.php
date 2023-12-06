@@ -91,10 +91,10 @@
                 </div>
             </div>
 
-            <div class="overflow-x-auto">
+            <div class="overflow-scroll" style="max-height: calc(100vh - 200px)">
                 @if ($items->isNotEmpty())
                     <table class="table">
-                        <thead>
+                        <thead class="sticky top-0 bg-base-100">
                             <tr>
                                 <th></th>
                                 @foreach ($keys as $key)
@@ -204,9 +204,6 @@
         </div>
     </div>
 
-    <script type="module">
-        Echo.channel("global").listen('{{ $Name }}Event', (e) => {
-            window.livewire.emit('socket', e)
-        })
-    </script>
+    @component('components.util.crud-socket-scripts', ['socketListeners' => $socketListeners])
+    @endcomponent
 </div>
