@@ -88,6 +88,6 @@ class ShowComponent extends Component
 
     public function updateEvents()
     {
-        $this->emit("update-events", $this->events);
+        $this->emit("update-events", $this->events->load("space", "customer"));
     }
 }

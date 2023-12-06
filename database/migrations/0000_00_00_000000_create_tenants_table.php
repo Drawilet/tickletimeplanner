@@ -13,13 +13,18 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('settings', function (Blueprint $table) {
+        Schema::create('tenants', function (Blueprint $table) {
             $table->id();
 
             $table->string('name');
-            $table->json("schedule");
-            $table->string("opening");
-            $table->string("closing");
+            $table->string('description');
+            $table->string('phone');
+            $table->string('email');
+
+            $table->string('background_image')->nullable();
+            $table->string('profile_image')->nullable();
+
+            $table->json('social_nets');
 
             $table->timestamps();
         });
@@ -32,6 +37,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('settings');
+        Schema::dropIfExists('tenants');
     }
 };

@@ -23,6 +23,6 @@ class Instagram extends Component
      */
     public function render()
     {
-        return view('components.icons.instagram');
+        return view('components.icons.social-networks.instagram');
     }
 }

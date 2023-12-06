@@ -50,7 +50,7 @@
 
             <label class="divider divider-base-200 mt-auto"></label>
             <li>
-                <a href="{{ route('settings.show') }}">
+                <a href="{{ route('tenant.settings.show') }}">
                     <x-icons.cog-6-tooth />
                     <span>Settings</span>
                 </a>
