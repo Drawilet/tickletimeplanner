@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Tenant;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -15,8 +16,15 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        User::withoutEvents(function () {
-            User::factory()->create(["name" => "admin", "email" => "admin@example.com"]);
-        });
+
+        $tenant = Tenant::factory()->create();
+
+        User::factory()->create(
+            [
+                "name" => "admin",
+                "email" => "admin@example.com",
+                "tenant_id" => $tenant->id,
+            ]
+        );
     }
 }

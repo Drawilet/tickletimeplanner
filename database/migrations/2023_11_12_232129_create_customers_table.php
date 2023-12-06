@@ -16,10 +16,14 @@ return new class extends Migration
     {
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
+
+            $table->string('firstname');
+            $table->string('lastname');
+            $table->string('email')->unique();
+            $table->string('phone');
+            $table->text("address");
+
             $table->timestamps();
-            $table->string('photo');
-            $table->string('buisinessname');
-            $table->string('tradename');
         });
     }
 

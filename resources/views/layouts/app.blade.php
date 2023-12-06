@@ -32,10 +32,11 @@
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-
+    <script src="https://cdn.jsdelivr.net/npm/theme-change@2.0.2/index.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
         integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 
     <!-- Styles -->
     @livewireStyles
@@ -51,10 +52,24 @@
             {{ $slot }}
         </main>
     </div>
-
     @stack('modals')
+    @stack('scripts')
 
     @livewireScripts
+    @livewireCalendarScripts
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <x-livewire-alert::scripts />
+
+    <script>
+        const savedTheme = localStorage.getItem('theme');
+
+        if (savedTheme) {
+
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        }
+    </script>
+
+    @livewire('toaster-component')
 </body>
 
 </html>

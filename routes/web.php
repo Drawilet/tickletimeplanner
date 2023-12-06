@@ -1,14 +1,16 @@
 <?php
 
-use App\Http\Livewire\Event\NewComponent as EventNewComponent;
-use App\Http\Livewire\Event\ShowComponent as EventShowComponent;
+use App\Http\Livewire\Dashboard\ShowComponent as DashboardComponent;
 
-use App\Http\Livewire\Settings\Show as SettingsShowComponent;
+use App\Http\Livewire\Tenant\Spaces\ShowComponent as ShowSpacesComponent;
+
+use App\Http\Livewire\Tenant\Customers\ShowComponent as ShowCustomersComponent;
+use App\Http\Livewire\Tenant\Products\ShowComponent as ShowProductsComponent;
+
+use App\Http\Livewire\Tenant\Settings\ShowComponent as ShowSettingsComponent;
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Livewire\Clientcomponent;
-use App\Http\Livewire\Customercomponent;
-use App\Http\Livewire\CustomerModelscomponent;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -21,25 +23,25 @@ use App\Http\Livewire\CustomerModelscomponent;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');});
-
-Route::middleware([
+$middleware = [
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified'
-])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
-  
-  
-    Route::get('/customers', Customercomponent::class)->name('customers.show');
+];
 
-    Route::get("/events", EventShowComponent::class)->name("events.show");
-    Route::get("/events/new", EventNewComponent::class)->name("events.new");
+Route::get('/', function () {
+    return view('welcome');
+});
 
-    Route::get("/settings", SettingsShowComponent::class)->name("settings.show");
+Route::middleware($middleware)->group(function () {
+    Route::get('/dashboard', DashboardComponent::class)->name('dashboard.show');
 
 });
 
+Route::prefix("tenant")->name("tenant.")->middleware($middleware)->group(function () {
+    Route::get("settings", ShowSettingsComponent::class)->name("settings.show");
+
+    Route::get('products', ShowProductsComponent::class)->name('products.show');
+    Route::get("spaces", ShowSpacesComponent::class)->name("spaces.show");
+    Route::get('customers', ShowCustomersComponent::class)->name('customers.show');
+});
