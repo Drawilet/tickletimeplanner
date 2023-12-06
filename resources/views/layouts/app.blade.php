@@ -52,6 +52,9 @@
             {{ $slot }}
         </main>
     </div>
+
+    @livewire('accessibility-component')
+
     @stack('modals')
     @stack('scripts')
 
@@ -70,6 +73,8 @@
     </script>
 
     @livewire('toaster-component')
+
+
 </body>
 
 </html>
