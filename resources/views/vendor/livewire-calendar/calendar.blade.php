@@ -17,7 +17,8 @@
                 </button>
 
                 <h2 class="text-2xl ml-2" id="title">
-                    Title
+                    {{ $monthGrid[2]->first()->format("F") }}
+                    {{ $monthGrid[2]->first()->format("Y") }}
                 </h2>
             </div>
 
