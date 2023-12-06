@@ -20,6 +20,8 @@
                     Title
                 </h2>
             </div>
+
+            @includeIf($beforeCalendarView)
         </section>
     </div>
 
