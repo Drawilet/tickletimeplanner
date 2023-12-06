@@ -57,6 +57,8 @@
 
     @livewireScripts
     @livewireCalendarScripts
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <x-livewire-alert::scripts />
 
     <script>
         const savedTheme = localStorage.getItem('theme');
@@ -66,6 +68,8 @@
             document.documentElement.setAttribute('data-theme', savedTheme);
         }
     </script>
+
+    @livewire('toaster-component')
 </body>
 
 </html>

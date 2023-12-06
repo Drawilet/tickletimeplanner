@@ -58,8 +58,8 @@ class ShowComponent extends Component
     public function save()
     {
         Validator::make($this->data, [
-            'profile_image' => 'required|image|max:2048',
-            'background_image' => 'required|image|max:2048',
+            'profile_image' => isset($this->data["id"]) ? "" :  'required|image|max:2048',
+            'background_image' =>  isset($this->data["id"]) ? "" : 'required|image|max:2048',
 
             'name' => 'required',
             'description' => 'required',
@@ -94,5 +94,7 @@ class ShowComponent extends Component
             $user->tenant_id = $tenant->id;
             $user->save();
         }
+
+        $this->emit('toast', 'success', 'Data saved successfully');
     }
 }
