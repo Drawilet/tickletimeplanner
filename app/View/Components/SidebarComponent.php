@@ -7,22 +7,24 @@ use Illuminate\View\Component;
 class SidebarComponent extends Component
 {
     public $sidebar = [
-        "Dashboard" => [
+        
+        "dashboard" => [
             "icon" => "home",
             "route" => "dashboard.show"
         ],
 
         "More",
 
-        "Customers" => [
+        "customers" => [
             "icon" => "user-group",
             "route" => "tenant.customers.show"
         ],
-        "Spaces" => [
+        "spaces" => [
             "icon" => "map-pin",
             "route" => "tenant.spaces.show"
+            
         ],
-        "Products" => [
+        "products" => [
             "icon" => "shopping-bag",
             "route" => "tenant.products.show"
         ],
