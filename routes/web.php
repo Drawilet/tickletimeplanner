@@ -3,9 +3,9 @@
 use App\Http\Livewire\Dashboard\ShowComponent as DashboardComponent;
 
 use App\Http\Livewire\Tenant\Spaces\ShowComponent as ShowSpacesComponent;
-
 use App\Http\Livewire\Tenant\Customers\ShowComponent as ShowCustomersComponent;
 use App\Http\Livewire\Tenant\Products\ShowComponent as ShowProductsComponent;
+use App\Http\Livewire\Tenant\Users\ShowComponent as ShowUsersComponent;
 
 use App\Http\Livewire\Tenant\Settings\ShowComponent as ShowSettingsComponent;
 
@@ -39,7 +39,6 @@ Route::get('/', function () {
 
 Route::middleware($middleware)->group(function () {
     Route::get('/dashboard', DashboardComponent::class)->name('dashboard.show');
-
 });
 
 Route::prefix("tenant")->name("tenant.")->middleware($middleware)->group(function () {
@@ -48,4 +47,5 @@ Route::prefix("tenant")->name("tenant.")->middleware($middleware)->group(functio
     Route::get('products', ShowProductsComponent::class)->name('products.show');
     Route::get("spaces", ShowSpacesComponent::class)->name("spaces.show");
     Route::get('customers', ShowCustomersComponent::class)->name('customers.show');
+    Route::get('users', ShowUsersComponent::class)->name('users.show');
 });

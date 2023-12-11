@@ -28,6 +28,9 @@ return new class extends Migration
 
             $table->string("color");
 
+
+            $table->foreignId("tenant_id")->constrained("tenants");
+
             $table->timestamps();
         });
     }

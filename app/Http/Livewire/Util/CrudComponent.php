@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Util;
 
 use App\Http\Socket\WithCrudSockets;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -97,13 +98,15 @@ class CrudComponent extends Component
 
     public function Modal($modal, $value, $id = null)
     {
+
         if ($value == true) {
             $this->clean();
             switch ($modal) {
                 case 'save':
                     if ($id) {
                         $item = $this->Model::find($id);
-                        $this->data = $item->toArray();
+                        if (in_array("beforeOpenSaveModal", $this->events)) $this->data = $this->beforeOpenSaveModal($item);
+                        else $this->data = $item->toArray();
                     }
                     break;
                 case 'delete':
@@ -176,7 +179,10 @@ class CrudComponent extends Component
                 }
             }
         }
+
+        if (in_array("beforeSave", $this->events)) $this->data = $this->beforeSave($item, $this->data);
         $item->save();
+        if (in_array("afterSave", $this->events)) $this->afterSave($item, $this->data);
 
         event(new $this->ItemEvent($this->data["id"] ? "update" : "create", $item));
 

@@ -11,13 +11,20 @@
                     @endcomponent
                 </button>
 
-                <button type="button" title="Next month" wire:click='goToNextMonth' aria-pressed="false" class="btn ">
+                <button type="button" title="Current nonth" wire:click='goToCurrentMonth' aria-pressed="false" class="btn">
+                    @component('components.icons.calendar')
+                    @endcomponent
+                </button>
+
+                <button type="button" title="Next month" wire:click='goToNextMonth' aria-pressed="false"
+                    class="btn ">
                     @component('components.icons.chevron-right')
                     @endcomponent
                 </button>
 
                 <h2 class="text-2xl ml-2" id="title">
-                    Title
+                    {{ $monthGrid[2]->first()->format('F') }}
+                    {{ $monthGrid[2]->first()->format('Y') }}
                 </h2>
             </div>
 

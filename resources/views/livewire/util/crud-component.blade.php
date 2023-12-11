@@ -165,20 +165,22 @@
                             </td>
                             @endforeach
 
-                            <td>
-                                <button wire:click="Modal('save', true, '{{ $item->id }}')">
-                                    @component('components.icons.pencil-square')
-                                    @endcomponent
-                                </button>
-                                <button wire:click="Modal('delete', true, '{{ $item->id }}')">
-                                    @component('components.icons.trash')
-                                    @endcomponent
-                                </button>
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                                    @can($name . 's' . '.manage')
+                                        <td>
+                                            <button wire:click="Modal('save', true, '{{ $item->id }}')">
+                                                @component('components.icons.pencil-square')
+                                                @endcomponent
+                                            </button>
+                                            <button wire:click="Modal('delete', true, '{{ $item->id }}')">
+                                                @component('components.icons.trash')
+                                                @endcomponent
+                                            </button>
+                                        </td>
+                                    @endcan
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 @else
                 <div class="flex flex-col items-center justify-center mt-5">
                     <h2 class="text-2xl opacity-90">No {{ $name }}s found</h2>
