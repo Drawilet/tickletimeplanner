@@ -1,4 +1,3 @@
-
 <div class="dropdown dropdown-top dropdown-hover dropdown-left fixed bottom-0 right-0">
     <div tabindex="0" role="button" class="btn m-1 ">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
@@ -8,11 +7,12 @@
         </svg>
     </div>
     <ul tabindex="0" class="dropdown-content z-[1] menu p-0 bg-base-100 rounded-box w-52 -left-36">
-        
+
         <li>
             <label class="swap swap-rotate">
                 <!-- this hidden checkbox controls the state -->
-                <input type="checkbox" class="theme-controller" value="synthwave" data-toggle-theme="corporate,business" />
+                <input type="checkbox" class="theme-controller" value="synthwave"
+                    data-toggle-theme="corporate,business" />
 
                 <!-- sun icon -->
                 <svg class="swap-on fill-current w-10 h-10" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -30,9 +30,10 @@
         </li>
         <li>
             @foreach (config('Languages') as $lang => $Languages)
-    <a href="{{ route('lang', $lang) }}" @if ($lang == App::getLocale()) class="active" @endif>{{ $Languages }}</a>
-@endforeach
+                <a href="{{ route('lang', $lang) }}"
+                    @if ($lang == App::getLocale()) class="active" @endif>{{ $Languages }}</a>
+            @endforeach
         </li>
     </ul>
-    <script>
+
 </div>
