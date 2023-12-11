@@ -27,7 +27,7 @@
                             @component('components.icons.' . $item['icon'])
                             @endcomponent
 
-                            {{ $label }}
+                            {{ __( "sidebar.".$label) }}
                         </a>
 
                         @isset($item['sub'])
@@ -52,7 +52,7 @@
             <li>
                 <a href="{{ route('tenant.settings.show') }}">
                     <x-icons.cog-6-tooth />
-                    <span>Settings</span>
+                    <span>{{__('sidebar.Settings')}}</span>
                 </a>
             </li>
     </div>
