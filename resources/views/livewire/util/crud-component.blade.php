@@ -100,7 +100,10 @@
                                 @foreach ($keys as $key)
                                     <th class="capitalize {{ $mainKey == $key ? '' : '' }}">{{ $key }}</th>
                                 @endforeach
-                                <th></th>
+
+                                @can($name . 's' . '.manage')
+                                    <th></th>
+                                @endcan
                             </tr>
                         </thead>
                         <tbody>
@@ -176,16 +179,18 @@
                                         </td>
                                     @endforeach
 
-                                    <td>
-                                        <button wire:click="Modal('save', true, '{{ $item->id }}')">
-                                            @component('components.icons.pencil-square')
-                                            @endcomponent
-                                        </button>
-                                        <button wire:click="Modal('delete', true, '{{ $item->id }}')">
-                                            @component('components.icons.trash')
-                                            @endcomponent
-                                        </button>
-                                    </td>
+                                    @can($name . 's' . '.manage')
+                                        <td>
+                                            <button wire:click="Modal('save', true, '{{ $item->id }}')">
+                                                @component('components.icons.pencil-square')
+                                                @endcomponent
+                                            </button>
+                                            <button wire:click="Modal('delete', true, '{{ $item->id }}')">
+                                                @component('components.icons.trash')
+                                                @endcomponent
+                                            </button>
+                                        </td>
+                                    @endcan
                                 </tr>
                             @endforeach
                         </tbody>
