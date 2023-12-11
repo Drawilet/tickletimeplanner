@@ -40,6 +40,8 @@ class CrudComponent extends Component
         "search" => ""
     ], $filter;
 
+    public $events = [];
+
     public function setup($Model, $ItemEvent, array $params)
     {
         $this->Model = $Model;
