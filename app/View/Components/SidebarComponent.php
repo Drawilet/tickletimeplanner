@@ -15,16 +15,24 @@ class SidebarComponent extends Component
         "More",
 
         "Customers" => [
-            "icon" => "user-group",
+            "icon" => "brief-case",
             "route" => "tenant.customers.show"
+        ],
+        "Products" => [
+            "icon" => "shopping-bag",
+            "route" => "tenant.products.show"
         ],
         "Spaces" => [
             "icon" => "map-pin",
             "route" => "tenant.spaces.show"
         ],
-        "Products" => [
-            "icon" => "shopping-bag",
-            "route" => "tenant.products.show"
+        "Payments" => [
+            "icon" => "bank-notes",
+            "route" => "dashboard.show"
+        ],
+        "Users" => [
+            "icon" => "user-group",
+            "route" => "dashboard.show"
         ],
     ];
 

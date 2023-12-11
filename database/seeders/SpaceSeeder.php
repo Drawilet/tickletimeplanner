@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Space;
 use App\Models\SpacePhoto;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Storage;
 
@@ -17,6 +18,8 @@ class SpaceSeeder extends Seeder
      */
     public function run()
     {
+        $user = User::first();
+
         $spaces = [
             [
                 "name" => "Peter Pipper Pizza",
@@ -99,6 +102,7 @@ class SpaceSeeder extends Seeder
         ];
 
         foreach ($spaces as $space) {
+            $space["tenant_id"] = $user->tenant_id;
             $space = Space::create($space);
 
             $id = $space->id;

@@ -1,13 +1,17 @@
 <div>
     <x-dialog-modal wire:model="modals.new">
         <x-slot name="title">
-            <h3 class="text-2xl">New Event</h3>
+            <h3 class="text-2xl">
+                @isset($data['date'])
+                    {{ \Carbon\Carbon::parse($data['date'])->format('d F, Y') }}
+                @endisset
+            </h3>
         </x-slot>
 
         <x-slot name="content">
             <section>
                 <x-form-control>
-                    <x-label for="name" value="{{ __('Name') }}" />
+                    <x-label for="name" value="{{ __('Event name') }}" />
                     <x-input id="name" name="name" wire:model="data.name" />
                     <x-input-error for="data.name" class="mt-2" />
                 </x-form-control>
