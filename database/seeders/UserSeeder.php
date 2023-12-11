@@ -16,15 +16,15 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-
         $tenant = Tenant::factory()->create();
 
-        User::factory()->create(
+        $user =  User::factory()->create(
             [
                 "name" => "admin",
                 "email" => "admin@example.com",
                 "tenant_id" => $tenant->id,
             ]
         );
+        $user->assignRole("tenant.admin");
     }
 }

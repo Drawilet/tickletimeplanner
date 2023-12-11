@@ -6,11 +6,12 @@ use App\Events\EventEvent;
 use App\Events\CustomerEvent;
 use App\Events\ProductEvent;
 use App\Events\SpaceEvent;
-
+use App\Events\UserEvent;
 use App\Models\Event;
 use App\Models\Customer;
 use App\Models\Product;
 use App\Models\Space;
+use App\Models\User;
 
 trait WithCrudSockets
 {
@@ -31,6 +32,10 @@ trait WithCrudSockets
             "Event" => EventEvent::class,
             "Model" => Event::class,
         ],
+        "user"=> [
+            "Event" => UserEvent::class,
+            "Model" => User::class,
+        ]
     ];
 
 
