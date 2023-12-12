@@ -17,13 +17,13 @@
                 {{-- INFORMATION --}}
                 <section>
                     <x-form-control>
-                        <x-label for="name" value="{{ __('Event name') }}" />
+                        <x-label for="name" value="{{ __('calendar-lang.Eventname') }}" />
                         <x-input id="name" name="name" wire:model="data.name" :readonly="$readonly" />
                         <x-input-error for="data.name" class="mt-2" />
                     </x-form-control>
 
                     <x-form-control>
-                        <x-label for="space_id" value="{{ __('Space') }}" />
+                        <x-label for="space_id" value="{{ __('calendar-lang.Space') }}" />
                         <select class="select select-bordered" wire:model="data.space_id" @readonly($readonly)>
                             <option value="{{ null }}">Pick one</option>
                             @foreach ($spaces as $space)
@@ -35,7 +35,7 @@
                     </x-form-control>
 
                     <x-form-control>
-                        <x-label for="customer_id" value="{{ __('Customer') }}" />
+                        <x-label for="customer_id" value="{{ __('calendar-lang.Customer') }}" />
                         <div class="flex items-center">
                             <select class="select select-bordered w-full" wire:model="data.customer_id"
                                 @readonly($readonly)>
@@ -57,35 +57,35 @@
                     <div class="divider"></div>
 
                     <x-form-control>
-                        <x-label for="date" value="{{ __('Date') }}" />
+                        <x-label for="date" value="{{ __('calendar-lang.Date') }}" />
                         <x-input id="date" name="date" type="date" wire:model="data.date"
                             :readonly="$readonly" />
                         <x-input-error for="data.date" class="mt-2" />
                     </x-form-control>
 
                     <x-form-control>
-                        <x-label for="start_time" value="{{ __('Start time') }}" />
+                        <x-label for="start_time" value="{{ __('calendar-lang.Starttime') }}" />
                         <x-input id="start_time" name="start_time" type="time" wire:model="data.start_time"
                             :readonly="$readonly" />
                         <x-input-error for="data.start_time" class="mt-2" />
                     </x-form-control>
 
                     <x-form-control>
-                        <x-label for="end_time" value="{{ __('End time') }}" />
+                        <x-label for="end_time" value="{{ __('calendar-lang.Endtime') }}" />
                         <x-input id="end_time" name="end_time" type="time" wire:model="data.end_time"
                             :readonly="$readonly" />
                         <x-input-error for="data.end_time" class="mt-2" />
                     </x-form-control>
 
                     <x-form-control>
-                        <x-label for="price" value="{{ __('Price') }}" />
+                        <x-label for="price" value="{{ __('calendar-lang.Price') }}" />
                         <x-input id="price" name="price" type="number" wire:model="data.price"
                             :readonly="$readonly" />
                         <x-input-error for="data.price" class="mt-2" />
                     </x-form-control>
 
                     <x-form-control>
-                        <x-label for="notes" value="{{ __('Notes') }}" />
+                        <x-label for="notes" value="{{ __('calendar-lang.Notes') }}" />
                         <textarea id="notes" name="notes" class="textarea textarea-bordered" wire:model="data.notes"
                             :readonly="$readonly"></textarea>
                         <x-input-error for="data.notes" class="mt-2" />
@@ -97,9 +97,9 @@
                     <dialog id="product_modal" class="modal modal-bottom sm:modal-middle"
                         {{ $modals['addProduct'] ? 'open' : '' }}>
                         <div class="modal-box">
-                            <h3 class="font-bold text-lg">Add product</h3>
+                            <h3 class="font-bold text-lg">{{ __('calendar-lang.Addproduct') }}</h3>
 
-                            <input type="search" class="mt-2 input w-full" placeholder="Search products..."
+                            <input type="search" class="mt-2 input w-full" placeholder="{{ __('calendar-lang.Searchproducts') }}"
                                 wire:model="filters.product_name">
                             <table class="table w-full">
 
@@ -114,12 +114,12 @@
                             </table>
                             <div class="modal-action">
                                 <form method="dialog">
-                                    <button class="btn">Close</button>
+                                    <button class="btn">{{ __('calendar-lang.close') }}</button>
                                 </form>
                             </div>
 
                             <form method="dialog" class="modal-backdrop" wire:click="Modal('addProduct', false)">
-                                <button>close</button>
+                                <button>{{ __('calendar-lang.close') }}</button>
                             </form>
                         </div>
                     </dialog>
@@ -129,13 +129,13 @@
                                 <x-icons.plus />
                             </button>
                         @endif
-                        Products
+                        {{__('calendar-lang.Products')}}
                     </h2>
                     <div class="overflow-x-auto">
                         <table class="table w-full table-zebra ">
                             <thead>
                                 <tr>
-                                    <th class="w-3/4">Name</th>
+                                    <th class="w-3/4">{{__('calendar-lang.Name')  }}</th>
                                     <th></th>
                                     <th></th>
                                     <th></th>
@@ -191,7 +191,7 @@
             <span class="text-xl mr-auto block">$ {{ $this->getTotal() }}</span>
 
             <button class="btn btn-primary px-8" wire:click="saveEvent">
-                {{ __('Save') }}
+                {{ __('calendar-lang.Save') }}
             </button>
         </x-slot>
     </x-dialog-modal>
