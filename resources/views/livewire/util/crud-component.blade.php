@@ -156,7 +156,11 @@
                                 @break
 
                                 @default
-                                {{ $item[$key] }}
+                                @if ($type["type"] == 'color')
+                                    <span style="background-color: {{ $item[$key] }}; width: 20px; height: 20px; display: inline-block;"></span>
+                                @else
+                                    {{ $item[$key] }}
+                                @endif
                                 @break
                                 @endswitch
                                 @endif
