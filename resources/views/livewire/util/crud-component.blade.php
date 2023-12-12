@@ -37,8 +37,8 @@
         </x-slot>
 
         <x-slot name="footer">
-            <button wire:click="Modal('save', false)" type="button" class="btn btn-neutral w-28 mr-2">Cancel</button>
-            <button wire:click="save" class=" btn btn-accent w-28">Save</button>
+            <button wire:click="Modal('save', false)" type="button" class="btn btn-neutral w-28 mr-2">{{ __('show-lang.cancel') }}</button>
+            <button wire:click="save" class=" btn btn-accent w-28">{{ __('show-lang.save') }}</button>
         </x-slot>
     </x-dialog-modal>
 
@@ -48,11 +48,11 @@
         </x-slot>
         <x-slot name="content">
 
-            <h2>¿Are you sure you want do delete "{{ $data[$mainKey] }}" {{ $name }}?</h2>
+            <h2>{{ __('show-lang.h1') }}{{ $data[$mainKey] }}" {{ __("show-lang.".$name)}}?</h2>
         </x-slot>
         <x-slot name="footer">
-            <button wire:click="Modal('delete', false)" type="button" class="btn btn-neutral w-28">Cancel</button>
-            <button wire:click.prevent="delete()" type="button" class="btn btn-warning w-28 mr-2">Delete</button>
+            <button wire:click="Modal('delete', false)" type="button" class="btn btn-neutral w-28">{{__('show-lang.cancel')}}</button>
+            <button wire:click.prevent="delete()" type="button" class="btn btn-warning w-28 mr-2">{{__('show-lang.delete')}}</button>
 
         </x-slot>
     </x-dialog-modal>
