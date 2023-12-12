@@ -13,6 +13,7 @@ class ShowComponent extends Component
     protected $listeners = [
         "Modal" => "Modal",
         "socket" => "handleSocket",
+        "update-filters" => "updateFilters",
     ];
 
     public $modals = [
@@ -35,7 +36,7 @@ class ShowComponent extends Component
     ];
 
     public $filters, $initialFilters = [
-        "space_id" => null,
+        "spaces" => [],
         "product_name" => null,
     ];
 
@@ -50,13 +51,15 @@ class ShowComponent extends Component
         $this->addSocketListener("space", ["useItemsKey" => false, "get" => true]);
 
         $this->data = $this->initialData;
+
+        $this->initialFilters["spaces"] = $this->spaces->pluck("id")->toArray();
         $this->filters = $this->initialFilters;
     }
 
-    public function render()
+    public function getFilteredItems()
     {
         $this->filteredEvents = $this->events->filter(function ($event) {
-            if ($this->filters["space_id"] && $event->space_id != $this->filters["space_id"]) return false;
+            if (!in_array($event->space_id, $this->filters["spaces"])) return false;
             return true;
         });
 
@@ -64,7 +67,11 @@ class ShowComponent extends Component
             if ($this->filters["product_name"] && !str_contains(strtolower($product->name), strtolower($this->filters["product_name"]))) return false;
             return true;
         });
+    }
 
+    public function render()
+    {
+        $this->getFilteredItems();
         return view('livewire.dashboard.show-component');
     }
 
@@ -99,10 +106,10 @@ class ShowComponent extends Component
 
         $event =  Event::create($this->data);
 
-        foreach ($this->data["products"] as $product_id => $quantity) {
+        foreach ($this->data["products"] as  $product) {
             $event->products()->create([
-                "product_id" => $product_id,
-                "quantity" => $quantity,
+                "product_id" => $product["product_id"],
+                "quantity" => $product["quantity"],
             ]);
         }
 
@@ -112,7 +119,14 @@ class ShowComponent extends Component
 
     public function updateEvents()
     {
-        $this->emit("update-events", $this->events->load("space", "customer"));
+        $this->getFilteredItems();
+        $this->emit("update-events", $this->filteredEvents->load("space", "customer"));
+    }
+
+    public function updateFilters($filters)
+    {
+        $this->filters = array_merge($this->filters, $filters);
+        $this->updateEvents();
     }
 
     public function productAction($product_id, $action, $quantity = 1)

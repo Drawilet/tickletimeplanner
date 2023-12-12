@@ -26,10 +26,13 @@ class CalendarComponent extends LivewireCalendar
             return [
                 'id' => $event["id"],
                 'title' => $event["name"],
-                'description' => $event["space"]["name"] . "\n" . substr($event["start_time"], 0, -3) . ' - ' . substr($event["end_time"], 0, -3),
+                "location" => $event["space"]["name"],
+                'description' => substr($event["start_time"], 0, -3) . ' - ' . substr($event["end_time"], 0, -3),
                 'date' => $event["date"],
+                'color' => $event["space"]["color"],
+                "start_time" => $event["start_time"],
             ];
-        }));
+        })->sortBy('start_time')->values()->toArray());
     }
 
     public function onDayClick($year, $month, $day)
@@ -37,7 +40,7 @@ class CalendarComponent extends LivewireCalendar
         $month = str_pad($month, 2, '0', STR_PAD_LEFT);
         $day = str_pad($day, 2, '0', STR_PAD_LEFT);
 
-       /*  $selectedDate = Carbon::create($year, $month, $day);
+        /*  $selectedDate = Carbon::create($year, $month, $day);
         if ($selectedDate->isPast())
             return; */
 

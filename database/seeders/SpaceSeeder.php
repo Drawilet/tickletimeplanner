@@ -58,7 +58,7 @@ class SpaceSeeder extends Seeder
                         "closing" => "17:00"
                     ]
                 ],
-                "color" => "#ff0000",
+                "color" => "#f2ff3d",
             ],
             [
                 "name" => "Versalles Palace",
@@ -97,7 +97,7 @@ class SpaceSeeder extends Seeder
                         "closing" => "17:00"
                     ]
                 ],
-                "color" => "#00ff00",
+                "color" => "#70fdff",
             ]
         ];
 

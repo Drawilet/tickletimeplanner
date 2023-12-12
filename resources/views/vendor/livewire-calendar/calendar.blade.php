@@ -11,7 +11,8 @@
                     @endcomponent
                 </button>
 
-                <button type="button" title="Current nonth" wire:click='goToCurrentMonth' aria-pressed="false" class="btn">
+                <button type="button" title="Current nonth" wire:click='goToCurrentMonth' aria-pressed="false"
+                    class="btn">
                     @component('components.icons.calendar')
                     @endcomponent
                 </button>
@@ -28,7 +29,7 @@
                 </h2>
             </div>
 
-            @includeIf($beforeCalendarView)
+            @livewire($beforeCalendarView)
         </section>
     </div>
 
