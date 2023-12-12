@@ -99,10 +99,10 @@ class ShowComponent extends Component
 
         $event =  Event::create($this->data);
 
-        foreach ($this->data["products"] as $product_id => $quantity) {
+        foreach ($this->data["products"] as  $product) {
             $event->products()->create([
-                "product_id" => $product_id,
-                "quantity" => $quantity,
+                "product_id" => $product["product_id"],
+                "quantity" => $product["quantity"],
             ]);
         }
 
