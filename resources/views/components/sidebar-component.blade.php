@@ -20,7 +20,7 @@
             {{-- MENU --}}
             @foreach ($sidebar as $label => $item)
                 @if (gettype($item) == 'string')
-                    <label class="divider divider-accent">{{ $item }}</label>
+                    <label class="divider divider-accent">{{ __('sidebar.'.$item) }}</label>
                 @else
                     <li class="{{ isset($item['sub']) ? 'dropdown dropdown-hover dropdown-right' : '' }}">
                         <a href="{{ route($item['route']) }}">

@@ -16,13 +16,13 @@
             @csrf
 
             <x-form-control>
-                <x-label for="email" value="{{ __('Email') }}" />
+                <x-label for="email" value="{{ __('login-register.Email') }}" />
                 <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required
                     autofocus autocomplete="username" />
             </x-form-control>
 
             <x-form-control class="mt-4">
-                <x-label for="password" value="{{ __('Password') }}" />
+                <x-label for="password" value="{{ __('login-register.Password') }}" />
                 <x-input id="password" class="block mt-1 w-full" type="password" name="password" required
                     autocomplete="current-password" />
             </x-form-control>
@@ -30,19 +30,19 @@
             <div class="block mt-4">
                 <label for="remember_me" class="flex items-center">
                     <x-checkbox id="remember_me" name="remember" />
-                    <span class="ml-2 text-sm ">{{ __('Remember me') }}</span>
+                    <span class="ml-2 text-sm ">{{ __('login-register.Remember me') }}</span>
                 </label>
             </div>
 
             <div class="flex items-center justify-end mt-4">
                 @if (Route::has('password.request'))
                     <a class="underline text-sm  " href="{{ route('password.request') }}">
-                        {{ __('Forgot your password?') }}
+                        {{ __('login-register.Forgot your password?') }}
                     </a>
                 @endif
 
                 <x-button class="ml-4">
-                    {{ __('Log in') }}
+                    {{ __('login-register.Login') }}
                 </x-button>
             </div>
         </form>

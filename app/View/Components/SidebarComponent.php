@@ -12,7 +12,7 @@ class SidebarComponent extends Component
             "route" => "dashboard.show"
         ],
 
-        "More",
+        "more",
 
         "customers" => [
             "icon" => "brief-case",
