@@ -16,7 +16,8 @@ class ShowComponent extends Component
     ];
 
     public $modals = [
-        "new" => false,
+        "save" => false,
+        "addProduct" => false,
     ];
     public $data, $initialData = [
         "customer_id" => null,
@@ -29,14 +30,17 @@ class ShowComponent extends Component
 
         "price" => null,
         "notes" => null,
+
+        "products" => [],
     ];
 
     public $filters, $initialFilters = [
         "space_id" => null,
+        "product_name" => null,
     ];
 
 
-    public $events, $filteredEvents, $products, $customers, $spaces;
+    public $events, $filteredEvents, $products, $filteredProducts, $customers, $spaces;
 
     public function mount()
     {
@@ -55,21 +59,34 @@ class ShowComponent extends Component
             if ($this->filters["space_id"] && $event->space_id != $this->filters["space_id"]) return false;
             return true;
         });
+
+        $this->filteredProducts = $this->products->filter(function ($product) {
+            if ($this->filters["product_name"] && !str_contains(strtolower($product->name), strtolower($this->filters["product_name"]))) return false;
+            return true;
+        });
+
         return view('livewire.dashboard.show-component');
     }
 
     public function Modal($name, $value, $data = null)
     {
-        if ($value === true) $this->data = $this->initialData;
-        if ($data) $this->data = array_merge($this->data, $data);
+        switch ($name) {
+            case 'save':
+                if ($value === true) $this->data = $this->initialData;
+                if ($data) {
+                    if (isset($data["id"])) $this->data = array_merge($this->data, $this->events->find($data["id"])->load("products")->toArray());
+                    else $this->data = array_merge($this->data, $data);
+                }
+                break;
+        }
 
         $this->modals[$name] = $value;
     }
 
-    public function newEvent()
+    public function saveEvent()
     {
         $this->validate([
-            "data.name" => "required|string|max:20",
+            "data.name" => "required",
             "data.space_id" => "required",
             "data.customer_id" => "required",
 
@@ -82,12 +99,60 @@ class ShowComponent extends Component
 
         $event =  Event::create($this->data);
 
+        foreach ($this->data["products"] as $product_id => $quantity) {
+            $event->products()->create([
+                "product_id" => $product_id,
+                "quantity" => $quantity,
+            ]);
+        }
+
         event(new EventEvent("create", $event));
-        $this->Modal("new", false);
+        $this->Modal("save", false);
     }
 
     public function updateEvents()
     {
         $this->emit("update-events", $this->events->load("space", "customer"));
+    }
+
+    public function productAction($product_id, $action, $quantity = 1)
+    {
+        switch ($action) {
+            case 'add':
+                if (isset($this->data["products"][$product_id])) {
+                    $this->data["products"][$product_id]["quantity"] += $quantity;
+                } else {
+                    $this->data["products"][$product_id] = [
+                        "quantity" => $quantity,
+                        "product_id" => $product_id,
+                    ];
+                }
+                break;
+
+            case 'decrease':
+                if (isset($this->data["products"][$product_id])) {
+                    if ($this->data["products"][$product_id]["quantity"] > 1) {
+                        $this->data["products"][$product_id]["quantity"] -= $quantity;
+                    } else {
+                        unset($this->data["products"][$product_id]);
+                    }
+                }
+                break;
+
+            case 'remove':
+                unset($this->data["products"][$product_id]);
+                break;
+        }
+
+        $this->Modal("addProduct", false);
+    }
+
+    public function getTotal()
+    {
+        $total = $this->data["price"] ?? 0;
+        foreach ($this->data["products"] as $data) {
+            $total += $this->products->find($data["product_id"])->price * $data["quantity"];
+        }
+        return $total;
     }
 }

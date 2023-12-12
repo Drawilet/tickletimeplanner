@@ -41,8 +41,15 @@ class CalendarComponent extends LivewireCalendar
         if ($selectedDate->isPast())
             return; */
 
-        $this->emit('Modal', 'new', true, [
+        $this->emit('Modal', 'save', true, [
             'date' => $year . '-' . $month . '-' . $day,
+        ]);
+    }
+
+    public function onEventClick($eventId)
+    {
+        $this->emit('Modal', 'save', true, [
+            'id' => $eventId,
         ]);
     }
 }
