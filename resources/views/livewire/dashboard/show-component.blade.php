@@ -199,6 +199,7 @@
     @livewire('dashboard.calendar-component', [
         'events' => $filteredEvents,
         'dragAndDropEnabled' => false,
+        "beforeCalendarView" => "dashboard.filter-component",
     ])
 
     @component('components.util.crud-socket-scripts', ['socketListeners' => $socketListeners])
