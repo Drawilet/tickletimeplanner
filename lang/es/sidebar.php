@@ -1,12 +1,8 @@
 <?php
-return[
-'dashboard'=>'Panel',
-'customers'=>'Clientes',
-'spaces'=>'Espacios',
-'products'=>'Productos',
-'Settings'=>'Configuración',
-'payments'=>'Pago',
-'users'=>'Usuarios',
-'more'=>'Más',
-
-];
+    'dashboard' => 'Panel',
+    'customers' => 'Clientes',
+    'spaces' => 'Espacios',
+    'products' => 'Productos',
+    "payments" => "Pagos",
+    "users" => "Usuarios",
+    'Settings' => 'Configuración',

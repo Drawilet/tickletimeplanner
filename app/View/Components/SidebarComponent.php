@@ -33,7 +33,7 @@ class SidebarComponent extends Component
         ],
         "users" => [
             "icon" => "user-group",
-            "route" => "dashboard.show"
+            "route" => "tenant.users.show"
         ],
     ];
 

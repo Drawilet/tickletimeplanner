@@ -18,4 +18,9 @@ class Event extends Base
     {
         return $this->belongsTo(Space::class);
     }
+
+    public function products()
+    {
+        return $this->hasMany(EventProduct::class);
+    }
 }
