@@ -1,4 +1,5 @@
 <?php
+return [
     'dashboard' => 'Panel',
     'customers' => 'Clientes',
     'spaces' => 'Espacios',
@@ -6,3 +7,4 @@
     "payments" => "Pagos",
     "users" => "Usuarios",
     'Settings' => 'Configuración',
+];
