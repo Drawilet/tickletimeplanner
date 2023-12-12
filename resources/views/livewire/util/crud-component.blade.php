@@ -1,13 +1,13 @@
 <div class="overflow-x-auto">
     <x-dialog-modal wire:model="modals.save">
         <x-slot name="title">
-            {{ gettype($data['id']) == 'string' ? 'Create' : 'Update' }} {{ $name }}
+            {{ gettype($data['id']) == 'string' ? 'Create' : 'Update' }} {{ __("show-lang.".$name) }}
         </x-slot>
 
         <x-slot name="content">
             @foreach ($types as $key => $type)
             <x-form-control class="mt-2">
-                <x-label for="" value="{{ __(ucFirst($key)) }}" />
+                <x-label for="" value="{{ __($name.'-lang.'.$key) }}" />
 
                 @if (isset($type['component']))
                 @livewire($type['component'])
@@ -75,7 +75,7 @@
         <div class="bg-base-100 overflow-hidden shadow-xl sm:rounded-lg px-4 py-4">
             <div class="mockup-browser border border-base-300">
                 <div class="mockup-browser-toolbar flex items-center">
-                    <input class="input py-5" wire:model="filter.search" type="text" placeholder="Search {{ $name }}s">
+                    <input class="input py-5" wire:model="filter.search" type="text" placeholder="{{__("show-lang.search")}} {{ __("show-lang.".$name) }}">
                     <button wire:click="Modal('save', true)" class=" btn btn-ghost bg-base-100 hover:bg-base-300 hover:text-blue-50 py-2 px-4 ml-2">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />

@@ -5,4 +5,7 @@ return[
 'spaces'=>'Spaces',
 'products'=>'Products',
 'Settings'=>'Settings',
+'payments'=>'Payments',
+'users'=>'Users',
+'more'=>'More',
 ];
