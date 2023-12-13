@@ -5,6 +5,8 @@ namespace App\Http\Livewire\Dashboard;
 use App\Events\EventEvent;
 use App\Http\Socket\WithCrudSockets;
 use App\Models\Event;
+use App\Models\Payment;
+use Illuminate\Support\Facades\Validator;
 use Livewire\Component;
 
 class ShowComponent extends Component
@@ -16,9 +18,10 @@ class ShowComponent extends Component
     ];
 
     public $modals = [
-        "new" => false,
+        "save" => false,
+        "addProduct" => false,
     ];
-    public $data, $initialData = [
+    public $event, $initialEvent = [
         "customer_id" => null,
         "name" => null,
         "space_id" => null,
@@ -29,14 +32,22 @@ class ShowComponent extends Component
 
         "price" => null,
         "notes" => null,
+
+        "products" => [],
     ];
 
     public $filters, $initialFilters = [
-        "space_id" => null,
+        "product_name" => null,
     ];
 
+    public $payment, $initialPayment = [
+        "user_id" => null,
+        "event_id" => null,
+        "amount" => null,
+        "concept" => null,
+    ];
 
-    public $events, $filteredEvents, $products, $customers, $spaces;
+    public $events, $products, $filteredProducts, $customers, $spaces;
 
     public function mount()
     {
@@ -45,14 +56,15 @@ class ShowComponent extends Component
         $this->addSocketListener("customer", ["useItemsKey" => false, "get" => true]);
         $this->addSocketListener("space", ["useItemsKey" => false, "get" => true]);
 
-        $this->data = $this->initialData;
+        $this->event = $this->initialEvent;
+        $this->payment = $this->initialPayment;
         $this->filters = $this->initialFilters;
     }
 
     public function render()
     {
-        $this->filteredEvents = $this->events->filter(function ($event) {
-            if ($this->filters["space_id"] && $event->space_id != $this->filters["space_id"]) return false;
+        $this->filteredProducts = $this->products->filter(function ($product) {
+            if ($this->filters["product_name"] && !str_contains(strtolower($product->name), strtolower($this->filters["product_name"]))) return false;
             return true;
         });
         return view('livewire.dashboard.show-component');
@@ -60,34 +72,120 @@ class ShowComponent extends Component
 
     public function Modal($name, $value, $data = null)
     {
-        if ($value === true) $this->data = $this->initialData;
-        if ($data) $this->data = array_merge($this->data, $data);
+        switch ($name) {
+            case 'save':
+                if ($value === true) $this->event = $this->initialEvent;
+                if ($data) {
+                    if (isset($data["id"]))
+                        $this->event = array_merge(
+                            $this->event,
+                            $this->events->find($data["id"])->load("products", "payments")->toArray()
+                        );
+                    else $this->event = array_merge($this->event, $data);
+                }
+                break;
+        }
 
         $this->modals[$name] = $value;
     }
 
-    public function newEvent()
+    public function saveEvent()
     {
-        $this->validate([
-            "data.name" => "required|string|max:20",
-            "data.space_id" => "required",
-            "data.customer_id" => "required",
+        Validator::make($this->event, [
+            "name" => "required",
+            "space_id" => "required",
+            "customer_id" => "required",
 
-            "data.date" => "required",
-            "data.start_time" => "required",
-            "data.end_time" => "required",
+            "date" => "required",
+            "start_time" => "required",
+            "end_time" => "required",
 
-            "data.price" => "required",
-        ]);
+            "price" => "required",
+        ])->validate();
 
-        $event =  Event::create($this->data);
+        $event =  Event::create($this->event);
+
+        foreach ($this->event["products"] as  $product) {
+            $event->products()->create([
+                "product_id" => $product["product_id"],
+                "quantity" => $product["quantity"],
+            ]);
+        }
 
         event(new EventEvent("create", $event));
-        $this->Modal("new", false);
+        $this->Modal("save", false);
     }
 
     public function updateEvents()
     {
         $this->emit("update-events", $this->events->load("space", "customer"));
+    }
+
+    public function productAction($product_id, $action, $quantity = 1)
+    {
+        switch ($action) {
+            case 'add':
+                if (isset($this->event["products"][$product_id])) {
+                    $this->event["products"][$product_id]["quantity"] += $quantity;
+                } else {
+                    $this->event["products"][$product_id] = [
+                        "quantity" => $quantity,
+                        "product_id" => $product_id,
+                    ];
+                }
+                break;
+
+            case 'decrease':
+                if (isset($this->event["products"][$product_id])) {
+                    if ($this->event["products"][$product_id]["quantity"] > 1) {
+                        $this->event["products"][$product_id]["quantity"] -= $quantity;
+                    } else {
+                        unset($this->event["products"][$product_id]);
+                    }
+                }
+                break;
+
+            case 'remove':
+                unset($this->event["products"][$product_id]);
+                break;
+        }
+
+        $this->Modal("addProduct", false);
+    }
+
+    public function getTotal()
+    {
+        $total = $this->event["price"] ?? 0;
+        foreach ($this->event["products"] as $data) {
+            $total += $this->products->find($data["product_id"])->price * $data["quantity"];
+        }
+        return $total;
+    }
+
+    public function getRemaining()
+    {
+        $remaining = $this->getTotal();
+        foreach ($this->event["payments"] as $payment) {
+            $remaining -= $payment["amount"];
+        }
+        return $remaining;
+    }
+
+    public function addPayment()
+    {
+        Validator::make($this->payment, [
+            "amount" => "required",
+            "concept" => "required",
+        ])->validate();
+
+        $this->payment["amount"] = (float) $this->payment["amount"];
+        $this->payment["event_id"] = $this->event["id"];
+        $this->payment["user_id"] = auth()->user()->id;
+
+        Payment::create($this->payment);
+        $this->event["payments"][] = $this->payment;
+        $this->payment = $this->initialPayment;
+
+        $this->emit("toast", "success", "Payment added successfully");
     }
 }

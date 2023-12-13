@@ -23,6 +23,8 @@ return new class extends Migration
             $table->string('phone');
             $table->text("address");
 
+            $table->foreignId("tenant_id")->constrained("tenants");
+
             $table->timestamps();
         });
     }

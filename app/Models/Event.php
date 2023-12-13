@@ -3,9 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 
-class Event extends Model
+class Event extends Base
 {
     use HasFactory;
     protected $fillable = ["name", "space_id", "customer_id", "date", "start_time", "end_time", "price", "notes"];
@@ -18,5 +17,15 @@ class Event extends Model
     public function space()
     {
         return $this->belongsTo(Space::class);
+    }
+
+    public function products()
+    {
+        return $this->hasMany(EventProduct::class);
+    }
+
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
     }
 }

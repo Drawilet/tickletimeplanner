@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Util;
 
 use App\Http\Socket\WithCrudSockets;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -38,6 +39,8 @@ class CrudComponent extends Component
     public $initialFilter = [
         "search" => ""
     ], $filter;
+
+    public $events = [];
 
     public function setup($Model, $ItemEvent, array $params)
     {
@@ -97,13 +100,15 @@ class CrudComponent extends Component
 
     public function Modal($modal, $value, $id = null)
     {
+
         if ($value == true) {
             $this->clean();
             switch ($modal) {
                 case 'save':
                     if ($id) {
                         $item = $this->Model::find($id);
-                        $this->data = $item->toArray();
+                        if (in_array("beforeOpenSaveModal", $this->events)) $this->data = $this->beforeOpenSaveModal($item);
+                        else $this->data = $item->toArray();
                     }
                     break;
                 case 'delete':
@@ -124,6 +129,7 @@ class CrudComponent extends Component
 
     public function save()
     {
+        if (in_array("beforeSave", $this->events)) $this->data = $this->beforeSave($this->data);
         $item = $this->Model::updateOrCreate(["id" => $this->data["id"]], $this->data);
 
         $name = $this->name;
@@ -176,12 +182,14 @@ class CrudComponent extends Component
                 }
             }
         }
+
         $item->save();
+        if (in_array("afterSave", $this->events)) $this->afterSave($item, $this->data);
 
         event(new $this->ItemEvent($this->data["id"] ? "update" : "create", $item));
 
         $this->Modal("save", false);
-        $this->emit("toast", "success", "$this->Name saved successfully");
+        $this->emit("toast", "success", $this->Name. " " .__("toast-lang.savedsuccessfully"));
     }
     public function delete()
     {
@@ -191,7 +199,7 @@ class CrudComponent extends Component
         $item->delete();
 
         event(new $this->ItemEvent("delete", $this->data));
-        $this->emit("toast", "success", "$this->Name deleted successfully");
+        $this->emit("toast", "success", $this->Name . " " . __("toast-lang.deletedsuccessfully"));
     }
 
     public function parseValue($value)

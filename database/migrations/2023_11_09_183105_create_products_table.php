@@ -22,6 +22,8 @@ return new class extends Migration
             $table->decimal("cost");
             $table->decimal("price");
 
+            $table->foreignId("tenant_id")->constrained("tenants");
+
             $table->timestamps();
         });
     }

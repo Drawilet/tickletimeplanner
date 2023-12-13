@@ -20,14 +20,14 @@
             {{-- MENU --}}
             @foreach ($sidebar as $label => $item)
                 @if (gettype($item) == 'string')
-                    <label class="divider divider-accent">{{ $item }}</label>
+                    <label class="divider divider-accent">{{ __('sidebar.'.$item) }}</label>
                 @else
                     <li class="{{ isset($item['sub']) ? 'dropdown dropdown-hover dropdown-right' : '' }}">
                         <a href="{{ route($item['route']) }}">
                             @component('components.icons.' . $item['icon'])
                             @endcomponent
 
-                            {{ $label }}
+                            {{ __( "sidebar.".$label) }}
                         </a>
 
                         @isset($item['sub'])
@@ -52,7 +52,7 @@
             <li>
                 <a href="{{ route('tenant.settings.show') }}">
                     <x-icons.cog-6-tooth />
-                    <span>Settings</span>
+                    <span>{{__('sidebar.Settings')}}</span>
                 </a>
             </li>
     </div>

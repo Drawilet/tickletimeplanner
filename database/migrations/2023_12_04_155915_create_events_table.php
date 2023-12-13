@@ -28,6 +28,8 @@ return new class extends Migration
 
             $table->text('notes')->nullable();
 
+            $table->foreignId("tenant_id")->constrained("tenants");
+
             $table->timestamps();
         });
     }
