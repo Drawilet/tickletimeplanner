@@ -18,13 +18,14 @@
                 <section>
                     <x-form-control>
                         <x-label for="name" value="{{ __('calendar-lang.Eventname') }}" />
-                        <x-input id="name" name="name" wire:model="eventData.name" :readonly="$readonly" />
+                        <x-input id="name" name="name" wire:model="eventData.name" :disabled="$readonly" />
                         <x-input-error for="eventData.name" class="mt-2" />
                     </x-form-control>
 
                     <x-form-control>
                         <x-label for="space_id" value="{{ __('calendar-lang.Space') }}" />
-                        <select class="select select-bordered" wire:model="eventData.space_id" @readonly($readonly)>
+                        <select class="select select-bordered" wire:model="eventData.space_id"
+                            @disabled($readonly)>
                             <option value="{{ null }}">Pick one</option>
                             @foreach ($spaces as $space)
                                 <option value="{{ $space->id }}">{{ $space->name }}
@@ -38,7 +39,7 @@
                         <x-label for="customer_id" value="{{ __('calendar-lang.Customer') }}" />
                         <div class="flex items-center">
                             <select class="select select-bordered w-full" wire:model="eventData.customer_id"
-                                @readonly($readonly)>
+                                @disabled($readonly)>
                                 <option value="{{ null }}">Pick one</option>
                                 @foreach ($customers as $customer)
                                     <option value="{{ $customer->id }}">{{ $customer->firstname }}
@@ -59,35 +60,35 @@
                     <x-form-control>
                         <x-label for="date" value="{{ __('calendar-lang.Date') }}" />
                         <x-input id="date" name="date" type="date" wire:model="eventData.date"
-                            :readonly="$readonly" />
+                            :disabled="$readonly" />
                         <x-input-error for="eventData.date" class="mt-2" />
                     </x-form-control>
 
                     <x-form-control>
                         <x-label for="start_time" value="{{ __('calendar-lang.Starttime') }}" />
                         <x-input id="start_time" name="start_time" type="time" wire:model="eventData.start_time"
-                            :readonly="$readonly" />
+                            :disabled="$readonly" />
                         <x-input-error for="eventData.start_time" class="mt-2" />
                     </x-form-control>
 
                     <x-form-control>
                         <x-label for="end_time" value="{{ __('calendar-lang.Endtime') }}" />
                         <x-input id="end_time" name="end_time" type="time" wire:model="eventData.end_time"
-                            :readonly="$readonly" />
+                            :disabled="$readonly" />
                         <x-input-error for="eventData.end_time" class="mt-2" />
                     </x-form-control>
 
                     <x-form-control>
                         <x-label for="price" value="{{ __('calendar-lang.Price') }}" />
                         <x-input id="price" name="price" type="number" wire:model="eventData.price"
-                            :readonly="$readonly" />
+                            :disabled="$readonly" />
                         <x-input-error for="eventData.price" class="mt-2" />
                     </x-form-control>
 
                     <x-form-control>
                         <x-label for="notes" value="{{ __('calendar-lang.Notes') }}" />
                         <textarea id="notes" name="notes" class="textarea textarea-bordered" wire:model="eventData.notes"
-                            :readonly="$readonly"></textarea>
+                            @disabled($readonly)></textarea>
                         <x-input-error for="eventData.notes" class="mt-2" />
                     </x-form-control>
                 </section>
