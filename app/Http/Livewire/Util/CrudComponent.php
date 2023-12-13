@@ -189,7 +189,7 @@ class CrudComponent extends Component
         event(new $this->ItemEvent($this->data["id"] ? "update" : "create", $item));
 
         $this->Modal("save", false);
-        $this->emit("toast", "success", "$this->Name saved successfully");
+        $this->emit("toast", "success", $this->Name. " " .__("toast-lang.savedsuccessfully"));
     }
     public function delete()
     {
@@ -199,7 +199,7 @@ class CrudComponent extends Component
         $item->delete();
 
         event(new $this->ItemEvent("delete", $this->data));
-        $this->emit("toast", "success", "$this->Name deleted successfully");
+        $this->emit("toast", "success", $this->Name . " " . __("toast-lang.deletedsuccessfully"));
     }
 
     public function parseValue($value)
