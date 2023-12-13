@@ -2,15 +2,15 @@
     <x-dialog-modal wire:model="modals.save">
         <x-slot name="title">
             <h3 class="text-2xl">
-                @isset($data['date'])
-                    {{ \Carbon\Carbon::parse($data['date'])->format('d F, Y') }}
+                @isset($eventData['date'])
+                    {{ \Carbon\Carbon::parse($eventData['date'])->format('d F, Y') }}
                 @endisset
             </h3>
         </x-slot>
 
         <x-slot name="content">
             @php
-                $readonly = isset($data['id']);
+                $readonly = isset($eventData['id']);
             @endphp
 
             <div>
@@ -18,26 +18,26 @@
                 <section>
                     <x-form-control>
                         <x-label for="name" value="{{ __('calendar-lang.Eventname') }}" />
-                        <x-input id="name" name="name" wire:model="data.name" :readonly="$readonly" />
-                        <x-input-error for="data.name" class="mt-2" />
+                        <x-input id="name" name="name" wire:model="eventData.name" :readonly="$readonly" />
+                        <x-input-error for="eventData.name" class="mt-2" />
                     </x-form-control>
 
                     <x-form-control>
                         <x-label for="space_id" value="{{ __('calendar-lang.Space') }}" />
-                        <select class="select select-bordered" wire:model="data.space_id" @readonly($readonly)>
+                        <select class="select select-bordered" wire:model="eventData.space_id" @readonly($readonly)>
                             <option value="{{ null }}">Pick one</option>
                             @foreach ($spaces as $space)
                                 <option value="{{ $space->id }}">{{ $space->name }}
                                 </option>
                             @endforeach
                         </select>
-                        <x-input-error for="data.space_id" class="mt-2" />
+                        <x-input-error for="eventData.space_id" class="mt-2" />
                     </x-form-control>
 
                     <x-form-control>
                         <x-label for="customer_id" value="{{ __('calendar-lang.Customer') }}" />
                         <div class="flex items-center">
-                            <select class="select select-bordered w-full" wire:model="data.customer_id"
+                            <select class="select select-bordered w-full" wire:model="eventData.customer_id"
                                 @readonly($readonly)>
                                 <option value="{{ null }}">Pick one</option>
                                 @foreach ($customers as $customer)
@@ -51,44 +51,44 @@
                                 <x-icons.plus />
                             </button>
                         </div>
-                        <x-input-error for="data.customer_id" class="mt-2" />
+                        <x-input-error for="eventData.customer_id" class="mt-2" />
                     </x-form-control>
 
                     <div class="divider"></div>
 
                     <x-form-control>
                         <x-label for="date" value="{{ __('calendar-lang.Date') }}" />
-                        <x-input id="date" name="date" type="date" wire:model="data.date"
+                        <x-input id="date" name="date" type="date" wire:model="eventData.date"
                             :readonly="$readonly" />
-                        <x-input-error for="data.date" class="mt-2" />
+                        <x-input-error for="eventData.date" class="mt-2" />
                     </x-form-control>
 
                     <x-form-control>
                         <x-label for="start_time" value="{{ __('calendar-lang.Starttime') }}" />
-                        <x-input id="start_time" name="start_time" type="time" wire:model="data.start_time"
+                        <x-input id="start_time" name="start_time" type="time" wire:model="eventData.start_time"
                             :readonly="$readonly" />
-                        <x-input-error for="data.start_time" class="mt-2" />
+                        <x-input-error for="eventData.start_time" class="mt-2" />
                     </x-form-control>
 
                     <x-form-control>
                         <x-label for="end_time" value="{{ __('calendar-lang.Endtime') }}" />
-                        <x-input id="end_time" name="end_time" type="time" wire:model="data.end_time"
+                        <x-input id="end_time" name="end_time" type="time" wire:model="eventData.end_time"
                             :readonly="$readonly" />
-                        <x-input-error for="data.end_time" class="mt-2" />
+                        <x-input-error for="eventData.end_time" class="mt-2" />
                     </x-form-control>
 
                     <x-form-control>
                         <x-label for="price" value="{{ __('calendar-lang.Price') }}" />
-                        <x-input id="price" name="price" type="number" wire:model="data.price"
+                        <x-input id="price" name="price" type="number" wire:model="eventData.price"
                             :readonly="$readonly" />
-                        <x-input-error for="data.price" class="mt-2" />
+                        <x-input-error for="eventData.price" class="mt-2" />
                     </x-form-control>
 
                     <x-form-control>
                         <x-label for="notes" value="{{ __('calendar-lang.Notes') }}" />
-                        <textarea id="notes" name="notes" class="textarea textarea-bordered" wire:model="data.notes"
+                        <textarea id="notes" name="notes" class="textarea textarea-bordered" wire:model="eventData.notes"
                             :readonly="$readonly"></textarea>
-                        <x-input-error for="data.notes" class="mt-2" />
+                        <x-input-error for="eventData.notes" class="mt-2" />
                     </x-form-control>
                 </section>
 
@@ -148,10 +148,10 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($data['products'] as $data)
+                                @foreach ($eventData['products'] as $eventData)
                                     @php
-                                        $product = $products->find($data['product_id']);
-                                        $price = $product->price * $data['quantity'];
+                                        $product = $products->find($eventData['product_id']);
+                                        $price = $product->price * $eventData['quantity'];
                                         $id = $product->id;
                                     @endphp
                                     <tr>
@@ -161,7 +161,7 @@
                                                 <button class="btn"
                                                     wire:click="productAction('{{ $id }}', 'decrease')">-</button>
                                             @endif
-                                            <span class="btn">{{ $data['quantity'] }}</span>
+                                            <span class="btn">{{ $eventData['quantity'] }}</span>
                                             @if (!$readonly)
                                                 <button class="btn"
                                                     wire:click="productAction('{{ $id }}', 'add')">+</button>
