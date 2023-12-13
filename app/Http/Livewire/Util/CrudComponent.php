@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Util;
 use App\Http\Socket\WithCrudSockets;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -21,7 +22,7 @@ class CrudComponent extends Component
     public $initialData, $data, $initialFiles, $files;
     public $types;
 
-    protected $rules = [];
+    public $crudRules = [];
     public $defaultValues = [
         "text" => "",
         "textarea" => "",
@@ -52,6 +53,8 @@ class CrudComponent extends Component
         $this->initialData = ["id"  => ""];
         $this->initialFiles = [];
         foreach ($params["types"] as $key => $type) {
+            $this->crudRules[$key] = $type["rules"] ?? "required";
+
             if (isset($type["hidden"]) && $type["hidden"] == true) continue;
             $this->keys[] = $key;
             if ($type["type"] == "file") $this->initialFiles[$key] = [];
@@ -129,6 +132,8 @@ class CrudComponent extends Component
 
     public function save()
     {
+        Validator::make($this->data, $this->crudRules)->validate();
+
         if (in_array("beforeSave", $this->events)) $this->data = $this->beforeSave($this->data);
         $item = $this->Model::updateOrCreate(["id" => $this->data["id"]], $this->data);
 

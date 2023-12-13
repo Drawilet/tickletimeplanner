@@ -45,6 +45,7 @@
                     @endswitch
                 @endif
 
+                <x-input-error for="{{ $key }}" class="mt-2" />
             </x-form-control>
         @endforeach
     </x-slot>
