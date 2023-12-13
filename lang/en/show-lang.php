@@ -1,10 +1,10 @@
-<?php 
+<?php
 return[
-'space' => 'Spaces',
-'customer' => 'Customers',
-'product' => 'Products',
-'payments' => 'Payments',
-'users' => 'Users',
+'space' => 'spaces',
+'customer' => 'customers',
+'product' => 'products',
+'payments' => 'payments',
+'users' => 'users',
 'search' => 'Search',
 'save'=>'Save',
 'cancel'=>'Cancel',
