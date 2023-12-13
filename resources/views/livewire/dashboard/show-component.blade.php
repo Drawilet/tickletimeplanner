@@ -99,7 +99,8 @@
                         <div class="modal-box">
                             <h3 class="font-bold text-lg">{{ __('calendar-lang.Addproduct') }}</h3>
 
-                            <input type="search" class="mt-2 input w-full" placeholder="{{ __('calendar-lang.Searchproducts') }}"
+                            <input type="search" class="mt-2 input w-full"
+                                placeholder="{{ __('calendar-lang.Searchproducts') }}"
                                 wire:model="filters.product_name">
                             <table class="table w-full">
 
@@ -129,13 +130,13 @@
                                 <x-icons.plus />
                             </button>
                         @endif
-                        {{__('calendar-lang.Products')}}
+                        {{ __('calendar-lang.Products') }}
                     </h2>
                     <div class="overflow-x-auto">
                         <table class="table w-full table-zebra ">
                             <thead>
                                 <tr>
-                                    <th class="w-3/4">{{__('calendar-lang.Name')  }}</th>
+                                    <th class="w-3/4">{{ __('calendar-lang.Name') }}</th>
                                     <th></th>
                                     <th></th>
                                     <th></th>
@@ -190,16 +191,18 @@
         <x-slot name="footer">
             <span class="text-xl mr-auto block">$ {{ $this->getTotal() }}</span>
 
-            <button class="btn btn-primary px-8" wire:click="saveEvent">
-                {{ __('calendar-lang.Save') }}
-            </button>
+            @if (!$readonly)
+                <button class="btn btn-primary px-8" wire:click="saveEvent">
+                    {{ __('calendar-lang.Save') }}
+                </button>
+            @endif
         </x-slot>
     </x-dialog-modal>
 
     @livewire('dashboard.calendar-component', [
         'events' => $filteredEvents,
         'dragAndDropEnabled' => false,
-        "beforeCalendarView" => "dashboard.filter-component",
+        'beforeCalendarView' => 'dashboard.filter-component',
     ])
 
     @component('components.util.crud-socket-scripts', ['socketListeners' => $socketListeners])
