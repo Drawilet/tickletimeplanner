@@ -29,7 +29,8 @@
                 </h2>
             </div>
 
-            @livewire($beforeCalendarView)
+            {{--     @livewire($beforeCalendarView) --}}
+            @includeIf($beforeCalendarView)
         </section>
     </div>
 

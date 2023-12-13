@@ -13,7 +13,6 @@ class ShowComponent extends Component
     protected $listeners = [
         "Modal" => "Modal",
         "socket" => "handleSocket",
-        "update-filters" => "updateFilters",
     ];
 
     public $modals = [
@@ -36,12 +35,11 @@ class ShowComponent extends Component
     ];
 
     public $filters, $initialFilters = [
-        "spaces" => [],
         "product_name" => null,
     ];
 
 
-    public $events, $filteredEvents, $products, $filteredProducts, $customers, $spaces;
+    public $events, $products, $filteredProducts, $customers, $spaces;
 
     public function mount()
     {
@@ -51,27 +49,15 @@ class ShowComponent extends Component
         $this->addSocketListener("space", ["useItemsKey" => false, "get" => true]);
 
         $this->data = $this->initialData;
-
-        $this->initialFilters["spaces"] = $this->spaces->pluck("id")->toArray();
         $this->filters = $this->initialFilters;
-    }
-
-    public function getFilteredItems()
-    {
-        $this->filteredEvents = $this->events->filter(function ($event) {
-            if (!in_array($event->space_id, $this->filters["spaces"])) return false;
-            return true;
-        });
-
-        $this->filteredProducts = $this->products->filter(function ($product) {
-            if ($this->filters["product_name"] && !str_contains(strtolower($product->name), strtolower($this->filters["product_name"]))) return false;
-            return true;
-        });
     }
 
     public function render()
     {
-        $this->getFilteredItems();
+        $this->filteredProducts = $this->products->filter(function ($product) {
+            if ($this->filters["product_name"] && !str_contains(strtolower($product->name), strtolower($this->filters["product_name"]))) return false;
+            return true;
+        });
         return view('livewire.dashboard.show-component');
     }
 
@@ -121,12 +107,6 @@ class ShowComponent extends Component
     {
         $this->getFilteredItems();
         $this->emit("update-events", $this->filteredEvents->load("space", "customer"));
-    }
-
-    public function updateFilters($filters)
-    {
-        $this->filters = array_merge($this->filters, $filters);
-        $this->updateEvents();
     }
 
     public function productAction($product_id, $action, $quantity = 1)
