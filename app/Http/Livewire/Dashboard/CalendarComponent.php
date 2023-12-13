@@ -26,7 +26,7 @@ class CalendarComponent extends LivewireCalendar
     {
 
         return collect($this->events->filter(function ($event) {
-            if (!in_array($event->space_id, $this->filters["spaces"])) return false;
+            if (!in_array($event["space_id"], $this->filters["spaces"])) return false;
             return true;
         })->map(function ($event) {
             return [

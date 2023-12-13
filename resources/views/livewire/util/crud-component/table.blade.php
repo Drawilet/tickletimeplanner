@@ -73,6 +73,14 @@
                                             <span>{{ \Illuminate\Support\Str::limit($item[$key], 50) }}</span>
                                         @break
 
+                                        @case('select')
+                                            @foreach ($type['options'] as $option)
+                                                @if ($option['value'] == $item[$key])
+                                                    {{ $option['label'] }}
+                                                @endif
+                                            @endforeach
+                                        @break
+
                                         @default
                                             @if ($type['type'] == 'color')
                                                 <span
@@ -115,4 +123,3 @@
         </div>
     @endif
 </div>
-

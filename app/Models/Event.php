@@ -23,4 +23,9 @@ class Event extends Base
     {
         return $this->hasMany(EventProduct::class);
     }
+
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
+    }
 }

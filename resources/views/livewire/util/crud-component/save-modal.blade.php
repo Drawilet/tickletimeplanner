@@ -20,6 +20,16 @@
                                        @endif @endforeach></textarea>
                         @break
 
+                        @case('select')
+                            <select id="{{ $key }}" wire:model="data.{{ $key }}"
+                                class="select select-bordered">
+                                <option value=""></option>
+                                @foreach ($type['options'] as $option)
+                                    <option value="{{ $option['value'] }}">{{ $option['label'] }}</option>
+                                @endforeach
+                            </select>
+                        @break
+
                         @case('file')
                             <input id="{{ $key }}" wire:model="files.{{ $key }}" type="file"
                                 class="file-input file-input-bordered"

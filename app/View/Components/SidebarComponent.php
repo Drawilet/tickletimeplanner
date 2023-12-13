@@ -29,7 +29,7 @@ class SidebarComponent extends Component
 
         "payments" => [
             "icon" => "bank-notes",
-            "route" => "dashboard.show"
+            "route" => "tenant.payments.show"
         ],
         "users" => [
             "icon" => "user-group",

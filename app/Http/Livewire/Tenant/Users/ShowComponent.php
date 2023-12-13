@@ -20,7 +20,7 @@ class ShowComponent extends CrudComponent
         return $data;
     }
 
-    public function beforeSave($user, $data)
+    public function beforeSave($data)
     {
         if (isset($data["password"])) {
             $data["password"] = Hash::make($data["password"]);

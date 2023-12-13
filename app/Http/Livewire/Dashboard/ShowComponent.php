@@ -5,6 +5,8 @@ namespace App\Http\Livewire\Dashboard;
 use App\Events\EventEvent;
 use App\Http\Socket\WithCrudSockets;
 use App\Models\Event;
+use App\Models\Payment;
+use Illuminate\Support\Facades\Validator;
 use Livewire\Component;
 
 class ShowComponent extends Component
@@ -19,7 +21,7 @@ class ShowComponent extends Component
         "save" => false,
         "addProduct" => false,
     ];
-    public $data, $initialData = [
+    public $event, $initialEvent = [
         "customer_id" => null,
         "name" => null,
         "space_id" => null,
@@ -38,6 +40,12 @@ class ShowComponent extends Component
         "product_name" => null,
     ];
 
+    public $payment, $initialPayment = [
+        "user_id" => null,
+        "event_id" => null,
+        "amount" => null,
+        "concept" => null,
+    ];
 
     public $events, $products, $filteredProducts, $customers, $spaces;
 
@@ -48,7 +56,8 @@ class ShowComponent extends Component
         $this->addSocketListener("customer", ["useItemsKey" => false, "get" => true]);
         $this->addSocketListener("space", ["useItemsKey" => false, "get" => true]);
 
-        $this->data = $this->initialData;
+        $this->event = $this->initialEvent;
+        $this->payment = $this->initialPayment;
         $this->filters = $this->initialFilters;
     }
 
@@ -65,10 +74,14 @@ class ShowComponent extends Component
     {
         switch ($name) {
             case 'save':
-                if ($value === true) $this->data = $this->initialData;
+                if ($value === true) $this->event = $this->initialEvent;
                 if ($data) {
-                    if (isset($data["id"])) $this->data = array_merge($this->data, $this->events->find($data["id"])->load("products")->toArray());
-                    else $this->data = array_merge($this->data, $data);
+                    if (isset($data["id"]))
+                        $this->event = array_merge(
+                            $this->event,
+                            $this->events->find($data["id"])->load("products", "payments")->toArray()
+                        );
+                    else $this->event = array_merge($this->event, $data);
                 }
                 break;
         }
@@ -78,21 +91,21 @@ class ShowComponent extends Component
 
     public function saveEvent()
     {
-        $this->validate([
-            "data.name" => "required",
-            "data.space_id" => "required",
-            "data.customer_id" => "required",
+        Validator::make($this->event, [
+            "name" => "required",
+            "space_id" => "required",
+            "customer_id" => "required",
 
-            "data.date" => "required",
-            "data.start_time" => "required",
-            "data.end_time" => "required",
+            "date" => "required",
+            "start_time" => "required",
+            "end_time" => "required",
 
-            "data.price" => "required",
-        ]);
+            "price" => "required",
+        ])->validate();
 
-        $event =  Event::create($this->data);
+        $event =  Event::create($this->event);
 
-        foreach ($this->data["products"] as  $product) {
+        foreach ($this->event["products"] as  $product) {
             $event->products()->create([
                 "product_id" => $product["product_id"],
                 "quantity" => $product["quantity"],
@@ -105,18 +118,17 @@ class ShowComponent extends Component
 
     public function updateEvents()
     {
-        $this->getFilteredItems();
-        $this->emit("update-events", $this->filteredEvents->load("space", "customer"));
+        $this->emit("update-events", $this->events->load("space", "customer"));
     }
 
     public function productAction($product_id, $action, $quantity = 1)
     {
         switch ($action) {
             case 'add':
-                if (isset($this->data["products"][$product_id])) {
-                    $this->data["products"][$product_id]["quantity"] += $quantity;
+                if (isset($this->event["products"][$product_id])) {
+                    $this->event["products"][$product_id]["quantity"] += $quantity;
                 } else {
-                    $this->data["products"][$product_id] = [
+                    $this->event["products"][$product_id] = [
                         "quantity" => $quantity,
                         "product_id" => $product_id,
                     ];
@@ -124,17 +136,17 @@ class ShowComponent extends Component
                 break;
 
             case 'decrease':
-                if (isset($this->data["products"][$product_id])) {
-                    if ($this->data["products"][$product_id]["quantity"] > 1) {
-                        $this->data["products"][$product_id]["quantity"] -= $quantity;
+                if (isset($this->event["products"][$product_id])) {
+                    if ($this->event["products"][$product_id]["quantity"] > 1) {
+                        $this->event["products"][$product_id]["quantity"] -= $quantity;
                     } else {
-                        unset($this->data["products"][$product_id]);
+                        unset($this->event["products"][$product_id]);
                     }
                 }
                 break;
 
             case 'remove':
-                unset($this->data["products"][$product_id]);
+                unset($this->event["products"][$product_id]);
                 break;
         }
 
@@ -143,10 +155,37 @@ class ShowComponent extends Component
 
     public function getTotal()
     {
-        $total = $this->data["price"] ?? 0;
-        foreach ($this->data["products"] as $data) {
+        $total = $this->event["price"] ?? 0;
+        foreach ($this->event["products"] as $data) {
             $total += $this->products->find($data["product_id"])->price * $data["quantity"];
         }
         return $total;
+    }
+
+    public function getRemaining()
+    {
+        $remaining = $this->getTotal();
+        foreach ($this->event["payments"] as $payment) {
+            $remaining -= $payment["amount"];
+        }
+        return $remaining;
+    }
+
+    public function addPayment()
+    {
+        Validator::make($this->payment, [
+            "amount" => "required",
+            "concept" => "required",
+        ])->validate();
+
+        $this->payment["amount"] = (float) $this->payment["amount"];
+        $this->payment["event_id"] = $this->event["id"];
+        $this->payment["user_id"] = auth()->user()->id;
+
+        Payment::create($this->payment);
+        $this->event["payments"][] = $this->payment;
+        $this->payment = $this->initialPayment;
+
+        $this->emit("toast", "success", "Payment added successfully");
     }
 }

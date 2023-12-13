@@ -4,11 +4,13 @@ namespace App\Http\Socket;
 
 use App\Events\EventEvent;
 use App\Events\CustomerEvent;
+use App\Events\PaymentEvent;
 use App\Events\ProductEvent;
 use App\Events\SpaceEvent;
 use App\Events\UserEvent;
 use App\Models\Event;
 use App\Models\Customer;
+use App\Models\Payment;
 use App\Models\Product;
 use App\Models\Space;
 use App\Models\User;
@@ -32,10 +34,14 @@ trait WithCrudSockets
             "Event" => EventEvent::class,
             "Model" => Event::class,
         ],
-        "user"=> [
+        "user" => [
             "Event" => UserEvent::class,
             "Model" => User::class,
-        ]
+        ],
+        "payment" => [
+            "Event" => PaymentEvent::class,
+            "Model" => Payment::class,
+        ],
     ];
 
 
