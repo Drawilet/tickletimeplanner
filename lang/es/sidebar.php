@@ -5,4 +5,5 @@ return [
     'spaces' => 'Espacios',
     'products' => 'Productos',
     'Settings' => 'Configuración',
+    'more'=>'Más',
 ];
