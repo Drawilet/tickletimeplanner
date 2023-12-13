@@ -129,6 +129,7 @@ class CrudComponent extends Component
 
     public function save()
     {
+        if (in_array("beforeSave", $this->events)) $this->data = $this->beforeSave($this->data);
         $item = $this->Model::updateOrCreate(["id" => $this->data["id"]], $this->data);
 
         $name = $this->name;
@@ -182,7 +183,6 @@ class CrudComponent extends Component
             }
         }
 
-        if (in_array("beforeSave", $this->events)) $this->data = $this->beforeSave($item, $this->data);
         $item->save();
         if (in_array("afterSave", $this->events)) $this->afterSave($item, $this->data);
 
