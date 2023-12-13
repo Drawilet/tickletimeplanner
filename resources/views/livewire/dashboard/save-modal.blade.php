@@ -22,7 +22,7 @@
                     <x-form-control>
                         <x-label for="name" value="{{ __('calendar-lang.Eventname') }}" />
                         <x-input id="name" name="name" wire:model="event.name" :disabled="$readonly" />
-                        <x-input-error for="event.name" class="mt-2" />
+                        <x-input-error for="name" class="mt-2" />
                     </x-form-control>
 
                     <x-form-control>
@@ -34,7 +34,7 @@
                                 </option>
                             @endforeach
                         </select>
-                        <x-input-error for="event.space_id" class="mt-2" />
+                        <x-input-error for="space_id" class="mt-2" />
                     </x-form-control>
 
                     <x-form-control>
@@ -54,7 +54,7 @@
                                 <x-icons.plus />
                             </button>
                         </div>
-                        <x-input-error for="event.customer_id" class="mt-2" />
+                        <x-input-error for="customer_id" class="mt-2" />
                     </x-form-control>
 
                     <div class="divider"></div>
@@ -63,35 +63,35 @@
                         <x-label for="date" value="{{ __('calendar-lang.Date') }}" />
                         <x-input id="date" name="date" type="date" wire:model="event.date"
                             :disabled="$readonly" />
-                        <x-input-error for="event.date" class="mt-2" />
+                        <x-input-error for="date" class="mt-2" />
                     </x-form-control>
 
                     <x-form-control>
                         <x-label for="start_time" value="{{ __('calendar-lang.Starttime') }}" />
                         <x-input id="start_time" name="start_time" type="time" wire:model="event.start_time"
                             :disabled="$readonly" />
-                        <x-input-error for="event.start_time" class="mt-2" />
+                        <x-input-error for="start_time" class="mt-2" />
                     </x-form-control>
 
                     <x-form-control>
                         <x-label for="end_time" value="{{ __('calendar-lang.Endtime') }}" />
                         <x-input id="end_time" name="end_time" type="time" wire:model="event.end_time"
                             :disabled="$readonly" />
-                        <x-input-error for="event.end_time" class="mt-2" />
+                        <x-input-error for="end_time" class="mt-2" />
                     </x-form-control>
 
                     <x-form-control>
                         <x-label for="price" value="{{ __('calendar-lang.Price') }}" />
                         <x-input id="price" name="price" type="number" wire:model="event.price"
                             :disabled="$readonly" />
-                        <x-input-error for="event.price" class="mt-2" />
+                        <x-input-error for="price" class="mt-2" />
                     </x-form-control>
 
                     <x-form-control>
                         <x-label for="notes" value="{{ __('calendar-lang.Notes') }}" />
                         <textarea id="notes" name="notes" class="textarea textarea-bordered" wire:model="event.notes"
                             @disabled($readonly)></textarea>
-                        <x-input-error for="event.notes" class="mt-2" />
+                        <x-input-error for="notes" class="mt-2" />
                     </x-form-control>
                 </section>
 

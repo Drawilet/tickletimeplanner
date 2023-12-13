@@ -3,8 +3,7 @@
 
     </x-slot>
     <x-slot name="content">
-
-        <h2>{{ __('show-lang.h1') }}{{ $data[$mainKey] }}" {{ __('show-lang.' . $name) }}?</h2>
+        <h2>{{ __('show-lang.h1') }}"{{ $data[$mainKey] }}"?</h2>
     </x-slot>
     <x-slot name="footer">
         <button wire:click="Modal('delete', false)" type="button"
