@@ -3,7 +3,9 @@
         <x-slot name="title">
             <h3 class="text-2xl">
                 @isset($data['date'])
-                    {{ \Carbon\Carbon::parse($data['date'])->format('d F, Y') }}
+                {{ \Carbon\Carbon::parse($data['date'])->format('d') }}
+                {{ trans('month-lang.' . strtolower(\Carbon\Carbon::parse($data['date'])->format('F'))) }},
+                {{ \Carbon\Carbon::parse($data['date'])->format('Y') }}
                 @endisset
             </h3>
         </x-slot>
