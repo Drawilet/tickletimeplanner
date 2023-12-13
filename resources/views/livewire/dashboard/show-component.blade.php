@@ -200,9 +200,9 @@
     </x-dialog-modal>
 
     @livewire('dashboard.calendar-component', [
-        'events' => $filteredEvents,
+        'events' => $events,
         'dragAndDropEnabled' => false,
-        'beforeCalendarView' => 'dashboard.filter-component',
+        'beforeCalendarView' => '/livewire/dashboard/filter-component',
     ])
 
     @component('components.util.crud-socket-scripts', ['socketListeners' => $socketListeners])
