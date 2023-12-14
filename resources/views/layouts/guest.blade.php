@@ -50,6 +50,7 @@
     </div>
 
     @livewire('accessibility-component')
+    @livewireScripts
 </body>
 
 
