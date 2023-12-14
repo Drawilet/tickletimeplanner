@@ -1,6 +1,6 @@
 <x-dialog-modal wire:model="modals.save">
     <x-slot name="title">
-        {{ gettype($data['id']) == 'string' ? 'Create' : 'Update' }} {{ __('show-lang.' . $name) }}
+        {{ gettype($data['id']) == 'string' ? __('show-lang.Create') : 'Update' }} {{ __('show-lang.' . $name) }}
     </x-slot>
 
     <x-slot name="content">

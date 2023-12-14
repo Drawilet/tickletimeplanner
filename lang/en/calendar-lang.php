@@ -22,4 +22,11 @@ return [
     'Payments' => 'Payments',
     'Opening' => 'Opening',
     'Closing' => 'Closing',
+    'Firstname' => 'Firstname',
+    'Lastname' => 'Lastname',
+    'Email' => 'Email',
+    'Phone' => 'Phone',
+    'Address' => 'Address',
+    'Submit' => 'Submit',
+
 ];

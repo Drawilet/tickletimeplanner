@@ -35,7 +35,7 @@
                 <x-input-error for="address" class="mt-2" />
             </x-form-control>
 
-            <button class="btn btn-primary mt-2" wire:click='newCustomer'>Submit</button>
+            <button class="btn btn-primary mt-2" wire:click='newCustomer'>{{ __('calendar-lang.Submit') }}</button>
         </ul>
     </div>
 </div>
