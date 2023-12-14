@@ -8,6 +8,7 @@ use App\Http\Socket\WithCrudSockets;
 use App\Models\Customer;
 use App\Models\Event;
 use App\Models\Payment;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use Livewire\Component;
 
@@ -60,6 +61,8 @@ class ShowComponent extends Component
 
     public $events, $products, $filteredProducts, $customers, $spaces;
 
+    public $currentSpace;
+
     public function mount()
     {
         $this->addSocketListener("event", ["useItemsKey" => false, "get" => true, "afterUpdate" => "updateEvents"]);
@@ -106,14 +109,16 @@ class ShowComponent extends Component
 
     public function saveEvent()
     {
+        $schedule = $this->getSchedule();
+
         Validator::make($this->event, [
             "name" => "required",
             "space_id" => "required",
             "customer_id" => "required",
 
             "date" => "required",
-            "start_time" => "required",
-            "end_time" => "required|after:start_time",
+            "start_time" => "required|after_or_equal:" . $schedule["opening"] . "|before_or_equal:" . $schedule["closing"],
+            "end_time" => "required|after:start_time|before_or_equal:" . $schedule["closing"],
 
             "price" => "required",
         ])->validate();
@@ -225,5 +230,24 @@ class ShowComponent extends Component
         $this->event["customer_id"] = $customer->id;
 
         $this->emit("toast", "success", "Customer added successfully");
+    }
+
+    public function updateSpace()
+    {
+        $this->currentSpace = $this->spaces->find($this->event["space_id"]) ?? null;
+    }
+
+    public function getSchedule()
+    {
+        $date = Carbon::parse($this->event["date"]);
+        $dayName = strtolower($date->format("l"));
+        $schedule = $this->currentSpace
+            ? $this->currentSpace->schedule[$dayName]
+            : [
+                'opening' => '00:00',
+                'closing' => '00:00',
+            ];
+
+        return  $schedule;
     }
 }

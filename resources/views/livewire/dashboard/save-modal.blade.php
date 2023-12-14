@@ -23,7 +23,7 @@
 
                     <x-form-control>
                         <x-label for="space_id" value="{{ __('calendar-lang.Space') }}" />
-                        <select class="select select-bordered" wire:model="event.space_id">
+                        <select class="select select-bordered" wire:model="event.space_id" wire:change='updateSpace'>
                             <option value="{{ null }}">Pick one</option>
                             @foreach ($spaces as $space)
                                 <option value="{{ $space->id }}">{{ $space->name }}
@@ -51,6 +51,10 @@
                         <x-input-error for="customer_id" class="mt-2" />
                     </x-form-control>
 
+                    @php
+                       $schedule = $this->getSchedule();
+                    @endphp
+
                     <div class="divider"></div>
 
                     <x-form-control>
@@ -61,7 +65,8 @@
 
                     <x-form-control>
                         <x-label for="start_time" value="{{ __('calendar-lang.Starttime') }}" />
-                        <x-input id="start_time" name="start_time" type="time" wire:model="event.start_time" />
+                        <x-input id="start_time" name="start_time" type="time" wire:model="event.start_time"
+                            min="{{ $schedule['opening'] }}" max="{{ $schedule['closing'] }}" />
                         <x-input-error for="start_time" class="mt-2" />
                     </x-form-control>
 
