@@ -2,7 +2,7 @@
     <table class="w-full">
         <thead>
             <tr>
-                <th>Name</th>
+                <th></th>
                 <th></th>
             </tr>
         </thead>
