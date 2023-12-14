@@ -16,8 +16,8 @@ return [
     'Searchproducts' => 'Buscar productos...',
     'event' => 'Evento',
     'Amount' => 'Cantidad',
-    'Concept' => 'Concepto',
-    'Remaining' => 'Restante',
+    'Concept' => 'Notas',
+    'balance' => 'Saldo',
     'AddPayment' => 'Añadir pago',
     'Payments' => 'Pagos',
     'Opening' => 'Apertura',
@@ -29,4 +29,5 @@ return [
     'Address' => 'Dirección',
     'Submit' => 'Guardar',
     'Newcustomer' => 'Nuevo cliente',
+    "total" => "Total",
 ];
