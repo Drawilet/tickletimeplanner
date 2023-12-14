@@ -1,6 +1,5 @@
 <?php
 return[
-
     'name' => 'Nombre',
     'email' => 'Correo',
     'password' => 'Contraseña',
@@ -16,5 +15,4 @@ return[
     'payments.manage'=>'Administrar Pagos',
     'spaces.show'=>'Mostrar Espacios',
     'spaces.manage'=>'Administrar Espacios',
-
 ];

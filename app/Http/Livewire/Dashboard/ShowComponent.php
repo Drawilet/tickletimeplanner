@@ -2,10 +2,13 @@
 
 namespace App\Http\Livewire\Dashboard;
 
+use App\Events\CustomerEvent;
 use App\Events\EventEvent;
 use App\Http\Socket\WithCrudSockets;
+use App\Models\Customer;
 use App\Models\Event;
 use App\Models\Payment;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use Livewire\Component;
 
@@ -20,6 +23,7 @@ class ShowComponent extends Component
     public $modals = [
         "save" => false,
         "addProduct" => false,
+        "newCustomer" => false,
     ];
     public $event, $initialEvent = [
         "customer_id" => null,
@@ -47,7 +51,17 @@ class ShowComponent extends Component
         "concept" => null,
     ];
 
+    public $customer, $initialCustomer = [
+        "firstname" => null,
+        "lastname" => null,
+        "email" => null,
+        "phone" => null,
+        "address" => null,
+    ];
+
     public $events, $products, $filteredProducts, $customers, $spaces;
+
+    public $currentSpace;
 
     public function mount()
     {
@@ -84,6 +98,10 @@ class ShowComponent extends Component
                     else $this->event = array_merge($this->event, $data);
                 }
                 break;
+
+            case 'newCustomer':
+                if ($value === true) $this->customer = $this->initialCustomer;
+                break;
         }
 
         $this->modals[$name] = $value;
@@ -91,19 +109,21 @@ class ShowComponent extends Component
 
     public function saveEvent()
     {
+        $schedule = $this->getSchedule();
+
         Validator::make($this->event, [
             "name" => "required",
             "space_id" => "required",
             "customer_id" => "required",
 
             "date" => "required",
-            "start_time" => "required",
-            "end_time" => "required|after:start_time",
+            "start_time" => "required|after_or_equal:" . $schedule["opening"] . "|before_or_equal:" . $schedule["closing"],
+            "end_time" => "required|after:start_time|before_or_equal:" . $schedule["closing"],
 
             "price" => "required",
         ])->validate();
 
-        $event =  Event::create($this->event);
+        $event = Event::updateOrCreate(["id" => $this->event["id"] ?? ""], $this->event);
 
         foreach ($this->event["products"] as  $product) {
             $event->products()->create([
@@ -112,7 +132,8 @@ class ShowComponent extends Component
             ]);
         }
 
-        event(new EventEvent("create", $event));
+        event(new EventEvent(isset($this->event["id"]) ? "update" : "create", $event));
+
         $this->Modal("save", false);
     }
 
@@ -187,5 +208,46 @@ class ShowComponent extends Component
         $this->payment = $this->initialPayment;
 
         $this->emit("toast", "success", "Payment added successfully");
+    }
+
+    public function newCustomer()
+    {
+        Validator::make($this->customer, [
+            "firstname" => "required",
+            "lastname" => "required",
+            "email" => "required",
+            "phone" => "required",
+            "address" => "required",
+        ])->validate();
+
+        $customer = Customer::create($this->customer);
+        $this->customer = $this->initialCustomer;
+
+        $this->Modal("newCustomer", false);
+
+        event(new CustomerEvent("create", $customer));
+
+        $this->event["customer_id"] = $customer->id;
+
+        $this->emit("toast", "success", "Customer added successfully");
+    }
+
+    public function updateSpace()
+    {
+        $this->currentSpace = $this->spaces->find($this->event["space_id"]) ?? null;
+    }
+
+    public function getSchedule()
+    {
+        $date = Carbon::parse($this->event["date"]);
+        $dayName = strtolower($date->format("l"));
+        $schedule = $this->currentSpace
+            ? $this->currentSpace->schedule[$dayName]
+            : [
+                'opening' => '00:00',
+                'closing' => '00:00',
+            ];
+
+        return  $schedule;
     }
 }

@@ -1,6 +1,5 @@
 <?php
 return[
-
 'Eventname'=>'Nombre del evento',
 'Space'=>'Espacio',
 'Customer'=>'Cliente',
@@ -23,5 +22,4 @@ return[
 'Payments'=>'Pagos',
 'Opening'=>'Apertura',
 'Closing'=>'Cierre',
-
 ];

@@ -1,6 +1,5 @@
 <?php
 return [
-
     'Eventname' => 'Eventname',
     'Space' => 'Space',
     'Customer' => 'Customer',
@@ -23,5 +22,4 @@ return [
     'Payments' => 'Payments',
     'Opening' => 'Opening',
     'Closing' => 'Closing',
-
 ];
