@@ -5,7 +5,7 @@ return [
     'product' => 'productos',
     'space' => 'espacios',
     'payment' => 'pagos',
-    'users' => 'usuarios',
+    'user' => 'usuarios',
     'search' => 'Buscar ',
     'save' => 'Guardar',
     'cancel' => 'Cancelar',
