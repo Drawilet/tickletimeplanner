@@ -103,7 +103,7 @@ class ShowComponent extends Component
             "price" => "required",
         ])->validate();
 
-        $event =  Event::create($this->event);
+        $event = Event::updateOrCreate(["id" => $this->event["id"] ?? ""], $this->event);
 
         foreach ($this->event["products"] as  $product) {
             $event->products()->create([
@@ -112,7 +112,8 @@ class ShowComponent extends Component
             ]);
         }
 
-        event(new EventEvent("create", $event));
+        event(new EventEvent(isset($this->event["id"]) ? "update" : "create", $event));
+
         $this->Modal("save", false);
     }
 

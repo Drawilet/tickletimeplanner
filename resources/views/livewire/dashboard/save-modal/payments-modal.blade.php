@@ -1,4 +1,4 @@
-@if ($readonly)
+@isset($event['id'])
     @php
         $remaining = $this->getRemaining();
     @endphp
@@ -22,7 +22,7 @@
             <label class="divider divider-base-200"></label>
             <li>
                 <a class="flex justify-between">
-                    <span>{{ __('calendar-lang.Remaining')}}</span>
+                    <span>{{ __('calendar-lang.Remaining') }}</span>
                     <span> ${{ $remaining }}</span>
                 </a>
             </li>
@@ -42,11 +42,11 @@
                     </x-form-control>
 
                     <button class="btn btn-primary w-full mt-2" wire:click.prevent='addPayment()'>
-                        <x-icons.plus />{{ __('calendar-lang.AddPayment')}}
+                        <x-icons.plus />{{ __('calendar-lang.AddPayment') }}
                     </button>
                 </form>
             @endif
 
         </ul>
     </div>
-@endif
+@endisset
