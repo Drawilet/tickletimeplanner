@@ -4,7 +4,7 @@ return [
     "customer?" => "cliente?",
     'product' => 'productos',
     'space' => 'espacios',
-    'payments' => 'pagos',
+    'payment' => 'pagos',
     'users' => 'usuarios',
     'search' => 'Buscar ',
     'save' => 'Guardar',
