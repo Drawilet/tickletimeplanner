@@ -44,7 +44,7 @@
                                     </option>
                                 @endforeach
                             </select>
-                            <button class="btn btn-neutral ml-2" wire:click="newCustomer">
+                            <button class="btn btn-neutral ml-2" wire:click="Modal('newCustomer', true)">
                                 <x-icons.plus />
                             </button>
                         </div>
@@ -154,6 +154,7 @@
 
     @include('livewire.dashboard.save-modal.products-modal')
     @include('livewire.dashboard.save-modal.payments-modal')
+    @include('livewire.dashboard.save-modal.new-customer-modal')
 
     <label class="modal-backdrop" wire:click="Modal('save', false)">Close</label>
 </div>

@@ -2,8 +2,10 @@
 
 namespace App\Http\Livewire\Dashboard;
 
+use App\Events\CustomerEvent;
 use App\Events\EventEvent;
 use App\Http\Socket\WithCrudSockets;
+use App\Models\Customer;
 use App\Models\Event;
 use App\Models\Payment;
 use Illuminate\Support\Facades\Validator;
@@ -20,6 +22,7 @@ class ShowComponent extends Component
     public $modals = [
         "save" => false,
         "addProduct" => false,
+        "newCustomer" => false,
     ];
     public $event, $initialEvent = [
         "customer_id" => null,
@@ -45,6 +48,14 @@ class ShowComponent extends Component
         "event_id" => null,
         "amount" => null,
         "concept" => null,
+    ];
+
+    public $customer, $initialCustomer = [
+        "firstname" => null,
+        "lastname" => null,
+        "email" => null,
+        "phone" => null,
+        "address" => null,
     ];
 
     public $events, $products, $filteredProducts, $customers, $spaces;
@@ -83,6 +94,10 @@ class ShowComponent extends Component
                         );
                     else $this->event = array_merge($this->event, $data);
                 }
+                break;
+
+            case 'newCustomer':
+                if ($value === true) $this->customer = $this->initialCustomer;
                 break;
         }
 
@@ -188,5 +203,27 @@ class ShowComponent extends Component
         $this->payment = $this->initialPayment;
 
         $this->emit("toast", "success", "Payment added successfully");
+    }
+
+    public function newCustomer()
+    {
+        Validator::make($this->customer, [
+            "firstname" => "required",
+            "lastname" => "required",
+            "email" => "required",
+            "phone" => "required",
+            "address" => "required",
+        ])->validate();
+
+        $customer = Customer::create($this->customer);
+        $this->customer = $this->initialCustomer;
+
+        $this->Modal("newCustomer", false);
+
+        event(new CustomerEvent("create", $customer));
+
+        $this->event["customer_id"] = $customer->id;
+
+        $this->emit("toast", "success", "Customer added successfully");
     }
 }
