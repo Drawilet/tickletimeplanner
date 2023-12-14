@@ -53,7 +53,8 @@ class CrudComponent extends Component
         $this->initialData = ["id"  => ""];
         $this->initialFiles = [];
         foreach ($params["types"] as $key => $type) {
-            $this->crudRules[$key] = $type["rules"] ?? "required";
+            if ($type["type"] != "file")
+                $this->crudRules[$key] = $type["rules"] ?? "required";
 
             if (isset($type["hidden"]) && $type["hidden"] == true) continue;
             $this->keys[] = $key;
@@ -194,7 +195,7 @@ class CrudComponent extends Component
         event(new $this->ItemEvent($this->data["id"] ? "update" : "create", $item));
 
         $this->Modal("save", false);
-        $this->emit("toast", "success", $this->Name. " " .__("toast-lang.savedsuccessfully"));
+        $this->emit("toast", "success", $this->Name . " " . __("toast-lang.savedsuccessfully"));
     }
     public function delete()
     {
