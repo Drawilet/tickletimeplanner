@@ -16,9 +16,9 @@
             </p>
         </div>
 
-        <button class="btn btn-primary">
-            <a href="{{ route("spaces.show") }}">Book now</a>
-        </button>
+        <a href="{{ route('spaces.show') }}">
+            <button class="btn btn-primary w-full">Book now</button>
+        </a>
     </section>
 
     <section class="md:w-1/2 md:flex md:justify-center md:items-center">
