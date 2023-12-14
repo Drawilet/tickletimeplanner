@@ -11,4 +11,5 @@ return [
     'cancel' => 'Cancelar',
     'h1' => '¿Está seguro de que desea eliminar ',
     'delete' => 'Eliminar',
+    'Create' => 'Crear',
 ];
