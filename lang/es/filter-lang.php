@@ -1,8 +1,5 @@
 <?php
-return[
-
+return [
     'Spaces' => 'Espacios',
     'All' => 'Todos',
-
-
 ];
