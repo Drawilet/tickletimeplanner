@@ -28,4 +28,5 @@ return [
     'Phone' => 'Teléfono',
     'Address' => 'Dirección',
     'Submit' => 'Guardar',
+    'Newcustomer' => 'Nuevo cliente',
 ];
