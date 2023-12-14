@@ -1,8 +1,6 @@
 <?php
-return[
-
-    'ManageAccount'=>'Manage Account',
-    'Profile'=>'Profile',
-    'LogOut'=>'Log Out',
-
+return [
+    'ManageAccount' => 'Manage Account',
+    'Profile' => 'Profile',
+    'LogOut' => 'Log Out',
 ];

@@ -1,8 +1,6 @@
 <?php
-return[
-
+return [
     'event_id' => 'Event',
     'concept' => 'Concept',
     'amount' => 'Amount',
-
 ];

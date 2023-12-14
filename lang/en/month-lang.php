@@ -1,6 +1,5 @@
 <?php
-return[
-
+return [
     'january' => 'January',
     'february' => 'February',
     'march' => 'March',
@@ -13,5 +12,4 @@ return[
     'october' => 'October',
     'november' => 'November',
     'december' => 'December',
-
 ];

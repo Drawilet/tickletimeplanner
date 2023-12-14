@@ -5,7 +5,7 @@
 
 
     <div class="w-96 absolute right-0 top-0 h-full p-4 bg-base-200 text-base-content">
-        <h3 class="text-xl text-center">{{ __('calendar-lang.AddPayment') }}</h3>
+        <h3 class="text-xl text-center">{{ __('calendar-lang.Payments') }}</h3>
 
         <ul class="menu">
             @isset($event['payments'])
