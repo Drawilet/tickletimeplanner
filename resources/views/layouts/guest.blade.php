@@ -18,6 +18,33 @@
 </head>
 
 <body>
+    <header class="navbar bg-base-100">
+        <div class="flex-1">
+            <a class="btn btn-ghost text-xl" href="/">
+                <x-application-mark />
+            </a>
+        </div>
+        <nav class="flex-none">
+            <ul class="menu flex-row px-1">
+                @auth
+                    <li>
+                        <a href="{{ url('/dashboard') }}" class="text-sm underline">Dashboard</a>
+                    </li>
+                @else
+                    <li>
+                        <a href="{{ route('login') }}" class="text-sm underline">Log in</a>
+                    </li>
+
+                    @if (Route::has('register'))
+                        <li>
+                            <a href="{{ route('register') }}" class="ml-4 text-sm  underline">Register</a>
+                        </li>
+                    @endif
+                @endauth
+            </ul>
+        </nav>
+    </header>
+
     <div class="font-sansantialiased">
         {{ $slot }}
     </div>
