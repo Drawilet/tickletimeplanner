@@ -4,7 +4,7 @@ return[
 'customer' => 'customers',
 'product' => 'products',
 'payments' => 'payments',
-'users' => 'users',
+'user' => 'users',
 'search' => 'Search',
 'save'=>'Save',
 'cancel'=>'Cancel',

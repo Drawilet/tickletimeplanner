@@ -6,6 +6,6 @@ return [
     'products' => 'Products',
     'Settings' => 'Settings',
     'payments' => 'Payments',
-    'users' => 'Users',
     'more' => 'More',
+    'users' => 'Users',
 ];

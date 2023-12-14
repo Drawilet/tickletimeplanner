@@ -10,7 +10,7 @@
         <tbody>
             @foreach ($permissions as $permission)
                 <tr>
-                    <td class="capitalize">{{ $this->parseName($permission->name) }}</td>
+                    <td class="capitalize">{{ trans('User-lang.'.strtolower($permission->name))}}</td>
                     <td>
                         <input type="checkbox" class="toggle toggle-primary"
                             wire:change='togglePermission("{{ $permission->name }}")' @checked(in_array($permission->name, $data['permissions'])) />
