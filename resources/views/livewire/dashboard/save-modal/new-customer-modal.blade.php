@@ -3,7 +3,7 @@
     <div class="drawer-side">
         <label aria-label="close sidebar" class="drawer-overlay" wire:click="Modal('newCustomer', false)"></label>
         <ul class="menu p-4 w-96 min-h-full bg-base-200 text-base-content">
-            <h2 class="text-2xl text-center mb-2">New customer</h2>
+            <h2 class="text-2xl text-center mb-2">{{ __('calendar-lang.Newcustomer') }}</h2>
 
             <x-form-control>
                 <x-label for="firstname" value="{{ __('calendar-lang.Firstname') }}" />

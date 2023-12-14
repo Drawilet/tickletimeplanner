@@ -12,4 +12,5 @@ appointments and events, with a friendly interface and functions that improve ef
 and user satisfaction in the planning process.',
 
     'Booknow' => 'Book now',
+    
 ];

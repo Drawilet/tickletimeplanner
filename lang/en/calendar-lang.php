@@ -28,5 +28,6 @@ return [
     'Phone' => 'Phone',
     'Address' => 'Address',
     'Submit' => 'Submit',
+    'Newcustomer' => 'New customer',
 
 ];
