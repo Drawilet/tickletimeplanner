@@ -32,11 +32,13 @@
                     <x-form-control>
                         <x-label for="payment.amount" value="{{ __('calendar-lang.Amount') }}" />
                         <x-input id="payment.amount" name="payment.amount" wire:model="payment.amount" type="number" />
+                        <x-input-error for="amount" class="mt-2" />
                     </x-form-control>
 
                     <x-form-control>
                         <x-label for="payment.concept" value="{{ __('calendar-lang.Concept') }}" />
                         <x-input id="payment.concept" name="payment.concept" wire:model="payment.concept" />
+                        <x-input-error for="concept" class="mt-2" />
                     </x-form-control>
 
                     <button class="btn btn-primary w-full mt-2" wire:click.prevent='addPayment()'>
