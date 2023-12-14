@@ -6,4 +6,6 @@ return [
     'products' => 'Productos',
     'Settings' => 'Configuración',
     'more'=>'Más',
+    'payments' => 'Pagos',
+    'users' => 'Usuarios',
 ];

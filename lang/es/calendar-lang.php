@@ -16,5 +16,10 @@ return[
 'Save'=>'Guardar',
 'Searchproducts'=>'Buscar productos...',
 'event'=>'Evento',
+'Amount'=>'Cantidad',
+'Concept'=>'Concepto',
+'Remaining'=>'Restante',
+'AddPayment'=>'Añadir pago',
+'Payments'=>'Pagos',
 
 ];
