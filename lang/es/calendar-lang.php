@@ -21,5 +21,7 @@ return[
 'Remaining'=>'Restante',
 'AddPayment'=>'Añadir pago',
 'Payments'=>'Pagos',
+'Opening'=>'Apertura',
+'Closing'=>'Cierre',
 
 ];

@@ -10,20 +10,20 @@
                 $data['schedule'][$day]['closing'] != ''
                     ? 'btn-primary'
                     : '' }} ">
-                {{ substr($day, 0, 1) }}
+                {{ substr(__("days-lang.".$day), 0, 1) }}
             </button>
         @endforeach
     </div>
 
     @isset($selectedDay)
         <x-form-control>
-            <x-label for="opening" value="{{ __('Opening') }}" />
+            <x-label for="opening" value="{{ __('calendar-lang.Opening') }}" />
             <x-input id="opening" name="opening" wire:model="data.schedule.{{ $selectedDay }}.opening"
                 wire:change='handleScheduleChange' type="time" />
         </x-form-control>
 
         <x-form-control>
-            <x-label for="closing" value="{{ __('Closing') }}" />
+            <x-label for="closing" value="{{ __('calendar-lang.Closing') }}" />
             <x-input id="closing" name="closing" wire:model="data.schedule.{{ $selectedDay }}.closing"
                 wire:change='handleScheduleChange' type="time" />
         </x-form-control>
