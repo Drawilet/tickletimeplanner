@@ -229,7 +229,7 @@ class ShowComponent extends Component
 
         $this->event["customer_id"] = $customer->id;
 
-        $this->emit("toast", "success", "Customer added successfully");
+        $this->emit("toast", "success", __('toast-lang.Customeraddedsuccessfully'));
     }
 
     public function updateSpace()

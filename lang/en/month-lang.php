@@ -12,4 +12,7 @@ return [
     'october' => 'October',
     'november' => 'November',
     'december' => 'December',
+    'Previousmonth'=>'Previous month',
+    'CurrentMonth'=>'Current month',
+    'Nextmonth'=>'Next month',
 ];
