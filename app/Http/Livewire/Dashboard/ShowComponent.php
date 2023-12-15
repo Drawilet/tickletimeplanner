@@ -250,4 +250,10 @@ class ShowComponent extends Component
 
         return  $schedule;
     }
+
+    function updateEndTime()
+    {
+        if ($this->event["end_time"]) return;
+        $this->event["end_time"] = $this->event["start_time"];
+    }
 }
