@@ -30,7 +30,7 @@
                                 <img src="{{ $photo['url'] }}" class="w-full" />
                                 <div
                                     class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
-                                    <a href="#{{ $name . ($key == 0 ? $size : $key - 1) }}" class="btn btn-circle">❮</a>
+                                    <a href="#{{ $name . ($key == 1 ? $size : $key - 1) }}" class="btn btn-circle">❮</a>
                                     <a href="#{{ $name . ($key == $size ? 1 : $key + 1) }}" class="btn btn-circle">❯</a>
                                 </div>
                             </div>
