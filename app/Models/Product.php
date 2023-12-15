@@ -8,4 +8,9 @@ class Product extends Base
 {
     use HasFactory;
     protected $fillable = ["photo", "name", "description", "cost", "price"];
+
+    public function events()
+    {
+        return $this->hasMany(Event::class);
+    }
 }
