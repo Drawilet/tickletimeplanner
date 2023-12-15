@@ -1,6 +1,6 @@
 <x-dialog-modal wire:model="modals.save">
     <x-slot name="title">
-        {{ gettype($data['id']) == 'string' ? 'Create' : 'Update' }} {{ __('show-lang.' . $name) }}
+        {{ gettype($data['id']) == 'string' ? __('show-lang.Create') : 'Update' }} {{ __('show-lang.' . $name) }}
     </x-slot>
 
     <x-slot name="content">
@@ -45,6 +45,7 @@
                     @endswitch
                 @endif
 
+                <x-input-error for="{{ $key }}" class="mt-2" />
             </x-form-control>
         @endforeach
     </x-slot>

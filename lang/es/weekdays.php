@@ -8,4 +8,3 @@ return [
     "saturday" => "sábado",
     "sunday" => "domingo"
 ];
-

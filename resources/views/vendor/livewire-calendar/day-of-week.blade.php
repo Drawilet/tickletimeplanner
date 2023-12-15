@@ -4,5 +4,4 @@
     <p class="text-sm capitalize">
         {{ trans('weekdays.' . strtolower($day->format('l'))) }}
     </p>
-
 </div>

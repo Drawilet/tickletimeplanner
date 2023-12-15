@@ -27,4 +27,9 @@ class Space extends Base
     protected $casts = [
         'schedule' => 'array',
     ];
+
+    public function getAddress()
+    {
+        return $this->address . ", " . $this->city . ", " . $this->state . ", " . $this->country;
+    }
 }

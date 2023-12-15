@@ -46,6 +46,7 @@ class DatabaseSeeder extends Seeder
                 ProductSeeder::class,
                 CustomerSeeder::class,
                 SpaceSeeder::class,
+                EventSeeder::class,
             ]
         );
     }

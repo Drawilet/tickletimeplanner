@@ -12,6 +12,8 @@ use App\Http\Livewire\Tenant\Settings\ShowComponent as ShowSettingsComponent;
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LanguageControllers;
+use App\Http\Livewire\HomeComponent;
+use App\Http\Livewire\SpacesComponent;
 use Spatie\Permission\Commands\Show;
 
 /*
@@ -27,17 +29,14 @@ use Spatie\Permission\Commands\Show;
 
 Route::get('lang/{lang}', [LanguageControllers::class, 'switchLeng'])->name('lang');
 
-
-
 $middleware = [
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified'
 ];
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', HomeComponent::class)->name('home');
+Route::get("/spaces", SpacesComponent::class)->name("spaces.show");
 
 Route::middleware($middleware)->group(function () {
     Route::get('/dashboard', DashboardComponent::class)->name('dashboard.show');
