@@ -5,4 +5,6 @@ return [
     'email' => 'Email',
     'phone' => 'Phone',
     'address' => 'Address',
+    'Customer'=>'Customer',
+    'found'=>'found',
 ];

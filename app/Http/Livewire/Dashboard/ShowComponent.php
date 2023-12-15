@@ -229,7 +229,7 @@ class ShowComponent extends Component
 
         $this->event["customer_id"] = $customer->id;
 
-        $this->emit("toast", "success", "Customer added successfully");
+        $this->emit("toast", "success", __('toast-lang.Customeraddedsuccessfully'));
     }
 
     public function updateSpace()
@@ -249,5 +249,11 @@ class ShowComponent extends Component
             ];
 
         return  $schedule;
+    }
+
+    function updateEndTime()
+    {
+        if ($this->event["end_time"]) return;
+        $this->event["end_time"] = $this->event["start_time"];
     }
 }

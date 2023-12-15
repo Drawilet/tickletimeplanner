@@ -52,7 +52,7 @@
 
     <x-slot name="footer">
         <button wire:click="Modal('save', false)" type="button"
-            class="btn btn-neutral w-28 mr-2">{{ __('show-lang.cancel') }}</button>
-        <button wire:click="save" class=" btn btn-accent w-28">{{ __('show-lang.save') }}</button>
+            class="btn w-28 mr-2">{{ __('show-lang.cancel') }}</button>
+        <button wire:click="save" class=" btn btn-primary w-28">{{ __('show-lang.save') }}</button>
     </x-slot>
 </x-dialog-modal>

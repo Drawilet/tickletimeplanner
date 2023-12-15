@@ -5,19 +5,19 @@
     <div>
         <section class="flex flex-col md:flex-row justify-between mb-3">
             <div class="flex items-center mb-2 md:mb-0">
-                <button type="button" title="Previous month" wire:click='goToPreviousMonth' aria-pressed="false"
+                <button type="button" title="{{ __('month-lang.Previousmonth') }}" wire:click='goToPreviousMonth' aria-pressed="false"
                     class="btn ">
                     @component('components.icons.chevron-left')
                     @endcomponent
                 </button>
 
-                <button type="button" title="Current nonth" wire:click='goToCurrentMonth' aria-pressed="false"
+                <button type="button" title="{{__('month-lang.CurrentMonth') }}" wire:click='goToCurrentMonth' aria-pressed="false"
                     class="btn">
                     @component('components.icons.calendar')
                     @endcomponent
                 </button>
 
-                <button type="button" title="Next month" wire:click='goToNextMonth' aria-pressed="false"
+                <button type="button" title="{{ __('month-lang.Nextmonth') }}" wire:click='goToNextMonth' aria-pressed="false"
                     class="btn ">
                     @component('components.icons.chevron-right')
                     @endcomponent

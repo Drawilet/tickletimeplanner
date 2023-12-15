@@ -37,6 +37,7 @@ class ShowComponent extends CrudComponent
                     "type" => "number",
                 ],
             ],
+            "foreigns" => ["events"],
         ]);
     }
 }

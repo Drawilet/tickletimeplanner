@@ -2,8 +2,9 @@
 return [
     'space' => 'spaces',
     'customer' => 'customers',
-    'product' => 'products',
+    'product' => 'Products',
     'payments' => 'payments',
+    'payment' => 'payment',
     'user' => 'users',
     'search' => 'Search',
     'save' => 'Save',
@@ -11,4 +12,5 @@ return [
     'h1' => '¿Are you sure you want do delete ',
     'delete' => 'Delete',
     'Create' => 'Create',
+    'no' => 'no',
 ];

@@ -5,4 +5,5 @@ return [
     'email' => 'Correo',
     'phone' => 'Teléfono',
     'address' => 'Dirección',
+    'found'=>'encontrado',
 ];

@@ -14,4 +14,9 @@ class Customer extends Base
         "phone",
         "address",
     ];
+
+    public function events()
+    {
+        return $this->hasMany(Event::class);
+    }
 }
