@@ -43,6 +43,8 @@ class CrudComponent extends Component
 
     public $events = [];
 
+    public $foreigns = [];
+
     public function setup($Model, $ItemEvent, array $params)
     {
         $this->Model = $Model;
@@ -72,6 +74,8 @@ class CrudComponent extends Component
         $this->name = strtolower($this->Name);
 
         $this->filter = $this->initialFilter;
+
+        $this->foreigns = $params["foreigns"] ?? [];
     }
 
     public function render()
@@ -201,6 +205,15 @@ class CrudComponent extends Component
     {
         $this->Modal("delete", false);
         $item = $this->Model::find($this->data["id"]);
+
+        foreach ($this->foreigns as $foreign) {
+            $items = $item->$foreign;
+            if (count($items) != 0) {
+                $this->modals["error"] = true;
+                $this->emit("toast", "error", __("toast-lang.cannotdelete") . " " . $this->Name . " " . __("toast-lang.because") . " " . __("toast-lang.has") . " " . $foreign);
+                return;
+            }
+        }
 
         $item->delete();
 

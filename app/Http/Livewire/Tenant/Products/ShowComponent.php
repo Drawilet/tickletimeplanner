@@ -23,6 +23,7 @@ class ShowComponent extends CrudComponent
                 "cost" => ["type" => "number"],
                 "price" => ["type" => "number"],
             ],
+            "foreigns" => ["events"],
         ]);
     }
 }
