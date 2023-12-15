@@ -1,10 +1,11 @@
 <?php
 return [
-    'customer' => 'clientes',
+    'customer' => 'cliente',
     "customer?" => "cliente?",
-    'product' => 'productos',
+    'product' => 'Productos',
     'space' => 'espacios',
-    'payment' => 'pagos',
+    'payment' => 'Pagos',
+    'payments' => 'pagos',
     'user' => 'usuarios',
     'search' => 'Buscar ',
     'save' => 'Guardar',
@@ -12,4 +13,5 @@ return [
     'h1' => '¿Está seguro de que desea eliminar ',
     'delete' => 'Eliminar',
     'Create' => 'Crear',
+    'no' => 'no',
 ];
