@@ -32,4 +32,9 @@ class Space extends Base
     {
         return $this->address . ", " . $this->city . ", " . $this->state . ", " . $this->country;
     }
+
+    public function events()
+    {
+        return $this->hasMany(Event::class);
+    }
 }

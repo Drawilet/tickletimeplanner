@@ -40,6 +40,7 @@ class ShowComponent extends CrudComponent
                 ],
                 "color" => ["type" => "color"],
             ],
+            "foreigns" => ["events"],
         ]);
     }
 }
