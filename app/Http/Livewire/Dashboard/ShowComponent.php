@@ -203,8 +203,8 @@ class ShowComponent extends Component
         $this->payment["event_id"] = $this->event["id"];
         $this->payment["user_id"] = auth()->user()->id;
 
-        Payment::create($this->payment);
-        $this->event["payments"][] = $this->payment;
+        $payment = Payment::create($this->payment);
+        $this->event["payments"][] = $payment;
         $this->payment = $this->initialPayment;
 
         $this->emit("toast", "success", "Payment added successfully");
