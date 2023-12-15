@@ -16,8 +16,8 @@ return [
     'Searchproducts' => 'Search products...',
     'event' => 'Event',
     'Amount' => 'Amount',
-    'Concept' => 'Concept',
-    'Remaining' => 'Remaining',
+    'Concept' => 'Notes',
+    'balance' => 'Balance',
     'AddPayment' => 'Add payment',
     'Payments' => 'Payments',
     'Opening' => 'Opening',
@@ -29,5 +29,5 @@ return [
     'Address' => 'Address',
     'Submit' => 'Submit',
     'Newcustomer' => 'New customer',
-
+    "total" => "Total",
 ];

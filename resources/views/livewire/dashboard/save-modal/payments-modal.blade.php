@@ -6,12 +6,14 @@
 
     <div class="w-96 absolute right-0 top-0 h-full p-4 bg-base-200 text-base-content">
         <h3 class="text-xl text-center">{{ __('calendar-lang.Payments') }}</h3>
+        <h4 class="text-lg text-center">{{ __('calendar-lang.total') }}: {{ $this->getTotal() }} </h4>
 
         <ul class="menu">
             @isset($event['payments'])
                 @foreach ($event['payments'] as $payment)
                     <li>
                         <a class="flex justify-between">
+                            <span>{{ Carbon\Carbon::parse($payment['created_at'])->format('d/m/Y') }}</span>
                             <span>{{ $payment['concept'] }}</span>
                             <span>${{ $payment['amount'] }}</span>
                         </a>
@@ -22,7 +24,7 @@
             <label class="divider divider-base-200"></label>
             <li>
                 <a class="flex justify-between">
-                    <span>{{ __('calendar-lang.Remaining') }}</span>
+                    <span>{{ __('calendar-lang.balance') }}</span>
                     <span> ${{ $remaining }}</span>
                 </a>
             </li>
