@@ -52,7 +52,7 @@
                     </x-form-control>
 
                     @php
-                       $schedule = $this->getSchedule();
+                        $schedule = $this->getSchedule();
                     @endphp
 
                     <div class="divider"></div>
@@ -66,7 +66,8 @@
                     <x-form-control>
                         <x-label for="start_time" value="{{ __('calendar-lang.Starttime') }}" />
                         <x-input id="start_time" name="start_time" type="time" wire:model="event.start_time"
-                            min="{{ $schedule['opening'] }}" max="{{ $schedule['closing'] }}" />
+                            wire:change='updateEndTime' min="{{ $schedule['opening'] }}"
+                            max="{{ $schedule['closing'] }}" />
                         <x-input-error for="start_time" class="mt-2" />
                     </x-form-control>
 
