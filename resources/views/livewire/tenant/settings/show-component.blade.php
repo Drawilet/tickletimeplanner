@@ -90,15 +90,15 @@
                 <div x-show="isDefault(link.url, ['facebook','instagram','tiktok', 'twitter', 'linkedin'], 5)">
                     <x-icons.default-link />
                 </div>
-                <input x-model="link.url" type="text" placeholder="Link here" class="input input-bordered w-full" />
-                <x-button x-on:click="addLink">Add</x-button>
+                <input x-model="link.url" type="text" placeholder="{{ __('setting-lang.Linkhere') }}" class="input input-bordered w-full" />
+                <x-button x-on:click="addLink">{{ __('setting-lang.add') }}</x-button>
             </div>
 
             <x-input-error for="social_nets" />
         </template>
 
 
-        <x-button class="btn btn-primary mt-4 w-full" wire:click="save">Save</x-button>
+        <x-button class="btn btn-primary mt-4 w-full" wire:click="save">{{ __('setting-lang.save') }}</x-button>
     </div>
 
 

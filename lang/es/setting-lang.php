@@ -5,6 +5,9 @@ return [
     'Email' => 'Correo',
     'Description' => 'Descripción',
     'Phone' => 'Teléfono',
+    'save' => 'Guardar',
+    'add' => 'Agregar',
+    'Linkhere' => 'Enlace',
 
 
 ];

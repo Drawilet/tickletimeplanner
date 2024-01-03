@@ -30,4 +30,5 @@ return [
     'Submit' => 'Guardar',
     'Newcustomer' => 'Nuevo cliente',
     "total" => "Total",
+    'Pickone'=>'Seleccionar',
 ];

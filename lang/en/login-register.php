@@ -8,5 +8,7 @@ return [
     'Already registered?' => 'Already registered?',
     'Register' => 'Register',
     'Forgot your password?' => 'Forgot your password?',
-    'Login' => 'Log in',
+    'Login' => 'Login',
+    'Register'=>'Register',
+    'Dashboard'=>'Dashboard',
 ];
