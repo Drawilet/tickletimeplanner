@@ -195,7 +195,7 @@ class ShowComponent extends Component
     public function addPayment()
     {
         Validator::make($this->payment, [
-            "amount" => "required",
+            "amount" => "required|numeric|max:" . $this->getRemaining() . "|min:0",
             "concept" => "required",
         ])->validate();
 
