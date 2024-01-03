@@ -2,7 +2,7 @@
     <div class="flex justify-center items-center w-full mb-1 flex-wrap gap-1">
         <input type="text" class="input input-bordered w-full md:w-1/2 " placeholder="Search..."
             wire:model="filters.name">
-
+            
         <div class="w-full mt-2 flex gap-1 md:w-1/3 md:mt-0">
             <input type="text" class="input input-bordered w-1/2" placeholder="City" wire:model="filters.city">
             <input type="text" class="input input-bordered w-1/2" placeholder="Country"
@@ -47,7 +47,7 @@
             @endforeach
         @else
             <div class="w-96 mx-auto">
-                <h2 class="font-bold text-xl text-center">No spaces found</h2>
+                <h2 class="font-bold text-xl text-center">{{ __('spaces.Nospacesfound') }}</h2>
                 <p class="text-center">Try another search</p>
             </div>
         @endif
