@@ -5,7 +5,9 @@
             <div class="text-lg font-medium">
                 <h3 class="text-2xl">
                     @isset($event['date'])
-                        {{ \Carbon\Carbon::parse($event['date'])->format('d F, Y') }}
+                        {{ \Carbon\Carbon::parse($event['date'])->format('d') }},
+                        {{ __('month-lang.'.strtolower(\Carbon\Carbon::parse($event['date'])->format('F'))) }},
+                        {{ \Carbon\Carbon::parse($event['date'])->format('Y') }}
                     @endisset
 
                 </h3>
@@ -24,7 +26,7 @@
                     <x-form-control>
                         <x-label for="space_id" value="{{ __('calendar-lang.Space') }}" />
                         <select class="select select-bordered" wire:model="event.space_id" wire:change='updateSpace'>
-                            <option value="{{ null }}">Pick one</option>
+                            <option value="{{ null }}">{{ __('calendar-lang.Pickone') }}</option>
                             @foreach ($spaces as $space)
                                 <option value="{{ $space->id }}">{{ $space->name }}
                                 </option>
@@ -37,7 +39,7 @@
                         <x-label for="customer_id" value="{{ __('calendar-lang.Customer') }}" />
                         <div class="flex items-center">
                             <select class="select select-bordered w-full" wire:model="event.customer_id">
-                                <option value="{{ null }}">Pick one</option>
+                                <option value="{{ null }}">{{ __('calendar-lang.Pickone') }}</option>
                                 @foreach ($customers as $customer)
                                     <option value="{{ $customer->id }}">{{ $customer->firstname }}
                                         {{ $customer->lastname }}

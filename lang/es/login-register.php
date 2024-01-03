@@ -9,4 +9,6 @@ return [
     'Register' => 'Registrarse',
     'Forgot your password?' => '¿Olvidaste tu contraseña?',
     'Login' => 'Iniciar sesión',
+    'Register'=>'Registrarse',
+    'Dashboard'=>'Panel de control ',
 ];

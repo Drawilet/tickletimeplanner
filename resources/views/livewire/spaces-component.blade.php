@@ -8,7 +8,7 @@
         <span class="badge badge-outline badge-primary">{{ $filters['location']['locality'] }},
             {{ $filters['location']['countryName'] }}</span>
     @else
-        <span class="badge badge-outline badge-ghost">No location</span>
+        <span class="badge badge-outline badge-ghost">{{ __('spaces.Nolocation') }}</span>
     @endif
 
 
@@ -42,8 +42,7 @@
                         <p class="text-sm text-gray-500">{{ $space->getAddress() }}</p>
                         <div class="card-actions justify-end">
                             <button class="btn btn-primary"
-                                wire:click="Modal('contact', true, '{{ $space->id }}')">Book
-                                now</button>
+                                wire:click="Modal('contact', true, '{{ $space->id }}')">{{ __('spaces.Booknow') }}</button>
                         </div>
                     </div>
                 </div>
@@ -51,8 +50,8 @@
         @else
             <div class="card w-96 bg-base-100">
                 <div class="card-body">
-                    <h2 class="card-title">No spaces found</h2>
-                    <p>Try another search</p>
+                    <h2 class="card-title">{{ __('spaces.Nospacesfound') }}</h2>
+                    <p>Tryanothersearch</p>
                 </div>
             </div>
         @endif
@@ -88,7 +87,7 @@
                 </div>
 
                 <div class="modal-action">
-                    <label class="btn" wire:click="Modal('contact',false)">Close!</label>
+                    <label class="btn" wire:click="Modal('contact',false)">{{ __('spaces.Close') }}</label>
                 </div>
             </div>
         @endif
