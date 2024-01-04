@@ -6,7 +6,7 @@
                 <h3 class="text-2xl">
                     @isset($event['date'])
                         {{ \Carbon\Carbon::parse($event['date'])->format('d') }},
-                        {{ __('month-lang.'.strtolower(\Carbon\Carbon::parse($event['date'])->format('F'))) }},
+                        {{ __('month-lang.' . strtolower(\Carbon\Carbon::parse($event['date'])->format('F'))) }},
                         {{ \Carbon\Carbon::parse($event['date'])->format('Y') }}
                     @endisset
 
@@ -151,7 +151,7 @@
         </div>
 
         <div class="flex flex-row items-center justify-end px-6 py-4">
-            <span class="text-xl mr-auto block">$ {{ $this->getTotal() }}</span>
+            <span class="text-xl mr-auto block">{{ __('calendar-lang.total') }}: $ {{ $this->getTotal() }}</span>
 
             <button class="btn btn-primary px-8" wire:click="saveEvent">
                 {{ __('calendar-lang.Save') }}
