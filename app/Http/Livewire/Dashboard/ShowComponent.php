@@ -8,6 +8,7 @@ use App\Http\Socket\WithCrudSockets;
 use App\Models\Customer;
 use App\Models\Event;
 use App\Models\Payment;
+use App\Rules\PhoneNumber;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use Livewire\Component;
@@ -218,8 +219,8 @@ class ShowComponent extends Component
         Validator::make($this->customer, [
             "firstname" => "required",
             "lastname" => "required",
-            "email" => "required",
-            "phone" => "required",
+            "email" => "required|email",
+            "phone" => ["required", new PhoneNumber()],
             "address" => "required",
         ])->validate();
 
