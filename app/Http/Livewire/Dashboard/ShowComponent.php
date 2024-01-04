@@ -58,6 +58,7 @@ class ShowComponent extends Component
         "email" => null,
         "phone" => null,
         "address" => null,
+        "notes" => null,
     ];
 
     public $events, $products, $filteredProducts, $customers, $spaces;
@@ -222,6 +223,7 @@ class ShowComponent extends Component
             "email" => "required|email",
             "phone" => ["required", new PhoneNumber()],
             "address" => "required",
+            "notes" => "max:255"
         ])->validate();
 
         $customer = Customer::create($this->customer);
