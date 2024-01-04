@@ -8,6 +8,7 @@ use App\Http\Socket\WithCrudSockets;
 use App\Models\Customer;
 use App\Models\Event;
 use App\Models\Payment;
+use App\Rules\PhoneNumber;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use Livewire\Component;
@@ -90,7 +91,10 @@ class ShowComponent extends Component
             case 'save':
                 if ($value === true) $this->event = $this->initialEvent;
                 if ($data) {
-                    if (isset($data["id"]))
+                    if (gettype($data) != "array" && array_keys($data->toArray()) > 2) {
+                        error_log("Data is not an array");
+                        $this->event = array_merge($this->event, $data->load("products", "payments")->toArray());
+                    } else if (isset($data["id"]))
                         $this->event = array_merge(
                             $this->event,
                             $this->events->find($data["id"])->load("products", "payments")->toArray()
@@ -134,7 +138,7 @@ class ShowComponent extends Component
 
         event(new EventEvent(isset($this->event["id"]) ? "update" : "create", $event));
 
-        $this->Modal("save", false);
+        $this->Modal("save", true, $event);
     }
 
     public function updateEvents()
@@ -195,7 +199,7 @@ class ShowComponent extends Component
     public function addPayment()
     {
         Validator::make($this->payment, [
-            "amount" => "required",
+            "amount" => "required|numeric|max:" . $this->getRemaining() . "|min:0",
             "concept" => "required",
         ])->validate();
 
@@ -215,8 +219,8 @@ class ShowComponent extends Component
         Validator::make($this->customer, [
             "firstname" => "required",
             "lastname" => "required",
-            "email" => "required",
-            "phone" => "required",
+            "email" => "required|email",
+            "phone" => ["required", new PhoneNumber()],
             "address" => "required",
         ])->validate();
 

@@ -148,4 +148,5 @@ return [
 
     'attributes' => [],
 
+    "phone" => "El campo :attribute no es un número de teléfono válido.",
 ];
