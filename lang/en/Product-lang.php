@@ -5,4 +5,5 @@ return [
     'description' => 'Description',
     'cost' => 'Cost',
     'price' => 'Price',
+    'notes' => 'Notes',
 ];

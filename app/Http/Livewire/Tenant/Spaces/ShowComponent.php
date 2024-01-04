@@ -39,6 +39,7 @@ class ShowComponent extends CrudComponent
                     "hidden" => true
                 ],
                 "color" => ["type" => "color"],
+                "notes" => ["type" => "text",],
             ],
             "foreigns" => ["events"],
         ]);

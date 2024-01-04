@@ -14,6 +14,7 @@ class Payment extends Base
         "user_id",
         "amount",
         "concept",
+        "notes",
     ];
 
 }

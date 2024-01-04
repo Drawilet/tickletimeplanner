@@ -36,6 +36,9 @@ class ShowComponent extends CrudComponent
                 "amount" => [
                     "type" => "number",
                 ],
+                "notes" => [
+                    "type" => "text",
+                ],
             ],
             "foreigns" => ["events"],
         ]);

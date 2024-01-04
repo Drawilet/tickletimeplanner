@@ -6,4 +6,5 @@ return [
     'phone' => 'Teléfono',
     'address' => 'Dirección',
     'found'=>'encontrado',
+    'notes'=>'Notas',
 ];

@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('phone');
             $table->text("address");
+            $table->text('notes')->nullable();
 
             $table->foreignId("tenant_id")->constrained("tenants");
 
