@@ -90,7 +90,10 @@ class ShowComponent extends Component
             case 'save':
                 if ($value === true) $this->event = $this->initialEvent;
                 if ($data) {
-                    if (isset($data["id"]))
+                    if (gettype($data) != "array" && array_keys($data->toArray()) > 2) {
+                        error_log("Data is not an array");
+                        $this->event = array_merge($this->event, $data->load("products", "payments")->toArray());
+                    } else if (isset($data["id"]))
                         $this->event = array_merge(
                             $this->event,
                             $this->events->find($data["id"])->load("products", "payments")->toArray()
@@ -134,7 +137,7 @@ class ShowComponent extends Component
 
         event(new EventEvent(isset($this->event["id"]) ? "update" : "create", $event));
 
-        $this->Modal("save", false);
+        $this->Modal("save", true, $event);
     }
 
     public function updateEvents()
