@@ -9,4 +9,5 @@ return [
     'country' => 'Country',
     'schedule' => 'Schedule',
     'color' => 'Color',
+    'notes' => 'Notes',
 ];

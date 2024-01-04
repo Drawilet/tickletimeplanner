@@ -19,6 +19,8 @@ return new class extends Migration
             $table->foreignId("event_id")->constrained();
             $table->string("concept");
             $table->string("amount");
+            $table->text("notas")->nullable();
+
 
             $table->foreignId("user_id")->constrained();
             $table->foreignId("tenant_id")->constrained();

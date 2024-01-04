@@ -17,6 +17,7 @@ class Space extends Base
         "country",
         "schedule",
         "color",
+        "notes",
     ];
 
     public function photos()

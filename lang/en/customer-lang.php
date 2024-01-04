@@ -7,4 +7,5 @@ return [
     'address' => 'Address',
     'Customer'=>'Customer',
     'found'=>'found',
+    'notes'=>'Notes',
 ];

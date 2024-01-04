@@ -5,4 +5,5 @@ return[
     'description'=>'Descripción',
     'cost'=>'Costo',
     'price'=>'Precio',
+    'notes'=>'Notas',
 ];
