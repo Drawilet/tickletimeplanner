@@ -14,7 +14,7 @@
                     <li>
                         <a class="flex justify-between">
                             <span>{{ Carbon\Carbon::parse($payment['created_at'])->format('d/m/Y') }}</span>
-                            <span>{{ $payment['concept'] }}</span>
+                            <span>{{ $payment['notes'] }}</span>
                             <span>${{ $payment['amount'] }}</span>
                         </a>
                     </li>
@@ -38,9 +38,9 @@
                     </x-form-control>
 
                     <x-form-control>
-                        <x-label for="payment.concept" value="{{ __('calendar-lang.Concept') }}" />
-                        <x-input id="payment.concept" name="payment.concept" wire:model="payment.concept" />
-                        <x-input-error for="concept" class="mt-2" />
+                        <x-label for="payment.notes" value="{{ __('calendar-lang.Notes') }}" />
+                        <x-input id="payment.notes" name="payment.notes" wire:model="payment.notes" />
+                        <x-input-error for="notes" class="mt-2" />
                     </x-form-control>
 
                     <button class="btn btn-primary w-full mt-2" wire:click.prevent='addPayment()'>
