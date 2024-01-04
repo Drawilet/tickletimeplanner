@@ -2,7 +2,7 @@
     "private": true,
     "scripts": {
         "dev": "vite",
-        "build": "vite build && php artisan config:clear",
+        "build": "vite build",
         "afterclone": "bash ./setup.sh"
     },
     "devDependencies": {
