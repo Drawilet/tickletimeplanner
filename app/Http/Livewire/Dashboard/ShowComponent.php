@@ -49,7 +49,7 @@ class ShowComponent extends Component
         "user_id" => null,
         "event_id" => null,
         "amount" => null,
-        "concept" => null,
+        "notes" => null,
     ];
 
     public $customer, $initialCustomer = [
@@ -200,7 +200,7 @@ class ShowComponent extends Component
     {
         Validator::make($this->payment, [
             "amount" => "required|numeric|max:" . $this->getRemaining() . "|min:0",
-            "concept" => "required",
+            "notes" => "required",
         ])->validate();
 
         $this->payment["amount"] = (float) $this->payment["amount"];

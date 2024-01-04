@@ -16,7 +16,7 @@ return [
     'Searchproducts' => 'Search products...',
     'event' => 'Event',
     'Amount' => 'Amount',
-    'Concept' => 'Notes',
+    'Notes' => 'Notes',
     'balance' => 'Balance',
     'AddPayment' => 'Add payment',
     'Payments' => 'Payments',
