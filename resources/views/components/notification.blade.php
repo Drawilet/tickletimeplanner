@@ -14,7 +14,7 @@
     </section>
 
     <section>
-        <p class="text-sm">{{ $message }}</p>
+        <p class="text-sm">{{ __($message) }}</p>
         <p class="text-xs opacity-70">{{ $date }}</p>
     </section>
 </button>
