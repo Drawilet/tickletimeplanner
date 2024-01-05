@@ -93,7 +93,6 @@ class ShowComponent extends Component
                 if ($value === true) $this->event = $this->initialEvent;
                 if ($data) {
                     if (gettype($data) != "array" && array_keys($data->toArray()) > 2) {
-                        error_log("Data is not an array");
                         $this->event = array_merge($this->event, $data->load("products", "payments")->toArray());
                     } else if (isset($data["id"]))
                         $this->event = array_merge(
