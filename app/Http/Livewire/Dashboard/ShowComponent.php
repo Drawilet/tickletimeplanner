@@ -130,6 +130,7 @@ class ShowComponent extends Component
 
         $event = Event::updateOrCreate(["id" => $this->event["id"] ?? ""], $this->event);
 
+        $event->products()->delete();
         foreach ($this->event["products"] as  $product) {
             $event->products()->create([
                 "product_id" => $product["product_id"],
