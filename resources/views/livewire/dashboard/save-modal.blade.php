@@ -19,13 +19,13 @@
                 <section>
                     <x-form-control>
                         <x-label for="name" value="{{ __('calendar-lang.Eventname') }}" />
-                        <x-input id="name" name="name" wire:model="event.name" />
+                        <x-input id="name" name="name" wire:model="event.name" wire:loading.attr="disabled" wire:target="saveEvent" />
                         <x-input-error for="name" class="mt-2" />
                     </x-form-control>
 
                     <x-form-control>
                         <x-label for="space_id" value="{{ __('calendar-lang.Space') }}" />
-                        <select class="select select-bordered" wire:model="event.space_id" wire:change='updateSpace'>
+                        <select class="select select-bordered" wire:model="event.space_id" wire:change='updateSpace' wire:loading.attr="disabled" wire:target="saveEvent">
                             <option value="{{ null }}">{{ __('calendar-lang.Pickone') }}</option>
                             @foreach ($spaces as $space)
                                 <option value="{{ $space->id }}">{{ $space->name }}
@@ -38,7 +38,7 @@
                     <x-form-control>
                         <x-label for="customer_id" value="{{ __('calendar-lang.Customer') }}" />
                         <div class="flex items-center">
-                            <select class="select select-bordered w-full" wire:model="event.customer_id">
+                            <select class="select select-bordered w-full" wire:model="event.customer_id" wire:loading.attr="disabled" wire:target="saveEvent">
                                 <option value="{{ null }}">{{ __('calendar-lang.Pickone') }}</option>
                                 @foreach ($customers as $customer)
                                     <option value="{{ $customer->id }}">{{ $customer->firstname }}
@@ -61,7 +61,7 @@
 
                     <x-form-control>
                         <x-label for="date" value="{{ __('calendar-lang.Date') }}" />
-                        <x-input id="date" name="date" type="date" wire:model="event.date" />
+                        <x-input id="date" name="date" type="date" wire:model="event.date" wire:loading.attr="disabled" wire:target="saveEvent" />
                         <x-input-error for="date" class="mt-2" />
                     </x-form-control>
 
@@ -69,25 +69,25 @@
                         <x-label for="start_time" value="{{ __('calendar-lang.Starttime') }}" />
                         <x-input id="start_time" name="start_time" type="time" wire:model="event.start_time"
                             wire:change='updateEndTime' min="{{ $schedule['opening'] }}"
-                            max="{{ $schedule['closing'] }}" />
+                            max="{{ $schedule['closing'] }}" wire:loading.attr="disabled" wire:target="saveEvent"/>
                         <x-input-error for="start_time" class="mt-2" />
                     </x-form-control>
 
                     <x-form-control>
                         <x-label for="end_time" value="{{ __('calendar-lang.Endtime') }}" />
-                        <x-input id="end_time" name="end_time" type="time" wire:model="event.end_time" />
+                        <x-input id="end_time" name="end_time" type="time" wire:model="event.end_time" wire:loading.attr="disabled" wire:target="saveEvent"/>
                         <x-input-error for="end_time" class="mt-2" />
                     </x-form-control>
 
                     <x-form-control>
                         <x-label for="price" value="{{ __('calendar-lang.Price') }}" />
-                        <x-input id="price" name="price" type="number" wire:model="event.price" />
+                        <x-input id="price" name="price" type="number" wire:model="event.price" wire:loading.attr="disabled" wire:target="saveEvent"/>
                         <x-input-error for="price" class="mt-2" />
                     </x-form-control>
 
                     <x-form-control>
                         <x-label for="notes" value="{{ __('calendar-lang.Notes') }}" />
-                        <textarea id="notes" name="notes" class="textarea textarea-bordered" wire:model="event.notes"></textarea>
+                        <textarea id="notes" name="notes" class="textarea textarea-bordered" wire:model="event.notes" wire:loading.attr="disabled" wire:target="saveEvent"></textarea>
                         <x-input-error for="notes" class="mt-2" />
                     </x-form-control>
                 </section>
@@ -153,9 +153,15 @@
         <div class="flex flex-row items-center justify-end px-6 py-4">
             <span class="text-xl mr-auto block">{{ __('calendar-lang.total') }}: $ {{ $this->getTotal() }}</span>
 
-            <button class="btn btn-primary px-8" wire:click="saveEvent">
-                {{ __('calendar-lang.Save') }}
+            <button class="btn btn-primary px-8" wire:click="saveEvent" wire:loading.attr="disabled">
+                <span wire:loading wire:target="saveEvent">
+                    Cargando...
+                </span>
+                <span wire:loading.remove wire:target="saveEvent">
+                    {{ __('calendar-lang.Save') }}
+                </span>
             </button>
+
 
         </div>
     </div>
