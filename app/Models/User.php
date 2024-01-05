@@ -71,4 +71,26 @@ class User extends Authenticatable
     {
         return $this->hasMany(Notification::class);
     }
+
+    protected static function booted()
+    {
+        static::created(function ($user) {
+            $user->notifications()->create([
+                "message" => "welcome.notification",
+                "link" => "/dashboard",
+                "image" => "/icon.svg",
+                "icon" => "home",
+                "color" => "#AEFF7A",
+            ]);
+
+            $user->notifications()->create([
+                "message" => "welcome.setup-tenant",
+                "link" => "/tenant/settings",
+                "image" => "/icon.svg",
+                "icon" => "cog-6-tooth",
+                "color" => "#7ACFFF",
+            ]);
+        });
+    }
+
 }
