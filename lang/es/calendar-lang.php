@@ -31,4 +31,5 @@ return [
     'Newcustomer' => 'Nuevo cliente',
     "total" => "Total",
     'Pickone'=>'Seleccionar',
+    "not-available" => "El espacio no está disponible en este momento",
 ];

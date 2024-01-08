@@ -127,6 +127,17 @@ class ShowComponent extends Component
             "price" => "required",
         ])->validate();
 
+        $events = $this->events->where("space_id", $this->event["space_id"])->where("date", $this->event["date"]);
+        foreach ($events as $event) {
+            if (
+                ($this->event["start_time"] >= $event->start_time && $this->event["start_time"] < $event->end_time) ||
+                ($this->event["end_time"] > $event->start_time && $this->event["end_time"] <= $event->end_time)
+            ) {
+                $this->emit("toast", "error", __("calendar-lang.not-available"));
+                return;
+            }
+        }
+
         $event = Event::updateOrCreate(["id" => $this->event["id"] ?? ""], $this->event);
 
         $event->products()->delete();

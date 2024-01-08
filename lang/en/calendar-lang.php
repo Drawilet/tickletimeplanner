@@ -30,5 +30,6 @@ return [
     'Submit' => 'Submit',
     'Newcustomer' => 'New customer',
     "total" => "Total",
-    'Pickone'=>'Pick one',
+    'Pickone' => 'Pick one',
+    "not-available" => "Space is not available at this time",
 ];
