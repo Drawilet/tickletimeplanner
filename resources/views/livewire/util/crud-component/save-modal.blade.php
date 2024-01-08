@@ -55,7 +55,7 @@
             class="btn w-28 mr-2">{{ __('show-lang.cancel') }}</button>
         <button class="btn btn-primary px-8" wire:click="save" wire:loading.attr="disabled">
                 <span wire:loading >
-                    {{ __('auth.cargando') }}...
+                    {{ __('auth.cargando') }}
                 </span>
                 <span wire:loading.remove>
                     {{ __('calendar-lang.Save') }}

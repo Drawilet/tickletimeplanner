@@ -11,7 +11,7 @@
         <li>
             <label class="swap swap-rotate">
                 <!-- this hidden checkbox controls the state -->
-                <input type="checkbox" class="theme-controller" value="synthwave"
+                <input type="checkbox" class="theme-controller sr-only focus:ring-0" value="synthwave"
                     data-toggle-theme="emerald,dim" />
 
                 <!-- sun icon -->
