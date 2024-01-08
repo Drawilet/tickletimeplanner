@@ -155,7 +155,7 @@
 
             <button class="btn btn-primary px-8" wire:click="saveEvent" wire:loading.attr="disabled">
                 <span wire:loading wire:target="saveEvent">
-                    Cargando...
+                    {{ __('auth.cargando') }}...
                 </span>
                 <span wire:loading.remove wire:target="saveEvent">
                     {{ __('calendar-lang.Save') }}
