@@ -93,7 +93,6 @@ class ShowComponent extends Component
                 if ($value === true) $this->event = $this->initialEvent;
                 if ($data) {
                     if (gettype($data) != "array" && array_keys($data->toArray()) > 2) {
-                        error_log("Data is not an array");
                         $this->event = array_merge($this->event, $data->load("products", "payments")->toArray());
                     } else if (isset($data["id"]))
                         $this->event = array_merge(
@@ -128,8 +127,20 @@ class ShowComponent extends Component
             "price" => "required",
         ])->validate();
 
+        $events = $this->events->where("space_id", $this->event["space_id"])->where("date", $this->event["date"]);
+        foreach ($events as $event) {
+            if (
+                ($this->event["start_time"] >= $event->start_time && $this->event["start_time"] < $event->end_time) ||
+                ($this->event["end_time"] > $event->start_time && $this->event["end_time"] <= $event->end_time)
+            ) {
+                $this->emit("toast", "error", __("calendar-lang.not-available"));
+                return;
+            }
+        }
+
         $event = Event::updateOrCreate(["id" => $this->event["id"] ?? ""], $this->event);
 
+        $event->products()->delete();
         foreach ($this->event["products"] as  $product) {
             $event->products()->create([
                 "product_id" => $product["product_id"],
