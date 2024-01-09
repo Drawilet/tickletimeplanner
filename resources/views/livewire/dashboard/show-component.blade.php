@@ -1,4 +1,6 @@
 <div>
+    @livewire('dashboard.news-modal-component')
+
     @include('livewire.dashboard.save-modal')
 
     @livewire('dashboard.calendar-component', [
