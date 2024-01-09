@@ -6,4 +6,8 @@ return[
     'cost'=>'Costo',
     'price'=>'Precio',
     'notes'=>'Notas',
+
+    'search'=> 'Buscar producto...',
+    'create'=> 'Crear producto',
+    'notfound'=> 'Producto no encontrado',
 ];

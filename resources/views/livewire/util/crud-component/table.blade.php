@@ -114,11 +114,11 @@
         </table>
     @else
         <div class="flex flex-col items-center justify-center mt-5">
-            <h2 class="text-2xl opacity-90"> {{__('show-lang.'.$name)}} {{ __('show-lang.no') }} {{__('customer-lang.found')}}</h2>
+            <h2 class="text-2xl opacity-90"> {{ __($name . '-lang.' . "notfound") }}</h2>
             <button wire:click="Modal('save', true)" class=" btn btn-primary py-2 px-4 mt-4">
                 @component('components.icons.plus')
                 @endcomponent
-                {{ __('show-lang.Create') }} {{ __('show-lang.'.$name) }}
+                {{ __($name . '-lang.' . "create") }}
             </button>
         </div>
     @endif

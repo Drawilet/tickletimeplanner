@@ -7,4 +7,8 @@ return [
     'address' => 'Dirección',
     'found'=>'encontrado',
     'notes'=>'Notas',
+
+    'search'=> 'Buscar cliente...',
+    'create'=> 'Crear cliente',
+    'notfound'=> 'Cliente no encontrado',
 ];
