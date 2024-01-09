@@ -12,7 +12,7 @@
             <label class="swap swap-rotate">
                 <!-- this hidden checkbox controls the state -->
                 <input type="checkbox" class="theme-controller sr-only focus:ring-0" value="synthwave"
-                    data-toggle-theme="emerald,dim" />
+                    data-toggle-theme="winter,dark" />
 
                 <!-- sun icon -->
                 <svg class="swap-on fill-current w-10 h-10" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
