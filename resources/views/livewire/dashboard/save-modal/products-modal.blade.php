@@ -15,13 +15,7 @@
             </tbody>
         </table>
         <div class="modal-action">
-            <form method="dialog">
-                <button class="btn">{{ __('calendar-lang.close') }}</button>
-            </form>
+            <button class="btn" wire:click="Modal('addProduct', false)">{{ __('calendar-lang.close') }}</button>
         </div>
-
-        <form method="dialog" class="modal-backdrop" wire:click="Modal('addProduct', false)">
-            <button>{{ __('calendar-lang.close') }}</button>
-        </form>
     </div>
 </dialog>
