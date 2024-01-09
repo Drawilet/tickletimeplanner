@@ -4,4 +4,8 @@ return [
     'concept' => 'Concepto',
     'amount' => 'Monto',
     'notes' => 'Notas',
+
+    'search'=> 'Buscar pago...',
+    'create'=> 'Crear pago',
+    'notfound'=> 'Pago no encontrado',
 ];

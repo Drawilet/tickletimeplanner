@@ -6,4 +6,8 @@ return [
     'cost' => 'Cost',
     'price' => 'Price',
     'notes' => 'Notes',
+
+    'search'=> 'Search product...',
+    'create'=> 'Create product',
+    'notfound'=> 'Product not found',
 ];

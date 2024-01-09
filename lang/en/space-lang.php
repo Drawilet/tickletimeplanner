@@ -10,4 +10,8 @@ return [
     'schedule' => 'Schedule',
     'color' => 'Color',
     'notes' => 'Notes',
+
+    'search'=> 'Search space...',
+    'create'=> 'Create space',
+    'notfound'=> 'Space not found',
 ];

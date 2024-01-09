@@ -15,4 +15,8 @@ return[
     'payments.manage'=>'Administrar Pagos',
     'spaces.show'=>'Mostrar Espacios',
     'spaces.manage'=>'Administrar Espacios',
+
+    'search'=> 'Buscar usuario...',
+    'create'=> 'Crear usuario',
+    'notfound'=> 'Usuario no encontrado',
 ];
