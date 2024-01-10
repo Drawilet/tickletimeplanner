@@ -37,9 +37,9 @@
 
             <div class="modal-action mt-4">
                 <button class="btn btn-secondary rounded-md px-4 py-2" id="later-button">
-                    Remind me later
+                    {{ __('news-modal.Remind') }}
                 </button>
-                <button class="btn btn-primary rounded-md px-4 py-2" id="tomorrow-button">Close</button>
+                <button class="btn btn-primary rounded-md px-4 py-2" id="tomorrow-button">{{ __('news-modal.close') }}</button>
             </div>
         </div>
     </dialog>
