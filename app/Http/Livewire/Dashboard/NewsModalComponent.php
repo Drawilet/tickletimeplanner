@@ -22,4 +22,23 @@ class NewsModalComponent extends Component
     {
         return view('livewire.dashboard.news-modal-component');
     }
+
+    public function getTotal($event)
+    {
+        $total = $event["price"] ?? 0;
+        foreach ($event["products"] as $data) {
+            $total += $this->products->find($data["product_id"])->price * $data["quantity"];
+        }
+        return $total;
+    }
+
+    public function getRemaining($id)
+    {
+        $event= $this->events->find($id);
+        $remaining = $this->getTotal($event);
+        foreach ($event["payments"] as $payment) {
+            $remaining -= $payment["amount"];
+        }
+        return $remaining;
+    }
 }
