@@ -9,8 +9,14 @@
     </div>
 
     <div>
-        @livewire('notification-bar-component')
+        @livewire('news-component')
+
         <span class="mx-2"></span>
+
+        @livewire('notification-bar-component')
+
+        <span class="mx-2"></span>
+
         <x-dropdown align="right" width="48">
             <x-slot name="trigger">
                 <span class="inline-flex rounded-md">
