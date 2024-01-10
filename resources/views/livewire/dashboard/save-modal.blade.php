@@ -2,7 +2,7 @@
 <div class="modal" role="dialog">
     <div class="modal-box">
         <div class="px-6 py-4">
-            <div class="text-lg font-medium">
+            <div class="flex justify-between items-center">
                 <h3 class="text-2xl">
                     @isset($event['date'])
                         {{ \Carbon\Carbon::parse($event['date'])->format('d') }},
@@ -11,6 +11,12 @@
                     @endisset
 
                 </h3>
+
+                @isset($event['id'])
+                    <button class="btn btn-error" wire:click="Modal('delete', true)">
+                        <x-icons.trash />
+                    </button>
+                @endisset
 
             </div>
 

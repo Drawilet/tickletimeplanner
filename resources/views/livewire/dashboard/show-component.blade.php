@@ -1,4 +1,6 @@
 <div>
+    @include('livewire.dashboard.delete-modal')
+
     @livewire('dashboard.news-modal-component')
 
     @include('livewire.dashboard.save-modal')

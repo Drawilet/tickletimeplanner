@@ -32,4 +32,10 @@ return [
     "total" => "Total",
     'Pickone' => 'Pick one',
     "not-available" => "Space is not available at this time",
+
+    "delete-title" => "Are you sure you want to delete :name?",
+    "payments" => "It has :payments_count payments.",
+    "delete" => "Delete",
+    "cancel" => "Cancel",
+    "delete-success" => "Event deleted successfully!",
 ];
