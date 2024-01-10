@@ -23,6 +23,7 @@ class ShowComponent extends Component
 
     public $modals = [
         "save" => false,
+        "delete" => false,
         "addProduct" => false,
         "newCustomer" => false,
     ];
@@ -105,6 +106,13 @@ class ShowComponent extends Component
 
             case 'newCustomer':
                 if ($value === true) $this->customer = $this->initialCustomer;
+                break;
+
+            case 'delete':
+                if ($value === true) {
+                    $this->event["payments_count"] = count($this->event["payments"]);
+                    $this->modals["save"] = false;
+                }
                 break;
         }
 
@@ -272,5 +280,22 @@ class ShowComponent extends Component
     {
         if ($this->event["end_time"]) return;
         $this->event["end_time"] = $this->event["start_time"];
+    }
+
+    public function deleteEvent($id)
+    {
+        $this->Modal("delete", false);
+
+        $event = Event::find($id);
+        if (!$event) return;
+
+        foreach ($event->payments as $payment)
+            $payment->delete();
+
+        $event->delete();
+
+        event(new EventEvent("delete", $this->event));
+
+        $this->emit("toast", "success", __('calendar-lang.delete-success'));
     }
 }
