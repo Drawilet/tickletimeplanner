@@ -1,4 +1,8 @@
-<div>
+<div class="flex items-center">
+    <button id="toggle-news">
+        <x-icons.newspaper />
+    </button>
+
     <dialog id="news_modal" class="modal modal-bottom sm:modal-middle">
         <div class="modal-box">
             <h2 class="text-3xl text-center text-blue-500 mb-4">{{ __('news-modal.Próximoseventos') }}</h2>
@@ -61,8 +65,13 @@
             modal.close()
         }
 
+        function toggleNews() {
+            modal.showModal()
+        }
+
+        document.getElementById('toggle-news').addEventListener('click', toggleNews)
+
         document.getElementById('later-button').addEventListener('click', () => close('later'))
         document.getElementById('tomorrow-button').addEventListener('click', () => close('tomorrow'))
     </script>
-
 </div>
