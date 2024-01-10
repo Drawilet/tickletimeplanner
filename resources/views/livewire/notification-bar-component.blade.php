@@ -1,6 +1,6 @@
 <x-dropdown align="right" width="w-80">
     <x-slot name="trigger">
-        <button class="flex items-center relative">
+        <button class="flex items-center relative btn btn-circle">
             <x-icons.bell />
 
             @if ($hasUnreadNotifications)

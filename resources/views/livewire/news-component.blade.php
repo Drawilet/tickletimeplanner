@@ -1,5 +1,5 @@
 <div class="flex items-center">
-    <button id="toggle-news">
+    <button id="toggle-news" class="btn btn-circle">
         <x-icons.newspaper />
     </button>
 
