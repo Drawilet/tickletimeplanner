@@ -26,9 +26,16 @@
 
                         </p>
                         <p class="text-white-500 mt-1">
+                            
+                            @if ($this->getRemaining($event->id) == 0)
+    
+                            @else
                             <span>{{ __('news-modal.pago') }}</span>
-                            <span
-                                class="text-green-500 font-semibold mt-1">${{ $this->getRemaining($event->id) }}</span>
+                                <span class="text-red-500 font-semibold mt-1">
+                                ${{ $this->getRemaining($event->id) }}    
+                            </span>
+                            @endif
+                            
                         </p>
 
                     </li>
