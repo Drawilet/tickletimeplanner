@@ -2,16 +2,24 @@
 
 namespace App\Http\Livewire;
 
+use App\Http\Socket\WithCrudSockets;
 use App\Models\Event;
 use Carbon\Carbon;
 use Livewire\Component;
 
 class NewsComponent extends Component
 {
+    use WithCrudSockets;
+    protected $listeners = [
+        "socket" => "handleSocket",
+    ];
+
     public $events;
 
     public function mount()
     {
+        $this->addSocketListener("event", ["useItemsKey" => false, "get" => false]);
+
         $this->events = Event::whereBetween("date", [
             Carbon::now()->format("Y-m-d"),
             Carbon::now()->addDays(1)->format("Y-m-d")

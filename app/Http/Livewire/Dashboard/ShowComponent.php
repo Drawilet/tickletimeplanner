@@ -232,6 +232,8 @@ class ShowComponent extends Component
         $this->payment = $this->initialPayment;
 
         $this->emit("toast", "success", "Payment added successfully");
+
+        event(new EventEvent("update", $this->event));
     }
 
     public function newCustomer()
