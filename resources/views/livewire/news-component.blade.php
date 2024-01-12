@@ -28,7 +28,7 @@
                         <p class="text-white-500 mt-1">
                             <span>{{ __('news-modal.pago') }}</span>
                             <span
-                                class="text-green-500 font-semibold mt-1">${{ $this->getRemaining($event->id) }}</span>
+                                class="text-red-500 font-semibold mt-1">${{ $this->getRemaining($event->id) }}</span>
                         </p>
 
                     </li>
