@@ -50,7 +50,8 @@ class CrudComponent extends Component
         $this->Model = $Model;
         $this->ItemEvent = $ItemEvent;
 
-        $this->addSocketListener(class_basename($this->Model), ["get" => true]);
+        $this->addSocketListener(class_basename($this->Model), ["get" => false]);
+        $this->items = $this->Model::where("tenant_id", auth()->user()->tenant_id)->get();
 
         $this->initialData = ["id"  => ""];
         $this->initialFiles = [];
@@ -108,7 +109,6 @@ class CrudComponent extends Component
 
     public function Modal($modal, $value, $id = null)
     {
-
         if ($value == true) {
             $this->clean();
             switch ($modal) {
@@ -210,7 +210,7 @@ class CrudComponent extends Component
             $items = $item->$foreign;
             if (count($items) != 0) {
                 $this->modals["error"] = true;
-                $this->emit("toast", "error", __('toast-lang.cannotdelete') . " " . __("show-lang.".strtolower(($this->Name))) . " " . __('toast-lang.because') . " " . __('toast-lang.has') . " " . $foreign);
+                $this->emit("toast", "error", __('toast-lang.cannotdelete') . " " . __("show-lang." . strtolower(($this->Name))) . " " . __('toast-lang.because') . " " . __('toast-lang.has') . " " . $foreign);
                 return;
             }
         }

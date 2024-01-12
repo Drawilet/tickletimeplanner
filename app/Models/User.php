@@ -93,4 +93,14 @@ class User extends Authenticatable
         });
     }
 
+    static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            if (auth()->check()) {
+                $model->tenant_id = auth()->user()->tenant_id;
+            }
+        });
+    }
 }
