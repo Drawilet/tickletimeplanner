@@ -39,7 +39,8 @@
                 <button class="btn btn-secondary rounded-md px-4 py-2" id="later-button">
                     {{ __('news-modal.Remind') }}
                 </button>
-                <button class="btn btn-primary rounded-md px-4 py-2" id="tomorrow-button">{{ __('news-modal.close') }}</button>
+                <button class="btn btn-primary rounded-md px-4 py-2"
+                    id="tomorrow-button">{{ __('news-modal.close') }}</button>
             </div>
         </div>
     </dialog>
@@ -74,7 +75,4 @@
         document.getElementById('later-button').addEventListener('click', () => close('later'))
         document.getElementById('tomorrow-button').addEventListener('click', () => close('tomorrow'))
     </script>
-
-    @component('components.util.crud-socket-scripts', ['socketListeners' => $socketListeners])
-    @endcomponent
 </div>
