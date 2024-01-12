@@ -11,11 +11,9 @@
     <div>
         @livewire('news-component')
 
-        <span class="mx-2"></span>
-
         @livewire('notification-bar-component')
 
-        <span class="mx-2"></span>
+        <span class="mr-2"></span>
 
         <x-dropdown align="right" width="48">
             <x-slot name="trigger">

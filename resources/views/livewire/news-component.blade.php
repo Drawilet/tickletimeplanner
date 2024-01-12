@@ -1,12 +1,12 @@
 <div class="flex items-center">
-    <button id="toggle-news">
+    <button id="toggle-news" class="btn btn-circle">
         <x-icons.newspaper />
     </button>
 
     <dialog id="news_modal" class="modal modal-bottom sm:modal-middle">
-        <div class="modal-box">
+        <div class="modal-box overflow-hidden">
             <h2 class="text-3xl text-center text-blue-500 mb-4">{{ __('news-modal.Próximoseventos') }}</h2>
-            <ul class="space-y-4">
+            <ul class="space-y-4 max-h-96 overflow-y-scroll">
                 @foreach ($events as $event)
                     <li class="p-4 rounded-md shadow-md">
                         <h3 class="flex items-center text-xl text-blue-600">
@@ -74,4 +74,7 @@
         document.getElementById('later-button').addEventListener('click', () => close('later'))
         document.getElementById('tomorrow-button').addEventListener('click', () => close('tomorrow'))
     </script>
+
+    @component('components.util.crud-socket-scripts', ['socketListeners' => $socketListeners])
+    @endcomponent
 </div>
