@@ -33,7 +33,7 @@ class CalendarComponent extends LivewireCalendar
                 'id' => $event["id"],
                 'title' => $event["name"],
                 "location" => $event["space"]["name"],
-                'description' => substr($event["start_time"], 0, -3) . ' - ' . substr($event["end_time"], 0, -3),
+                'description' => \Carbon\Carbon::createFromFormat('H:i:s', $event["start_time"])->format('g:i A') . ' - ' . \Carbon\Carbon::createFromFormat('H:i:s', $event["end_time"])->format('g:i A'),
                 'date' => $event["date"],
                 'color' => $event["space"]["color"],
                 "start_time" => $event["start_time"],
