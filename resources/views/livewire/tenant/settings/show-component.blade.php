@@ -10,9 +10,9 @@
     <div class="w-full h-[250px]">
         <div class="mx-auto w-full h-[250px] bg-base-300 rounded-md overflow-hidden relative">
             @if ($data['background_image'])
-                <img src="{{ gettype($data['background_image']) == 'object' ? $data['background_image']->temporaryUrl() : $data['background_image'] }}"
-                    class="w-full">
-            @endif
+    <img src="{{ gettype($data['background_image']) == 'object' ? $data['background_image']->temporaryUrl() : $data['background_image'] }}"
+        class="w-full h-full object-cover">
+@endif
 
             <label for="background_image"
                 class="w-full h-5/6 bottom-0 bg-base-100 absolute flex items-center justify-center opacity-0 hover:opacity-75 transition duration-150 ease-in-out">
@@ -26,14 +26,14 @@
     <div class="flex flex-col items-center -mt-20">
         <div class="mx-auto h-32 w-32 bg-base-300 rounded-full overflow-hidden relative">
             @if ($data['profile_image'])
-                <img src="{{ gettype($data['profile_image']) == 'object' ? $data['profile_image']->temporaryUrl() : $data['profile_image'] }}"
-                    alt="" class="mx-auto overflow-hidden rounded-full max-h-32">
-            @endif
+    <img src="{{ gettype($data['profile_image']) == 'object' ? $data['profile_image']->temporaryUrl() : $data['profile_image'] }}"
+        alt="" class="mx-auto overflow-hidden rounded-full max-h-32 object-cover">
+@endif
 
             <label for="profile_image"
-                class="w-full h-1/2 bottom-0 bg-base-100 absolute flex items-center justify-center opacity-0 hover:opacity-75 transition duration-150 ease-in-out">
-                <x-icons.arrow-up-tray class="w-10" />
-            </label>
+    class="w-full bottom-0 bg-base-100 absolute flex items-center justify-center opacity-0 hover:opacity-75 transition duration-150 ease-in-out">
+    <x-icons.arrow-up-tray class="w-10" />
+</label>
 
             <input wire:model="data.profile_image" type="file" id="profile_image" class="hidden">
         </div>

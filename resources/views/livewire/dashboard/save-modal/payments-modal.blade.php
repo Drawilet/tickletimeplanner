@@ -9,6 +9,7 @@
         <h4 class="text-lg text-center">{{ __('calendar-lang.total') }}: {{ $this->getTotal() }} </h4>
 
         <ul class="menu">
+        <div class=" overflow-y-auto max-h-48">
             @isset($event['payments'])
                 @foreach ($event['payments'] as $payment)
                     <li>
@@ -20,7 +21,7 @@
                     </li>
                 @endforeach
             @endisset
-
+            </div>
             <label class="divider divider-base-200"></label>
             <li>
                 <a class="flex justify-between">
