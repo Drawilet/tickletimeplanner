@@ -48,7 +48,8 @@ trait WithCrudSockets
     public function handleSocket($key, $e)
     {
         $type = $this->registry[$key];
-        $socket = $this->socketListeners[$key];
+        $socket = isset($this->socketListeners[$key]) ? $this->socketListeners[$key] : null;
+        if (!$socket) return;
 
         $Model = $type["Model"];
 
