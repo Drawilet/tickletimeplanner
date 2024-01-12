@@ -74,4 +74,7 @@
         document.getElementById('later-button').addEventListener('click', () => close('later'))
         document.getElementById('tomorrow-button').addEventListener('click', () => close('tomorrow'))
     </script>
+
+    @component('components.util.crud-socket-scripts', ['socketListeners' => $socketListeners])
+    @endcomponent
 </div>
