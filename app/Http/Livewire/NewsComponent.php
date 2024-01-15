@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Http\Socket\WithCrudSockets;
 use App\Models\Event;
+use App\Models\EventProduct;
 use Carbon\Carbon;
 use Livewire\Component;
 
@@ -14,11 +15,12 @@ class NewsComponent extends Component
         "socket" => "handleSocket",
     ];
 
-    public $events;
+    public $events, $products;
 
     public function mount()
     {
-        $this->addSocketListener("event", ["useItemsKey" => false, "get" => false]);
+        $this->addSocketListener("event", ["useItemsKey" => false, "get" => false, "afterUpdate" => "getProducts"]);
+        $this->addSocketListener("product", ["useItemsKey" => false, "get" => true]);
 
         $this->events = Event::whereBetween("date", [
             Carbon::now()->format("Y-m-d"),
@@ -48,5 +50,15 @@ class NewsComponent extends Component
             $remaining -= $payment["amount"];
         }
         return $remaining;
+    }
+
+    public function getProducts()
+    {
+        $event = $this->events->last();
+        $products = EventProduct::where("event_id", $event->id)->get();
+        $event->products = $products;
+
+        $this->events->pop();
+        $this->events->push($event);
     }
 }
