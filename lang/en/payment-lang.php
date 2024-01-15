@@ -5,7 +5,8 @@ return [
     'amount' => 'Amount',
     'notes' => 'Notes',
 
-    'search'=> 'Search payment...',
-    'create'=> 'Create payment',
-    'notfound'=> 'Payment not found',
+    'search' => 'Search payment...',
+    'create' => 'Create payment',
+    "update" => "Update payment",
+    'notfound' => 'Payment not found',
 ];
