@@ -35,6 +35,14 @@ class SidebarComponent extends Component
             "icon" => "user-group",
             "route" => "tenant.users.show"
         ],
+        
+        'AdminMange',
+
+        "sp-admins" => [
+            "icon" => "SpAdmin",
+            "route" => "tenant.SpAdmin.show"
+        ],
+        
     ];
 
     /**
