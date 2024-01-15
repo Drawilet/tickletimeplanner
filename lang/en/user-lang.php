@@ -16,7 +16,8 @@ return [
     'spaces.show' => 'Show Spaces',
     'spaces.manage' => 'Manage Spaces',
 
-    'search'=> 'Search user...',
-    'create'=> 'Create user',
-    'notfound'=> 'User not found',
+    'search' => 'Search user...',
+    'create' => 'Create user',
+    "update" => "Update user",
+    'notfound' => 'User not found',
 ];

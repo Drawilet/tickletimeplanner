@@ -11,7 +11,8 @@ return [
     'color' => 'Color',
     'notes' => 'Notas',
 
-    'search'=> 'Buscar espacio...',
-    'create'=> 'Crear espacio',
-    'notfound'=> 'Espacio no encontrado',
+    'search' => 'Buscar espacio...',
+    'create' => 'Crear espacio',
+    "update" => "Actualizar espacio",
+    'notfound' => 'Espacio no encontrado',
 ];

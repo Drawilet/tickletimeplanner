@@ -5,10 +5,11 @@ return [
     'email' => 'Email',
     'phone' => 'Phone',
     'address' => 'Address',
-    'Customer'=>'Customer',
-    'notes'=>'Notes',
+    'Customer' => 'Customer',
+    'notes' => 'Notes',
 
-    'search'=> 'Search customer...',
-    'create'=> 'Create customer',
-    'notfound'=> 'Customer not found',
+    'search' => 'Search customer...',
+    'create' => 'Create customer',
+    "update" => "Update customer",
+    'notfound' => 'Customer not found',
 ];

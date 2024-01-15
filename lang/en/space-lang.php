@@ -11,7 +11,8 @@ return [
     'color' => 'Color',
     'notes' => 'Notes',
 
-    'search'=> 'Search space...',
-    'create'=> 'Create space',
-    'notfound'=> 'Space not found',
+    'search' => 'Search space...',
+    'create' => 'Create space',
+    "update" => "Update space",
+    'notfound' => 'Space not found',
 ];
