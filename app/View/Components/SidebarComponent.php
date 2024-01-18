@@ -6,6 +6,8 @@ use Illuminate\View\Component;
 
 class SidebarComponent extends Component
 {
+    public $currentRoute;
+
     public $sidebar = [
         "dashboard" => [
             "icon" => "home",
@@ -58,7 +60,7 @@ class SidebarComponent extends Component
      */
     public function __construct()
     {
-        //
+        $this->currentRoute = \Illuminate\Support\Facades\Route::currentRouteName();
     }
 
     /**
@@ -68,6 +70,6 @@ class SidebarComponent extends Component
      */
     public function render()
     {
-        return view('components.sidebar-component');
+        return view('components.sidebar-component', ['currentRoute' => $this->currentRoute]);
     }
 }
