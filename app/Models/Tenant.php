@@ -16,10 +16,9 @@ class Tenant extends Model
         'email',
         'background_image',
         'profile_image',
-        'social_nets',
+        /*  'social_nets', */
     ];
 
     protected $casts = [
-        'social_nets' => 'array',
-    ];
+        /*       'social_nets' => 'array', */];
 }
