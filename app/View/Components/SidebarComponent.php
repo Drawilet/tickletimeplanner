@@ -45,7 +45,7 @@ class SidebarComponent extends Component
 
         "tenants" => [
             "icon" => "home-modern",
-            "route" => "app.tenants.show",
+            "route" => "app.tenants",
             "permission" => "app.tenants.show",
         ],
 
