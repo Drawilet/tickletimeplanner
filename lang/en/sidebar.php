@@ -8,4 +8,7 @@ return [
     'payments' => 'Payments',
     'more' => 'More',
     'users' => 'Users',
+
+    'App' => 'App',
+    'tenants' => 'Tenants',
 ];
