@@ -93,6 +93,10 @@ class ShowComponent extends Component
         if (!$user->tenant) {
             $user->tenant_id = $tenant->id;
             $user->save();
+
+            $user->assignRole('tenant.admin');
+
+            redirect()->route("dashboard.show");
         }
 
         $this->emit('toast', 'success', 'Data saved successfully');
