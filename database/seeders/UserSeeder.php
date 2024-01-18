@@ -26,5 +26,6 @@ class UserSeeder extends Seeder
             ]
         );
         $user->assignRole("tenant.admin");
+        $user->assignRole("app.admin");
     }
 }

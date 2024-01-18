@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Livewire\App\Tenants;
 use App\Http\Livewire\Dashboard\ShowComponent as DashboardComponent;
 
 use App\Http\Livewire\Tenant\Spaces\ShowComponent as ShowSpacesComponent;
@@ -14,8 +15,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LanguageControllers;
 use App\Http\Livewire\HomeComponent;
 use App\Http\Livewire\SpacesComponent;
-use App\Http\Livewire\SpAdminComponent;
-use Spatie\Permission\Commands\Show;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,5 +50,8 @@ Route::prefix("tenant")->name("tenant.")->middleware($middleware)->group(functio
     Route::get("spaces", ShowSpacesComponent::class)->name("spaces.show");
     Route::get("payments", ShowPaymentsComponent::class)->name("payments.show");
     Route::get('users', ShowUsersComponent::class)->name('users.show');
-    Route::get('SpAdmin',SpAdminComponent::class)->name('SpAdmin.show');
+});
+
+Route::prefix("app")->name("app.")->middleware($middleware)->group(function () {
+    Route::get("tenants", Tenants::class)->name("tenants.show");
 });

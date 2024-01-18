@@ -16,33 +16,39 @@ class SidebarComponent extends Component
 
         "customers" => [
             "icon" => "brief-case",
-            "route" => "tenant.customers.show"
+            "route" => "tenant.customers.show",
+            "permission" => "tenant.customers.show",
         ],
         "products" => [
             "icon" => "shopping-bag",
-            "route" => "tenant.products.show"
+            "route" => "tenant.products.show",
+            "permission" => "tenant.products.show",
         ],
         "spaces" => [
             "icon" => "map-pin",
-            "route" => "tenant.spaces.show"
+            "route" => "tenant.spaces.show",
+            "permission" => "tenant.spaces.show",
         ],
 
         "payments" => [
             "icon" => "bank-notes",
-            "route" => "tenant.payments.show"
+            "route" => "tenant.payments.show",
+            "permission" => "tenant.payments.show",
         ],
         "users" => [
             "icon" => "user-group",
-            "route" => "tenant.users.show"
+            "route" => "tenant.users.show",
+            "permission" => "tenant.users.show",
         ],
-        
-        'AdminMange',
 
-        "sp-admins" => [
-            "icon" => "SpAdmin",
-            "route" => "tenant.SpAdmin.show"
+        'App',
+
+        "tenants" => [
+            "icon" => "home-modern",
+            "route" => "app.tenants.show",
+            "permission" => "app.tenants.show",
         ],
-        
+
     ];
 
     /**
