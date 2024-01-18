@@ -1,6 +1,8 @@
 <?php
 
-use App\Http\Livewire\App\Tenants;
+use App\Http\Livewire\App\TenantComponent;
+use App\Http\Livewire\App\Tenants\ShowComponent as ShowTenantComponent;
+
 use App\Http\Livewire\Dashboard\ShowComponent as DashboardComponent;
 
 use App\Http\Livewire\Tenant\Spaces\ShowComponent as ShowSpacesComponent;
@@ -53,5 +55,8 @@ Route::prefix("tenant")->name("tenant.")->middleware($middleware)->group(functio
 });
 
 Route::prefix("app")->name("app.")->middleware($middleware)->group(function () {
-    Route::get("tenants", Tenants::class)->name("tenants.show");
+    Route::get("tenants", TenantComponent::class)->name("tenants");
+
+    // /app/tenants/[id]
+    Route::get("tenants/{id}", ShowTenantComponent::class)->name("tenants.show");
 });
