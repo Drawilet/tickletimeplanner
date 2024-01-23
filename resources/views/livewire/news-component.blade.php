@@ -3,12 +3,12 @@
         <x-icons.newspaper />
     </button>
 
-    <dialog id="news_modal" class="modal modal-bottom sm:modal-middle">
+    <dialog id="news_modal" class="modal modal-bottom sm:modal-middle" @if ($modals['news']) open @endif>
         <div class="modal-box overflow-hidden">
             <h2 class="text-3xl text-center text-blue-500 mb-4">{{ __('news-modal.title') }}</h2>
             <ul class="space-y-4 max-h-96 overflow-y-scroll">
                 @foreach ($events as $event)
-                    <li class="p-4 rounded-md shadow-md">
+                    <li class="p-4 rounded-md shadow-md cursor-pointer" wire:click='openEvent("{{ $event->id }}")'>
                         <h3 class="flex items-center text-xl text-blue-600">
                             <span class="mr-2">{{ $event->name }}</span>
                             <span
@@ -56,14 +56,17 @@
         </div>
     </dialog>
 
-    <script>
-        const modal = document.getElementById('news_modal')
+    <script type="module">
+        function toggleNews(value) {
+            window.livewire.emit("toggleNews", value)
+        }
+
         const cookieKey = "news_date"
 
         const cookie = document.cookie.split('; ').find(row => row.startsWith(cookieKey))
         const cookieValue = cookie ? cookie.split('=')[1] : null
 
-        if (!cookieValue) modal.showModal()
+        if (!cookieValue) toggleNews(true)
 
         function close(when) {
             const date = new Date()
@@ -74,14 +77,11 @@
                 date.setHours(date.getHours() + 6)
 
             document.cookie = `${cookieKey}=${date}; expires=${date.toUTCString()}; path=/`
-            modal.close()
+            toggleNews(false)
         }
 
-        function toggleNews() {
-            modal.showModal()
-        }
 
-        document.getElementById('toggle-news').addEventListener('click', toggleNews)
+        document.getElementById('toggle-news').addEventListener('click', () => toggleNews(true))
 
         document.getElementById('later-button').addEventListener('click', () => close('later'))
         document.getElementById('tomorrow-button').addEventListener('click', () => close('tomorrow'))

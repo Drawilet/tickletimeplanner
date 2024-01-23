@@ -13,6 +13,11 @@ class NewsComponent extends Component
     use WithCrudSockets;
     protected $listeners = [
         "socket" => "handleSocket",
+        "toggleNews" => "toggleNews"
+    ];
+
+    public $modals = [
+        "news" => false,
     ];
 
     public $events, $products;
@@ -60,5 +65,18 @@ class NewsComponent extends Component
 
         $this->events->pop();
         $this->events->push($event);
+    }
+
+
+    public function toggleNews($value)
+    {
+        $this->modals["news"] = $value;
+    }
+
+
+    public function openEvent($id)
+    {
+        $this->toggleNews(false);
+        $this->emit("Modal", "save", true, ["id" => $id]);
     }
 }
