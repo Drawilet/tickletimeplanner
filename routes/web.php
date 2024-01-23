@@ -47,16 +47,20 @@ Route::middleware($middleware)->group(function () {
 Route::prefix("tenant")->name("tenant.")->middleware($middleware)->group(function () {
     Route::get("settings", ShowSettingsComponent::class)->name("settings.show");
 
-    Route::get('customers', ShowCustomersComponent::class)->name('customers.show');
-    Route::get('products', ShowProductsComponent::class)->name('products.show');
-    Route::get("spaces", ShowSpacesComponent::class)->name("spaces.show");
-    Route::get("payments", ShowPaymentsComponent::class)->name("payments.show");
-    Route::get('users', ShowUsersComponent::class)->name('users.show');
+    Route::middleware("permission:tenant.customers.show")->get('customers', ShowCustomersComponent::class)->name('customers.show');
+    Route::middleware("permission:tenant.products.show")->get('products', ShowProductsComponent::class)->name('products.show');
+    Route::middleware("permission:tenant.spaces.show")->get("spaces", ShowSpacesComponent::class)->name("spaces.show");
+    Route::middleware("permission:tenant.payments.show")->get("payments", ShowPaymentsComponent::class)->name("payments.show");
+    Route::middleware("permission:tenant.users.show")->get('users', ShowUsersComponent::class)->name('users.show');
 });
 
-Route::prefix("app")->name("app.")->middleware($middleware)->group(function () {
-    Route::get("tenants", TenantComponent::class)->name("tenants");
+Route
+    ::prefix("app")
+    ->name("app.")
+    ->middleware([...$middleware, "role:app.admin", "permission:app.tenants.show"])
+    ->group(function () {
+        Route::get("tenants", TenantComponent::class)->name("tenants");
 
-    // /app/tenants/[id]
-    Route::get("tenants/{id}", ShowTenantComponent::class)->name("tenants.show");
-});
+        // /app/tenants/[id]
+        Route::get("tenants/{id}", ShowTenantComponent::class)->name("tenants.show");
+    });
