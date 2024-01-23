@@ -94,7 +94,10 @@ class ShowComponent extends Component
                 if ($value === true) $this->event = $this->initialEvent;
                 if ($data) {
                     if (gettype($data) != "array" && array_keys($data->toArray()) > 2) {
-                        $this->event = array_merge($this->event, $data->load("products", "payments")->toArray());
+                        $this->event = array_merge(
+                            $this->event,
+                            $data->load("products", "payments")->toArray()
+                        );
                     } else if (isset($data["id"]))
                         $this->event = array_merge(
                             $this->event,
@@ -155,6 +158,9 @@ class ShowComponent extends Component
                 "quantity" => $product["quantity"],
             ]);
         }
+
+        if (strlen($event["start_time"]) == 5) $event["start_time"] .= ":00";
+        if (strlen($event["end_time"]) == 5) $event["end_time"] .= ":00";
 
         event(new EventEvent(isset($this->event["id"]) ? "update" : "create", $event));
 
