@@ -27,12 +27,17 @@
                         </p>
                         <p class="text-white-500 mt-1">
 
-                            @if ($this->getRemaining($event->id) == 0)
-                            @else
+                            @php
+                                $remaining = $this->getRemaining($event->id);
+                            @endphp
+
+                            @if ($remaining > 0)
                                 <span>{{ __('news-modal.payment-message') }}</span>
                                 <span class="text-red-500 font-semibold mt-1">
-                                    ${{ $this->getRemaining($event->id) }}
+                                    ${{ $remaining }}
                                 </span>
+                            @else
+                                <span>{{ __('news-modal.paid') }}</span>
                             @endif
 
                         </p>
