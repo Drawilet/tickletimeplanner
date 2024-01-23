@@ -43,8 +43,6 @@ class SidebarComponent extends Component
             "permission" => "tenant.users.show",
         ],
 
-        'App',
-
         "tenants" => [
             "icon" => "home-modern",
             "route" => "app.tenants",
