@@ -1,10 +1,9 @@
 <?php
 return [
+    'title' => 'Próximos eventos',
+    'message' => 'El evento se llevará a cabo el día ',
+    'payment-message' => 'Resta por liquidar la cantidad de ',
 
-    'Próximoseventos' => 'Próximos eventos',
-    'dia'=>'Está a punto de empezar su evento el día ',
-    'pago'=>'Y le falta por pagar:',
-    'Remind' => 'Recordarme',
+    'remind' => 'Recordarme',
     'close' => 'Cerrar',
-
 ];

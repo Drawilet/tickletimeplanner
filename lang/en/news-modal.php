@@ -1,10 +1,9 @@
 <?php
 return [
+    'title' => 'Upcoming events',
+    'message' => 'The event will take place on ',
+    'payment-message' => 'The outstanding amount for settlement is ',
 
-   'Próximoseventos' => 'Upcoming events',
-    'dia'=>'You are about to start your event on ',
-    'pago'=>'And you have to pay:',
-    'Remind' => 'Remind me later',
+    'remind' => 'Remind me later',
     'close' => 'Close',
-
 ];

@@ -5,7 +5,7 @@
 
     <dialog id="news_modal" class="modal modal-bottom sm:modal-middle">
         <div class="modal-box overflow-hidden">
-            <h2 class="text-3xl text-center text-blue-500 mb-4">{{ __('news-modal.Próximoseventos') }}</h2>
+            <h2 class="text-3xl text-center text-blue-500 mb-4">{{ __('news-modal.title') }}</h2>
             <ul class="space-y-4 max-h-96 overflow-y-scroll">
                 @foreach ($events as $event)
                     <li class="p-4 rounded-md shadow-md">
@@ -15,7 +15,7 @@
                                 class="w-3 h-3 rounded-full"style="background-color: {{ $event->space->color }}"></span>
                         </h3>
                         <p class="text-white-600 mt-2">
-                            <span>{{ __('news-modal.dia') }}</span>
+                            <span>{{ __('news-modal.message') }}</span>
                             <span>
                                 @isset($event['date'])
                                     {{ \Carbon\Carbon::parse($event['date'])->format('d') }},
@@ -26,16 +26,15 @@
 
                         </p>
                         <p class="text-white-500 mt-1">
-                            
+
                             @if ($this->getRemaining($event->id) == 0)
-    
                             @else
-                            <span>{{ __('news-modal.pago') }}</span>
+                                <span>{{ __('news-modal.payment-message') }}</span>
                                 <span class="text-red-500 font-semibold mt-1">
-                                ${{ $this->getRemaining($event->id) }}    
-                            </span>
+                                    ${{ $this->getRemaining($event->id) }}
+                                </span>
                             @endif
-                            
+
                         </p>
 
                     </li>
@@ -44,7 +43,7 @@
 
             <div class="modal-action mt-4">
                 <button class="btn btn-secondary rounded-md px-4 py-2" id="later-button">
-                    {{ __('news-modal.Remind') }}
+                    {{ __('news-modal.remind') }}
                 </button>
                 <button class="btn btn-primary rounded-md px-4 py-2"
                     id="tomorrow-button">{{ __('news-modal.close') }}</button>
