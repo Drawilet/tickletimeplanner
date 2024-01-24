@@ -1,19 +1,17 @@
 <main class="py-2 px-5 md:px-20 ">
-    <div class="flex justify-center items-center w-full mb-1">
-        <input type="text" class="input input-bordered w-full md:w-1/2 " placeholder="Search..."
+    <div class="flex justify-center items-center w-full mb-1 flex-wrap gap-1">
+        <input type="text" class="input input-bordered w-full md:w-1/2 " placeholder="{{__('spaces.Search') }}..."
             wire:model="filters.name">
+            
+        <div class="w-full mt-2 flex gap-1 md:w-1/3 md:mt-0">
+            <input type="text" class="input input-bordered w-1/2" placeholder="{{ __('spaces.City') }}" wire:model="filters.city">
+            <input type="text" class="input input-bordered w-1/2" placeholder="{{ __('spaces.Country') }}"
+                wire:model="filters.country">
+        </div>
     </div>
 
-    @if (isset($filters['location']))
-        <span class="badge badge-outline badge-primary">{{ $filters['location']['locality'] }},
-            {{ $filters['location']['countryName'] }}</span>
-    @else
-        <span class="badge badge-outline badge-ghost">No location</span>
-    @endif
-
-
     <section class="flex gap-5 flex-wrap mt-5">
-        @if ($spaces->isNotEmpty())
+        @if ($filteredSpaces->isNotEmpty())
             @foreach ($filteredSpaces as $space)
                 <div class="card w-96 bg-base-100 shadow-xl mx-auto md:mx-0">
                     <div class="carousel w-full max-h-60">
@@ -42,18 +40,15 @@
                         <p class="text-sm text-gray-500">{{ $space->getAddress() }}</p>
                         <div class="card-actions justify-end">
                             <button class="btn btn-primary"
-                                wire:click="Modal('contact', true, '{{ $space->id }}')">Book
-                                now</button>
+                                wire:click="Modal('contact', true, '{{ $space->id }}')">{{ __('spaces.Booknow') }}</button>
                         </div>
                     </div>
                 </div>
             @endforeach
         @else
-            <div class="card w-96 bg-base-100">
-                <div class="card-body">
-                    <h2 class="card-title">No spaces found</h2>
-                    <p>Try another search</p>
-                </div>
+            <div class="w-96 mx-auto">
+                <h2 class="font-bold text-xl text-center">{{ __('spaces.Nospacesfound') }}</h2>
+                <p class="text-center">{{ __('spaces.Tryanothersearch') }}</p>
             </div>
         @endif
     </section>
@@ -88,7 +83,7 @@
                 </div>
 
                 <div class="modal-action">
-                    <label class="btn" wire:click="Modal('contact',false)">Close!</label>
+                    <label class="btn" wire:click="Modal('contact',false)">{{ __('spaces.Close') }}</label>
                 </div>
             </div>
         @endif
@@ -111,7 +106,8 @@
                     }
                 });
 
-            @this.set('filters.location', location);
+            @this.set('filters.city', location.city);
+            @this.set('filters.country', location.countryName);
         }
 
         function getLocation() {

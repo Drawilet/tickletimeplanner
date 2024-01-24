@@ -13,6 +13,7 @@ class Customer extends Base
         "email",
         "phone",
         "address",
+        "notes",
     ];
 
     public function events()

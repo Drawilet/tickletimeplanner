@@ -1,4 +1,4 @@
-<div class="bg-base rounded-lg w-full md:w-5/12 mx-auto shadow-xl pb-8" x-data="{
+<div class="bg-base rounded-lg w-full md:w-5/12 mx-auto shadow-xl pb-8" {{-- x-data="{
     links: [{ url: '', icon: 'default-link' }],
     addLink() {
         this.links.push({ url: '', icon: 'default-link' })
@@ -6,12 +6,12 @@
     isDefault(cadena, substrings, cantidad) {
         return substrings.every(substring => cadena.indexOf(substring) === -1) && substrings.length === cantidad;
     }
-}">
+}" --}}>
     <div class="w-full h-[250px]">
         <div class="mx-auto w-full h-[250px] bg-base-300 rounded-md overflow-hidden relative">
             @if ($data['background_image'])
                 <img src="{{ gettype($data['background_image']) == 'object' ? $data['background_image']->temporaryUrl() : $data['background_image'] }}"
-                    class="w-full">
+                    class="w-full h-full object-cover">
             @endif
 
             <label for="background_image"
@@ -27,11 +27,11 @@
         <div class="mx-auto h-32 w-32 bg-base-300 rounded-full overflow-hidden relative">
             @if ($data['profile_image'])
                 <img src="{{ gettype($data['profile_image']) == 'object' ? $data['profile_image']->temporaryUrl() : $data['profile_image'] }}"
-                    alt="" class="mx-auto overflow-hidden rounded-full max-h-32">
+                    alt="" class="mx-auto overflow-hidden rounded-full max-h-32 object-cover">
             @endif
 
             <label for="profile_image"
-                class="w-full h-1/2 bottom-0 bg-base-100 absolute flex items-center justify-center opacity-0 hover:opacity-75 transition duration-150 ease-in-out">
+                class="w-full bottom-0 bg-base-100 absolute flex items-center justify-center opacity-0 hover:opacity-75 transition duration-150 ease-in-out">
                 <x-icons.arrow-up-tray class="w-10" />
             </label>
 
@@ -69,7 +69,7 @@
             </x-form-control>
 
         </div>
-
+        {{--
         <template x-for="link in links">
             <div class="flex space-x-2 space-y-2 items-center w-full">
                 <div x-show="link.url.includes('facebook')">
@@ -90,15 +90,15 @@
                 <div x-show="isDefault(link.url, ['facebook','instagram','tiktok', 'twitter', 'linkedin'], 5)">
                     <x-icons.default-link />
                 </div>
-                <input x-model="link.url" type="text" placeholder="Link here" class="input input-bordered w-full" />
-                <x-button x-on:click="addLink">Add</x-button>
+                <input x-model="link.url" type="text" placeholder="{{ __('setting-lang.Linkhere') }}"
+                    class="input input-bordered w-full" />
+                <x-button x-on:click="addLink">{{ __('setting-lang.add') }}</x-button>
             </div>
 
             <x-input-error for="social_nets" />
-        </template>
+        </template> --}}
 
-
-        <x-button class="btn btn-primary mt-4 w-full" wire:click="save">Save</x-button>
+        <x-button class="btn btn-primary mt-4 w-full" wire:click="save">{{ __('setting-lang.save') }}</x-button>
     </div>
 
 

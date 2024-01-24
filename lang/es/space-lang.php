@@ -9,4 +9,10 @@ return [
     'country' => 'País',
     'schedule' => 'Horario',
     'color' => 'Color',
+    'notes' => 'Notas',
+
+    'search' => 'Buscar espacio...',
+    'create' => 'Crear espacio',
+    "update" => "Actualizar espacio",
+    'notfound' => 'Espacio no encontrado',
 ];

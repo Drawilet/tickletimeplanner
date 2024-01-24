@@ -20,31 +20,33 @@
             {{-- MENU --}}
             @foreach ($sidebar as $label => $item)
                 @if (gettype($item) == 'string')
-                    <label class="divider divider-accent">{{ __('sidebar.'.$item) }}</label>
+                    <label class="divider divider-accent">{{ __('sidebar.' . $item) }}</label>
                 @else
-                    <li class="{{ isset($item['sub']) ? 'dropdown dropdown-hover dropdown-right' : '' }}">
-                        <a href="{{ route($item['route']) }}">
-                            @component('components.icons.' . $item['icon'])
-                            @endcomponent
+                    @can(isset($item['permission']) ? $item['permission'] : null)
+                        <li class="{{ isset($item['sub']) ? 'dropdown dropdown-hover dropdown-right' : '' }}">
+                           <a href="{{ route($item['route']) }}" class="{{ $currentRoute == $item['route'] ? 'active' : '' }}">
+                                @component('components.icons.' . $item['icon'])
+                                @endcomponent
 
-                            {{ __( "sidebar.".$label) }}
-                        </a>
+                                {{ __('sidebar.' . $label) }}
+                            </a>
 
-                        @isset($item['sub'])
-                            <ul tabindex="0"
-                                class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded w-52 -translate-x-5">
-                                @foreach ($item['sub'] as $subLabel => $subItem)
-                                    <a href="{{ route($subItem['route']) }}" class="flex items-center">
-                                        @component('components.icons.' . $subItem['icon'])
-                                        @endcomponent
+                            @isset($item['sub'])
+                                <ul tabindex="0"
+                                    class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded w-52 -translate-x-5">
+                                    @foreach ($item['sub'] as $subLabel => $subItem)
+                                        <a href="{{ route($subItem['route']) }}" class="flex items-center">
+                                            @component('components.icons.' . $subItem['icon'])
+                                            @endcomponent
 
-                                        {{ $subLabel }}
-                                    </a>
-                                @endforeach
-                            </ul>
-                        @endisset
+                                            {{ $subLabel }}
+                                        </a>
+                                    @endforeach
+                                </ul>
+                            @endisset
 
-                    </li>
+                        </li>
+                    @endcan
                 @endif
             @endforeach
 
@@ -52,9 +54,15 @@
             <li>
                 <a href="{{ route('tenant.settings.show') }}">
                     <x-icons.cog-6-tooth />
-                    <span>{{__('sidebar.Settings')}}</span>
+                    <span>{{ __('sidebar.Settings') }}</span>
                 </a>
             </li>
     </div>
     </ul>
+    <style>
+    .active {
+    border-left: 3px solid blue;
+}
+    
+    </style>
 </div>

@@ -30,7 +30,7 @@ class ShowComponent extends CrudComponent
                         ];
                     }),
                 ],
-                "concept" => [
+                "notes" => [
                     "type" => "text",
                 ],
                 "amount" => [

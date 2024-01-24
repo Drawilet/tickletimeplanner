@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('description');
             $table->decimal("cost");
             $table->decimal("price");
+            $table->text('notes')->nullable();
 
             $table->foreignId("tenant_id")->constrained("tenants");
 

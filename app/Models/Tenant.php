@@ -16,10 +16,28 @@ class Tenant extends Model
         'email',
         'background_image',
         'profile_image',
-        'social_nets',
+        /*  'social_nets', */
     ];
 
     protected $casts = [
-        'social_nets' => 'array',
-    ];
+        /*       'social_nets' => 'array', */];
+    public function customers()
+    {
+        return $this->hasMany(Customer::class);
+    }
+    public function events()
+    {
+        return $this->hasMany(Event::class);
+    }
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
+    public function spaces(){
+        return $this->hasMany(Space::class);
+    }
 }

@@ -1,20 +1,7 @@
 <?php
 
-use App\Http\Livewire\Dashboard\ShowComponent as DashboardComponent;
-
-use App\Http\Livewire\Tenant\Spaces\ShowComponent as ShowSpacesComponent;
-use App\Http\Livewire\Tenant\Customers\ShowComponent as ShowCustomersComponent;
-use App\Http\Livewire\Tenant\Products\ShowComponent as ShowProductsComponent;
-use App\Http\Livewire\Tenant\Users\ShowComponent as ShowUsersComponent;
-use App\Http\Livewire\Tenant\Payments\ShowComponent as ShowPaymentsComponent;
-
-use App\Http\Livewire\Tenant\Settings\ShowComponent as ShowSettingsComponent;
-
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\LanguageControllers;
-use App\Http\Livewire\HomeComponent;
-use App\Http\Livewire\SpacesComponent;
-use Spatie\Permission\Commands\Show;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -27,27 +14,66 @@ use Spatie\Permission\Commands\Show;
 |
 */
 
-Route::get('lang/{lang}', [LanguageControllers::class, 'switchLeng'])->name('lang');
-
-$middleware = [
+$defaultMiddleware = [
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified'
 ];
 
-Route::get('/', HomeComponent::class)->name('home');
-Route::get("/spaces", SpacesComponent::class)->name("spaces.show");
 
-Route::middleware($middleware)->group(function () {
-    Route::get('/dashboard', DashboardComponent::class)->name('dashboard.show');
+Route::get('lang/{lang}', [\App\Http\Controllers\LanguageControllers::class, 'switchLeng'])->name('lang');
+
+Route
+    ::get('/', \App\Http\Livewire\HomeComponent::class)
+    ->name('home');
+Route
+    ::get("/spaces", \App\Http\Livewire\SpacesComponent::class)
+    ->name("spaces.show");
+
+Route::middleware($defaultMiddleware)->group(function () {
+    Route
+        ::get('/dashboard', \App\Http\Livewire\Dashboard\ShowComponent::class)
+        ->name('dashboard.show');
 });
 
-Route::prefix("tenant")->name("tenant.")->middleware($middleware)->group(function () {
-    Route::get("settings", ShowSettingsComponent::class)->name("settings.show");
+Route::prefix("tenant")->name("tenant.")->middleware($defaultMiddleware)->group(function () {
+    Route
+        ::get("settings", \App\Http\Livewire\Tenant\Settings\ShowComponent::class)
+        ->name("settings.show");
 
-    Route::get('customers', ShowCustomersComponent::class)->name('customers.show');
-    Route::get('products', ShowProductsComponent::class)->name('products.show');
-    Route::get("spaces", ShowSpacesComponent::class)->name("spaces.show");
-    Route::get("payments", ShowPaymentsComponent::class)->name("payments.show");
-    Route::get('users', ShowUsersComponent::class)->name('users.show');
+    Route
+        ::middleware("permission:tenant.customers.show")
+        ->get('customers', \App\Http\Livewire\Tenant\Customers\ShowComponent::class)
+        ->name('customers.show');
+
+    Route
+        ::middleware("permission:tenant.products.show")
+        ->get('products', \App\Http\Livewire\Tenant\Products\ShowComponent::class)
+        ->name('products.show');
+    Route
+        ::middleware("permission:tenant.spaces.show")
+        ->get("spaces", \App\Http\Livewire\Tenant\Spaces\ShowComponent::class)
+        ->name("spaces.show");
+    Route
+        ::middleware("permission:tenant.payments.show")
+        ->get("payments", \App\Http\Livewire\Tenant\Payments\ShowComponent::class)
+        ->name("payments.show");
+    Route
+        ::middleware("permission:tenant.users.show")
+        ->get('users', \App\Http\Livewire\Tenant\Users\ShowComponent::class)
+        ->name('users.show');
 });
+
+Route
+    ::prefix("app")
+    ->name("app.")
+    ->middleware([...$defaultMiddleware, "role:app.admin", "permission:app.tenants.show"])
+    ->group(function () {
+        Route
+            ::get("tenants", \App\Http\Livewire\App\TenantComponent::class)
+            ->name("tenants");
+
+        Route
+            ::get("tenants/{id}", \App\Http\Livewire\App\Tenants\ShowComponent::class)
+            ->name("tenants.show");
+    });

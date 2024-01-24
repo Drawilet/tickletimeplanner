@@ -23,7 +23,8 @@ class SpacesComponent extends Component
     ];
     public $filters = [
         "name" => null,
-        "location" => null,
+        "city" => null,
+        "country" => null,
     ];
 
     public function mount()
@@ -34,30 +35,14 @@ class SpacesComponent extends Component
     public function render()
     {
         $this->filteredSpaces = $this->spaces->filter(function ($space) {
-            //Filter country
-            if ($this->filters["location"]) {
-                if (
-                    strtolower($space->country) != strtolower($this->filters["location"]["countryCode"])
-                    && strtolower($space->country) != strtolower($this->filters["location"]["countryName"])
-                ) {
-                    return false;
-                }
+            if ($this->filters["country"] != null && strpos(strtolower($space->country), strtolower($this->filters["country"])) === false)
+                return false;
 
-                //Filter city
-                if (
-                    strtolower($space->city) != strtolower($this->filters["location"]["city"])
-                    && strtolower($space->city) !=  strtolower($this->filters["location"]["locality"])
-                ) {
-                    return false;
-                }
-            }
+            if ($this->filters["city"]  != null && strpos(strtolower($space->city), strtolower($this->filters["city"])) === false)
+                return false;
 
-            //Filter name
-            if ($this->filters["name"] != null) {
-                if (strpos(strtolower($space->name), strtolower($this->filters["name"])) === false) {
-                    return false;
-                }
-            }
+            if ($this->filters["name"] != null && strpos(strtolower($space->name), strtolower($this->filters["name"])) === false)
+                return false;
 
             return true;
         });

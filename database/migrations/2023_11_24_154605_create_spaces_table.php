@@ -27,6 +27,7 @@ return new class extends Migration
             $table->json("schedule");
 
             $table->string("color");
+            $table->text('notes')->nullable();
 
 
             $table->foreignId("tenant_id")->constrained("tenants");

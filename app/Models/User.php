@@ -66,4 +66,41 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Tenant::class);
     }
+
+    public function notifications()
+    {
+        return $this->hasMany(Notification::class);
+    }
+
+    protected static function booted()
+    {
+        static::created(function ($user) {
+            $user->notifications()->create([
+                "message" => "welcome.notification",
+                "link" => "/dashboard",
+                "image" => "/icon.svg",
+                "icon" => "home",
+                "color" => "#AEFF7A",
+            ]);
+
+            $user->notifications()->create([
+                "message" => "welcome.setup-tenant",
+                "link" => "/tenant/settings",
+                "image" => "/icon.svg",
+                "icon" => "cog-6-tooth",
+                "color" => "#7ACFFF",
+            ]);
+        });
+    }
+
+    static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            if (auth()->check()) {
+                $model->tenant_id = auth()->user()->tenant_id;
+            }
+        });
+    }
 }

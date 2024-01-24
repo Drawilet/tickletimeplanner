@@ -1,6 +1,6 @@
 <x-dialog-modal wire:model="modals.save">
     <x-slot name="title">
-        {{ gettype($data['id']) == 'string' ? __('show-lang.Create') : 'Update' }} {{ __('show-lang.' . $name) }}
+        {{ gettype($data['id']) == 'string' ? __($name . '-lang.' . 'create') : __($name . '-lang.' . 'update') }}
     </x-slot>
 
     <x-slot name="content">
@@ -53,6 +53,13 @@
     <x-slot name="footer">
         <button wire:click="Modal('save', false)" type="button"
             class="btn w-28 mr-2">{{ __('show-lang.cancel') }}</button>
-        <button wire:click="save" class=" btn btn-primary w-28">{{ __('show-lang.save') }}</button>
+        <button class="btn btn-primary px-8" wire:click="save" wire:loading.attr="disabled">
+            <span wire:loading>
+                {{ __('auth.cargando') }}
+            </span>
+            <span wire:loading.remove>
+                {{ __('calendar-lang.Save') }}
+            </span>
+        </button>
     </x-slot>
 </x-dialog-modal>

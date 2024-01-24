@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('background_image')->nullable();
             $table->string('profile_image')->nullable();
 
-            $table->json('social_nets');
+            /* $table->json('social_nets'); */
 
             $table->timestamps();
         });

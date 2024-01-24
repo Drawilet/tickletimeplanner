@@ -1,10 +1,15 @@
 <?php
 return [
-    'firstname' => 'Firstename',
+    'firstname' => 'Firstname',
     'lastname' => 'Lastname',
     'email' => 'Email',
     'phone' => 'Phone',
     'address' => 'Address',
-    'Customer'=>'Customer',
-    'found'=>'found',
+    'Customer' => 'Customer',
+    'notes' => 'Notes',
+
+    'search' => 'Search customer...',
+    'create' => 'Create customer',
+    "update" => "Update customer",
+    'notfound' => 'Customer not found',
 ];

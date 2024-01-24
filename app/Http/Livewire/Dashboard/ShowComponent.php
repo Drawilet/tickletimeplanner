@@ -8,6 +8,7 @@ use App\Http\Socket\WithCrudSockets;
 use App\Models\Customer;
 use App\Models\Event;
 use App\Models\Payment;
+use App\Rules\PhoneNumber;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use Livewire\Component;
@@ -22,6 +23,7 @@ class ShowComponent extends Component
 
     public $modals = [
         "save" => false,
+        "delete" => false,
         "addProduct" => false,
         "newCustomer" => false,
     ];
@@ -48,7 +50,7 @@ class ShowComponent extends Component
         "user_id" => null,
         "event_id" => null,
         "amount" => null,
-        "concept" => null,
+        "notes" => null,
     ];
 
     public $customer, $initialCustomer = [
@@ -57,6 +59,7 @@ class ShowComponent extends Component
         "email" => null,
         "phone" => null,
         "address" => null,
+        "notes" => null,
     ];
 
     public $events, $products, $filteredProducts, $customers, $spaces;
@@ -90,7 +93,12 @@ class ShowComponent extends Component
             case 'save':
                 if ($value === true) $this->event = $this->initialEvent;
                 if ($data) {
-                    if (isset($data["id"]))
+                    if (gettype($data) != "array" && array_keys($data->toArray()) > 2) {
+                        $this->event = array_merge(
+                            $this->event,
+                            $data->load("products", "payments")->toArray()
+                        );
+                    } else if (isset($data["id"]))
                         $this->event = array_merge(
                             $this->event,
                             $this->events->find($data["id"])->load("products", "payments")->toArray()
@@ -101,6 +109,13 @@ class ShowComponent extends Component
 
             case 'newCustomer':
                 if ($value === true) $this->customer = $this->initialCustomer;
+                break;
+
+            case 'delete':
+                if ($value === true) {
+                    $this->event["payments_count"] = count($this->event["payments"]);
+                    $this->modals["save"] = false;
+                }
                 break;
         }
 
@@ -117,14 +132,33 @@ class ShowComponent extends Component
             "customer_id" => "required",
 
             "date" => "required",
-            "start_time" => "required|after_or_equal:" . $schedule["opening"] . "|before_or_equal:" . $schedule["closing"],
-            "end_time" => "required|after:start_time|before_or_equal:" . $schedule["closing"],
 
             "price" => "required",
         ])->validate();
 
+        if (!isset($this->event["id"])) {
+            Validator::make($this->event, [
+                "start_time" => "required|after_or_equal:" . $schedule["opening"] . "|before_or_equal:" . $schedule["closing"],
+                "end_time" => "required|after:start_time|before_or_equal:" . $schedule["closing"],
+            ])->validate();
+
+            $events = $this->events->where("space_id", $this->event["space_id"])->where("date", $this->event["date"]);
+            foreach ($events as $event) {
+                if (
+                    ($this->event["start_time"] >= $event->start_time && $this->event["start_time"] < $event->end_time) ||
+                    ($this->event["end_time"] > $event->start_time && $this->event["end_time"] <= $event->end_time)
+                ) {
+                    $this->emit("toast", "error", __("calendar-lang.not-available"));
+                    return;
+                }
+            }
+        }
+
+
+
         $event = Event::updateOrCreate(["id" => $this->event["id"] ?? ""], $this->event);
 
+        $event->products()->delete();
         foreach ($this->event["products"] as  $product) {
             $event->products()->create([
                 "product_id" => $product["product_id"],
@@ -132,9 +166,12 @@ class ShowComponent extends Component
             ]);
         }
 
+        if (strlen($event["start_time"]) == 5) $event["start_time"] .= ":00";
+        if (strlen($event["end_time"]) == 5) $event["end_time"] .= ":00";
+
         event(new EventEvent(isset($this->event["id"]) ? "update" : "create", $event));
 
-        $this->Modal("save", false);
+        $this->Modal("save", true, $event);
     }
 
     public function updateEvents()
@@ -144,12 +181,14 @@ class ShowComponent extends Component
 
     public function productAction($product_id, $action, $quantity = 1)
     {
+        $productIndex = array_search($product_id, array_column($this->event["products"], "product_id"));
+
         switch ($action) {
             case 'add':
-                if (isset($this->event["products"][$product_id])) {
-                    $this->event["products"][$product_id]["quantity"] += $quantity;
+                if ($productIndex !== false) {
+                    $this->event["products"][$productIndex]["quantity"] += $quantity;
                 } else {
-                    $this->event["products"][$product_id] = [
+                    $this->event["products"][] = [
                         "quantity" => $quantity,
                         "product_id" => $product_id,
                     ];
@@ -157,17 +196,19 @@ class ShowComponent extends Component
                 break;
 
             case 'decrease':
-                if (isset($this->event["products"][$product_id])) {
-                    if ($this->event["products"][$product_id]["quantity"] > 1) {
-                        $this->event["products"][$product_id]["quantity"] -= $quantity;
+                if ($productIndex !== false) {
+                    if ($this->event["products"][$productIndex]["quantity"] > 1) {
+                        $this->event["products"][$productIndex]["quantity"] -= $quantity;
                     } else {
-                        unset($this->event["products"][$product_id]);
+                        unset($this->event["products"][$productIndex]);
                     }
                 }
                 break;
 
             case 'remove':
-                unset($this->event["products"][$product_id]);
+                if ($productIndex !== false) {
+                    unset($this->event["products"][$productIndex]);
+                }
                 break;
         }
 
@@ -195,8 +236,8 @@ class ShowComponent extends Component
     public function addPayment()
     {
         Validator::make($this->payment, [
-            "amount" => "required",
-            "concept" => "required",
+            "amount" => "required|numeric|max:" . $this->getRemaining() . "|min:0",
+            "notes" => "required",
         ])->validate();
 
         $this->payment["amount"] = (float) $this->payment["amount"];
@@ -208,6 +249,8 @@ class ShowComponent extends Component
         $this->payment = $this->initialPayment;
 
         $this->emit("toast", "success", "Payment added successfully");
+
+        event(new EventEvent("update", $this->event));
     }
 
     public function newCustomer()
@@ -215,9 +258,10 @@ class ShowComponent extends Component
         Validator::make($this->customer, [
             "firstname" => "required",
             "lastname" => "required",
-            "email" => "required",
-            "phone" => "required",
+            "email" => "required|email",
+            "phone" => ["required", new PhoneNumber()],
             "address" => "required",
+            "notes" => "max:255"
         ])->validate();
 
         $customer = Customer::create($this->customer);
@@ -255,5 +299,22 @@ class ShowComponent extends Component
     {
         if ($this->event["end_time"]) return;
         $this->event["end_time"] = $this->event["start_time"];
+    }
+
+    public function deleteEvent($id)
+    {
+        $this->Modal("delete", false);
+
+        $event = Event::find($id);
+        if (!$event) return;
+
+        foreach ($event->payments as $payment)
+            $payment->delete();
+
+        $event->delete();
+
+        event(new EventEvent("delete", $this->event));
+
+        $this->emit("toast", "success", __('calendar-lang.delete-success'));
     }
 }

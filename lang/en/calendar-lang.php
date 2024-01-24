@@ -16,7 +16,7 @@ return [
     'Searchproducts' => 'Search products...',
     'event' => 'Event',
     'Amount' => 'Amount',
-    'Concept' => 'Notes',
+    'Notes' => 'Notes',
     'balance' => 'Balance',
     'AddPayment' => 'Add payment',
     'Payments' => 'Payments',
@@ -30,4 +30,12 @@ return [
     'Submit' => 'Submit',
     'Newcustomer' => 'New customer',
     "total" => "Total",
+    'Pickone' => 'Pick one',
+    "not-available" => "Space is not available at this time",
+
+    "delete-title" => "Are you sure you want to delete :name?",
+    "payments" => "It has :payments_count payments.",
+    "delete" => "Delete",
+    "cancel" => "Cancel",
+    "delete-success" => "Event deleted successfully!",
 ];

@@ -13,7 +13,7 @@ class Payment extends Base
         "event_id",
         "user_id",
         "amount",
-        "concept",
+        "notes",
     ];
 
 }

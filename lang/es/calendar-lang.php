@@ -30,4 +30,12 @@ return [
     'Submit' => 'Guardar',
     'Newcustomer' => 'Nuevo cliente',
     "total" => "Total",
+    'Pickone' => 'Seleccionar',
+    "not-available" => "El espacio no está disponible en este momento",
+
+    "delete-title" => "¿Estás seguro de que quieres eliminar :name?",
+    "payments" => "Tiene :payments_count pagos.",
+    "delete" => "Eliminar",
+    "cancel" => "Cancelar",
+    "delete-success" => "¡Evento eliminado con éxito!",
 ];

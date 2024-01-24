@@ -35,6 +35,14 @@
                 <x-input-error for="address" class="mt-2" />
             </x-form-control>
 
+            <x-form-control>
+                <x-label for="notes" value="{{ __('calendar-lang.Notes') }}" />
+                <textarea id="notes" name="notes" wire:model="customer.notes" class="textarea textarea-bordered"></textarea>
+                <x-input-error for="notes" class="mt-2" />
+            </x-form-control>
+
+
+
             <button class="btn btn-primary mt-2" wire:click='newCustomer'>{{ __('calendar-lang.Submit') }}</button>
         </ul>
     </div>

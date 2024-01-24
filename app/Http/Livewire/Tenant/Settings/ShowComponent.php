@@ -20,12 +20,12 @@ class ShowComponent extends Component
         "description" => "",
         "phone" => "",
         "email" => "",
-        "social_nets" => [
+        /*   "social_nets" => [
             [
                 "url" => "",
                 "icon" => "components/icons/default-link"
             ]
-        ],
+        ], */
     ];
 
     /*   protected $rules = [
@@ -47,13 +47,13 @@ class ShowComponent extends Component
         return view('livewire.tenant.settings.show-component');
     }
 
-    public function addSocialNet()
+    /*   public function addSocialNet()
     {
         $this->data->social_nets[] = [
             'url' => '',
             'icon' => 'components/icons/default-link'
         ];
-    }
+    } */
 
     public function save()
     {
@@ -65,7 +65,7 @@ class ShowComponent extends Component
             'description' => 'required',
             'phone' => 'required',
             'email' => 'required',
-            'social_nets' => 'required',
+            /*    'social_nets' => 'required', */
         ])->validate();
 
         $tenant = Tenant::updateOrCreate(
@@ -93,6 +93,10 @@ class ShowComponent extends Component
         if (!$user->tenant) {
             $user->tenant_id = $tenant->id;
             $user->save();
+
+            $user->assignRole('tenant.admin');
+
+            redirect()->route("dashboard.show");
         }
 
         $this->emit('toast', 'success', 'Data saved successfully');

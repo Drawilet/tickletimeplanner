@@ -6,6 +6,8 @@ use Illuminate\View\Component;
 
 class SidebarComponent extends Component
 {
+    public $currentRoute;
+
     public $sidebar = [
         "dashboard" => [
             "icon" => "home",
@@ -16,25 +18,37 @@ class SidebarComponent extends Component
 
         "customers" => [
             "icon" => "brief-case",
-            "route" => "tenant.customers.show"
+            "route" => "tenant.customers.show",
+            "permission" => "tenant.customers.show",
         ],
         "products" => [
             "icon" => "shopping-bag",
-            "route" => "tenant.products.show"
+            "route" => "tenant.products.show",
+            "permission" => "tenant.products.show",
         ],
         "spaces" => [
             "icon" => "map-pin",
-            "route" => "tenant.spaces.show"
+            "route" => "tenant.spaces.show",
+            "permission" => "tenant.spaces.show",
         ],
 
         "payments" => [
             "icon" => "bank-notes",
-            "route" => "tenant.payments.show"
+            "route" => "tenant.payments.show",
+            "permission" => "tenant.payments.show",
         ],
         "users" => [
             "icon" => "user-group",
-            "route" => "tenant.users.show"
+            "route" => "tenant.users.show",
+            "permission" => "tenant.users.show",
         ],
+
+        "tenants" => [
+            "icon" => "home-modern",
+            "route" => "app.tenants",
+            "permission" => "app.tenants.show",
+        ],
+
     ];
 
     /**
@@ -44,7 +58,7 @@ class SidebarComponent extends Component
      */
     public function __construct()
     {
-        //
+        $this->currentRoute = \Illuminate\Support\Facades\Route::currentRouteName();
     }
 
     /**
@@ -54,6 +68,6 @@ class SidebarComponent extends Component
      */
     public function render()
     {
-        return view('components.sidebar-component');
+        return view('components.sidebar-component', ['currentRoute' => $this->currentRoute]);
     }
 }

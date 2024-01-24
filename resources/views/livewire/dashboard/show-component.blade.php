@@ -1,4 +1,6 @@
 <div>
+    @include('livewire.dashboard.delete-modal')
+
     @include('livewire.dashboard.save-modal')
 
     @livewire('dashboard.calendar-component', [
