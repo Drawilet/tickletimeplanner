@@ -181,12 +181,14 @@ class ShowComponent extends Component
 
     public function productAction($product_id, $action, $quantity = 1)
     {
+        $productIndex = array_search($product_id, array_column($this->event["products"], "product_id"));
+
         switch ($action) {
             case 'add':
-                if (isset($this->event["products"][$product_id])) {
-                    $this->event["products"][$product_id]["quantity"] += $quantity;
+                if ($productIndex !== false) {
+                    $this->event["products"][$productIndex]["quantity"] += $quantity;
                 } else {
-                    $this->event["products"][$product_id] = [
+                    $this->event["products"][] = [
                         "quantity" => $quantity,
                         "product_id" => $product_id,
                     ];
@@ -194,17 +196,19 @@ class ShowComponent extends Component
                 break;
 
             case 'decrease':
-                if (isset($this->event["products"][$product_id])) {
-                    if ($this->event["products"][$product_id]["quantity"] > 1) {
-                        $this->event["products"][$product_id]["quantity"] -= $quantity;
+                if ($productIndex !== false) {
+                    if ($this->event["products"][$productIndex]["quantity"] > 1) {
+                        $this->event["products"][$productIndex]["quantity"] -= $quantity;
                     } else {
-                        unset($this->event["products"][$product_id]);
+                        unset($this->event["products"][$productIndex]);
                     }
                 }
                 break;
 
             case 'remove':
-                unset($this->event["products"][$product_id]);
+                if ($productIndex !== false) {
+                    unset($this->event["products"][$productIndex]);
+                }
                 break;
         }
 
