@@ -59,7 +59,13 @@ class NewsComponent extends Component
 
     public function getProducts()
     {
+        if ($this->events->isEmpty()) return;
+        if ($this->products->isEmpty()) return;
+
         $event = $this->events->last();
+        if (!$event)
+            return;
+
         $products = EventProduct::where("event_id", $event->id)->get();
         $event->products = $products;
 
