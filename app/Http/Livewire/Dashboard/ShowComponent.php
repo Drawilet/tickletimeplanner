@@ -308,8 +308,8 @@ class ShowComponent extends Component
         $event = Event::find($id);
         if (!$event) return;
 
-        foreach ($event->payments as $payment)
-            $payment->delete();
+        $event->payments()->delete();
+        $event->products()->delete();
 
         $event->delete();
 
