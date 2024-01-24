@@ -132,22 +132,29 @@ class ShowComponent extends Component
             "customer_id" => "required",
 
             "date" => "required",
-            "start_time" => "required|after_or_equal:" . $schedule["opening"] . "|before_or_equal:" . $schedule["closing"],
-            "end_time" => "required|after:start_time|before_or_equal:" . $schedule["closing"],
 
             "price" => "required",
         ])->validate();
 
-        $events = $this->events->where("space_id", $this->event["space_id"])->where("date", $this->event["date"]);
-        foreach ($events as $event) {
-            if (
-                ($this->event["start_time"] >= $event->start_time && $this->event["start_time"] < $event->end_time) ||
-                ($this->event["end_time"] > $event->start_time && $this->event["end_time"] <= $event->end_time)
-            ) {
-                $this->emit("toast", "error", __("calendar-lang.not-available"));
-                return;
+        if (!isset($this->event["id"])) {
+            Validator::make($this->event, [
+                "start_time" => "required|after_or_equal:" . $schedule["opening"] . "|before_or_equal:" . $schedule["closing"],
+                "end_time" => "required|after:start_time|before_or_equal:" . $schedule["closing"],
+            ])->validate();
+
+            $events = $this->events->where("space_id", $this->event["space_id"])->where("date", $this->event["date"]);
+            foreach ($events as $event) {
+                if (
+                    ($this->event["start_time"] >= $event->start_time && $this->event["start_time"] < $event->end_time) ||
+                    ($this->event["end_time"] > $event->start_time && $this->event["end_time"] <= $event->end_time)
+                ) {
+                    $this->emit("toast", "error", __("calendar-lang.not-available"));
+                    return;
+                }
             }
         }
+
+
 
         $event = Event::updateOrCreate(["id" => $this->event["id"] ?? ""], $this->event);
 
@@ -174,12 +181,14 @@ class ShowComponent extends Component
 
     public function productAction($product_id, $action, $quantity = 1)
     {
+        $productIndex = array_search($product_id, array_column($this->event["products"], "product_id"));
+
         switch ($action) {
             case 'add':
-                if (isset($this->event["products"][$product_id])) {
-                    $this->event["products"][$product_id]["quantity"] += $quantity;
+                if ($productIndex !== false) {
+                    $this->event["products"][$productIndex]["quantity"] += $quantity;
                 } else {
-                    $this->event["products"][$product_id] = [
+                    $this->event["products"][] = [
                         "quantity" => $quantity,
                         "product_id" => $product_id,
                     ];
@@ -187,17 +196,19 @@ class ShowComponent extends Component
                 break;
 
             case 'decrease':
-                if (isset($this->event["products"][$product_id])) {
-                    if ($this->event["products"][$product_id]["quantity"] > 1) {
-                        $this->event["products"][$product_id]["quantity"] -= $quantity;
+                if ($productIndex !== false) {
+                    if ($this->event["products"][$productIndex]["quantity"] > 1) {
+                        $this->event["products"][$productIndex]["quantity"] -= $quantity;
                     } else {
-                        unset($this->event["products"][$product_id]);
+                        unset($this->event["products"][$productIndex]);
                     }
                 }
                 break;
 
             case 'remove':
-                unset($this->event["products"][$product_id]);
+                if ($productIndex !== false) {
+                    unset($this->event["products"][$productIndex]);
+                }
                 break;
         }
 
