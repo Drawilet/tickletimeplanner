@@ -54,12 +54,12 @@
         <button wire:click="Modal('save', false)" type="button"
             class="btn w-28 mr-2">{{ __('show-lang.cancel') }}</button>
         <button class="btn btn-primary px-8" wire:click="save" wire:loading.attr="disabled">
-            <span wire:loading>
-                {{ __('auth.cargando') }}
-            </span>
-            <span wire:loading.remove>
-                {{ __('calendar-lang.Save') }}
-            </span>
+            <span wire:loading wire:target="save">
+                    {{ __('auth.cargando') }}...
+                </span>
+                <span wire:loading.remove wire:target="save">
+                    {{ __('calendar-lang.Save') }}
+                </span>
         </button>
     </x-slot>
 </x-dialog-modal>
