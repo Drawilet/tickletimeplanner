@@ -2,6 +2,12 @@
 <div class="modal" role="dialog">
     <div class="modal-box">
         <div class="px-6 py-4">
+            <div>
+                <h2>
+                    {{ !isset($event['id']) || count($event['payments']) == 0 ? __('calendar-lang.draft') : __('calendar-lang.sale') }}
+                </h2>
+            </div>
+
             <div class="flex justify-between items-center">
                 <h3 class="text-2xl">
                     @isset($event['date'])

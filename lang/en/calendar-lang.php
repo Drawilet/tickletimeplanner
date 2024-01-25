@@ -1,6 +1,9 @@
 <?php
 return [
-    'Eventname' => 'Eventname',
+    "draft" => "Draft",
+    "sale" => "Sale",
+
+    'Eventname' => 'Event name',
     'Space' => 'Space',
     'Customer' => 'Customer',
     'Date' => 'Date',
@@ -16,7 +19,6 @@ return [
     'Searchproducts' => 'Search products...',
     'event' => 'Event',
     'Amount' => 'Amount',
-    'Notes' => 'Notes',
     'balance' => 'Balance',
     'AddPayment' => 'Add payment',
     'Payments' => 'Payments',

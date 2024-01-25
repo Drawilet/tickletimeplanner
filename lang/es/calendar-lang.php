@@ -1,5 +1,8 @@
 <?php
 return [
+    "draft" => "Borrador",
+    "sale" => "Venta",
+
     'Eventname' => 'Nombre del evento',
     'Space' => 'Espacio',
     'Customer' => 'Cliente',
