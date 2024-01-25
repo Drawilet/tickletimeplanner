@@ -37,7 +37,7 @@ class CalendarComponent extends LivewireCalendar
                 'date' => $event["date"],
                 'color' => $event["space"]["color"],
                 "start_time" => $event["start_time"],
-                "isDraft" => count($event["payments"]) == 0,
+                "isDraft" => isset($event["payments"]) && count($event["payments"]) == 0,
             ];
         })->sortBy('start_time')->values()->toArray());
     }
