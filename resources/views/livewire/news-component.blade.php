@@ -7,7 +7,7 @@
         <div class="modal-box overflow-hidden">
             <h2 class="text-3xl text-center text-blue-500 mb-4">{{ __('news-modal.title') }}</h2>
             <ul class="space-y-4 max-h-96 overflow-y-scroll">
-                @foreach ($events as $event)
+                @foreach ($filteredEvents as $event)
                     <li class="p-4 rounded-md shadow-md cursor-pointer" wire:click='openEvent("{{ $event->id }}")'>
                         <h3 class="flex items-center text-xl text-blue-600">
                             <span class="mr-2">{{ $event->name }}</span>

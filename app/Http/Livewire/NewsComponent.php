@@ -20,7 +20,7 @@ class NewsComponent extends Component
         "news" => false,
     ];
 
-    public $events, $products;
+    public $events, $filteredEvents, $products;
 
     public function mount()
     {
@@ -35,6 +35,11 @@ class NewsComponent extends Component
 
     public function render()
     {
+        $this->filteredEvents =
+            $this->events->filter(function ($event) {
+                return count($event->payments) > 0;
+            });
+
         return view('livewire.news-component');
     }
 
