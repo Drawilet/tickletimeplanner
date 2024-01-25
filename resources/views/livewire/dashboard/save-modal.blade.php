@@ -1,5 +1,7 @@
 <input type="checkbox" class="modal-toggle" @checked($modals['save']) />
 <div class="modal" role="dialog">
+
+
     <div class="modal-box">
         <div class="px-6 py-4">
             <div>
@@ -135,10 +137,10 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($event['products'] as $event)
+                                @foreach ($event['products'] as $event_product)
                                     @php
-                                        $product = $products->find($event['product_id']);
-                                        $price = $product->price * $event['quantity'];
+                                        $product = $products->find($event_product['product_id']);
+                                        $price = $product->price * $event_product['quantity'];
                                         $id = $product->id;
                                     @endphp
                                     <tr>
@@ -146,7 +148,7 @@
                                         <td class="join">
                                             <button class="btn"
                                                 wire:click="productAction('{{ $id }}', 'decrease')">-</button>
-                                            <span class="btn">{{ $event['quantity'] }}</span>
+                                            <span class="btn">{{ $event_product['quantity'] }}</span>
                                             <button class="btn"
                                                 wire:click="productAction('{{ $id }}', 'add')">+</button>
                                         </td>
@@ -167,7 +169,9 @@
                     </div>
                 </section>
             </div>
+
         </div>
+
 
         <div class="flex flex-row items-center justify-end px-6 py-4">
             <span class="text-xl mr-auto block">{{ __('calendar-lang.total') }}: $ {{ $this->getTotal() }}</span>
@@ -184,6 +188,8 @@
 
         </div>
     </div>
+
+
 
     @include('livewire.dashboard.save-modal.products-modal')
     @include('livewire.dashboard.save-modal.payments-modal')
