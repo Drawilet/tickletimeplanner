@@ -6,4 +6,5 @@ return [
     'because' => 'porque',
     'has'=>'tiene',
     'Customeraddedsuccessfully'=>'Cliente agregado correctamente',
+    'events'=>'eventos',
 ];
