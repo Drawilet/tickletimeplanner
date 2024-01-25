@@ -40,4 +40,7 @@ return [
     "delete" => "Delete",
     "cancel" => "Cancel",
     "delete-success" => "Event deleted successfully!",
+
+    "show-payments" => "Show payments",
+    "hide-payments" => "Hide payments",
 ];

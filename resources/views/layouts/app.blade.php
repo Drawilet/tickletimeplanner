@@ -48,7 +48,7 @@
     <div class="min-h-screen">
         <x-navbar-component />
 
-        <main class="py-2 px-5">
+        <main class="p-1 md:py-2 md:px-5">
             {{ $slot }}
         </main>
     </div>

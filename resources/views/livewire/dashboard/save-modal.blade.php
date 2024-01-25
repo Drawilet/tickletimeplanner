@@ -1,7 +1,5 @@
 <input type="checkbox" class="modal-toggle" @checked($modals['save']) />
 <div class="modal" role="dialog">
-
-
     <div class="modal-box">
         <div class="px-6 py-4">
             <div>
@@ -187,9 +185,20 @@
 
 
         </div>
+
+        <div class="w-11/12 mx-auto flex md:hidden gap-2">
+            <button class="w-1/3 btn btn-neutral" wire:click='Modal("save",false)'>
+                {{ __('calendar-lang.close') }}
+            </button>
+
+            @isset($event['id'])
+                <button class="w-2/3 btn btn-secondary" onclick="payments_modal.style.display = 'block' ">
+                    {{ __('calendar-lang.show-payments') }}
+                </button>
+            @endisset
+
+        </div>
     </div>
-
-
 
     @include('livewire.dashboard.save-modal.products-modal')
     @include('livewire.dashboard.save-modal.payments-modal')

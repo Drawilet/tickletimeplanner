@@ -41,4 +41,7 @@ return [
     "delete" => "Eliminar",
     "cancel" => "Cancelar",
     "delete-success" => "¡Evento eliminado con éxito!",
+
+    "show-payments" => "Mostrar pagos",
+    "hide-payments" => "Ocultar pagos",
 ];
