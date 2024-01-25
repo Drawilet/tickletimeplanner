@@ -3,24 +3,23 @@
         $remaining = $this->getRemaining();
     @endphp
 
-
     <div class="hidden lg:block lg:w-96 absolute right-0 top-0 h-full p-4 bg-base-100 text-base-content">
         <h3 class="text-xl text-center">{{ __('calendar-lang.Payments') }}</h3>
         <h4 class="text-lg text-center">{{ __('calendar-lang.total') }}: {{ $this->getTotal() }} </h4>
 
         <ul class="menu">
-        <div class=" overflow-y-auto max-h-48">
-            @isset($event['payments'])
-                @foreach ($event['payments'] as $payment)
-                    <li>
-                        <a class="flex justify-between">
-                            <span>{{ Carbon\Carbon::parse($payment['created_at'])->format('d/m/Y') }}</span>
-                            <span>{{ $payment['notes'] }}</span>
-                            <span>${{ $payment['amount'] }}</span>
-                        </a>
-                    </li>
-                @endforeach
-            @endisset
+            <div class=" overflow-y-auto max-h-48">
+                @isset($event['payments'])
+                    @foreach ($event['payments'] as $payment)
+                        <li>
+                            <a class="flex justify-between">
+                                <span>{{ Carbon\Carbon::parse($payment['created_at'])->format('d/m/Y') }}</span>
+                                <span>{{ $payment['notes'] }}</span>
+                                <span>${{ $payment['amount'] }}</span>
+                            </a>
+                        </li>
+                    @endforeach
+                @endisset
             </div>
             <label class="divider divider-base-200"></label>
             <li>
