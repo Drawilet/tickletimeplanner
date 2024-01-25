@@ -7,4 +7,5 @@ return [
     'has'=>'has',
     'Customer'=>'Cliente',
     'Customeraddedsuccessfully'=>'Customer added successfully',
+    'events'=>'events',
 ];

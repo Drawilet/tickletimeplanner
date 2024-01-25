@@ -209,7 +209,7 @@ class CrudComponent extends Component
             $items = $item->$foreign;
             if (count($items) != 0) {
                 $this->modals["error"] = true;
-                $this->emit("toast", "error", __('toast-lang.cannotdelete') . " " . __("show-lang." . strtolower(($this->Name))) . " " . __('toast-lang.because') . " " . __('toast-lang.has') . " " . $foreign);
+                $this->emit("toast", "error", __('toast-lang.cannotdelete') . " " . __(strtolower($item->{$this->mainKey})) . " " . __('toast-lang.because') . " " . __('toast-lang.has') . " " . __("toast-lang.".$foreign));
                 return;
             }
         }
