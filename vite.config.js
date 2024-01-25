@@ -8,4 +8,11 @@ export default defineConfig({
             refresh: [...refreshPaths, "app/Http/Livewire/**"],
         }),
     ],
+    server: {
+        host: process.env.LARAVEL_SAIL
+            ? Object.values(os.networkInterfaces())
+                  .flat()
+                  .find((info) => info?.internal === false)?.address
+            : undefined,
+    },
 });

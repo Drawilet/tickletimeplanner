@@ -1,4 +1,4 @@
-<div class="drawer">
+<div class="drawer z-50">
     <input id="sidebar" type="checkbox" class="drawer-toggle" />
     <div class="drawer-content">
         <label for="sidebar" class="btn btn-square btn-ghost">

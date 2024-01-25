@@ -4,7 +4,7 @@
     </div>
     <div class="flex-1">
         <a class="btn btn-ghost normal-case text-xl" href="/dashboard">
-            <x-application-mark />
+            <x-application-mark hideName />
         </a>
     </div>
 
