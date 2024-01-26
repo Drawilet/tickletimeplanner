@@ -3,8 +3,8 @@
         $remaining = $this->getRemaining();
     @endphp
 
-    <div id="payments_modal"
-        class="hidden w-11/12 md:block lg:w-96 absolute right-0 top-0 h-full p-4 bg-base-100 text-base-content">
+    <div
+        class="{{ $modals['payments'] ? 'block' : 'hidden' }} w-11/12 md:block lg:w-96 absolute right-0 top-0 h-full p-4 bg-base-100 text-base-content">
         <h3 class="text-xl text-center">{{ __('calendar-lang.Payments') }}</h3>
         <h4 class="text-lg text-center">{{ __('calendar-lang.total') }}: {{ $this->getTotal() }} </h4>
 
@@ -50,7 +50,7 @@
                 </form>
             @endif
 
-            <button class="mt-2 w-full btn btn-secondary md:hidden " onclick="payments_modal.style.display = 'none' ">
+            <button class="mt-2 w-full btn btn-secondary md:hidden " wire:click="Modal('payments', false)">
                 {{ __('calendar-lang.hide-payments') }}
             </button>
         </ul>

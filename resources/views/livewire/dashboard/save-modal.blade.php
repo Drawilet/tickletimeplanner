@@ -192,7 +192,7 @@
             </button>
 
             @isset($event['id'])
-                <button class="w-2/3 btn btn-secondary" onclick="payments_modal.style.display = 'block' ">
+                <button class="w-2/3 btn btn-secondary" wire:click="Modal('payments', true)">
                     {{ __('calendar-lang.show-payments') }}
                 </button>
             @endisset
