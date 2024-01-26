@@ -182,9 +182,13 @@ class ShowComponent extends Component
         $this->Modal("save", true, $event);
     }
 
-    public function updateEvents()
+    public function updateEvents($action, $data)
     {
         $this->emit("update-events", $this->events->load("space", "customer"));
+
+        if (isset($this->event["id"]) && $this->event["id"] == $data["id"]) {
+            $this->event = $this->events->find($data["id"])->load("products", "payments", "customer", "space")->toArray();
+        }
     }
 
     public function updateEventPayments($action, $data)
