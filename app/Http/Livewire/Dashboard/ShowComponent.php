@@ -26,6 +26,7 @@ class ShowComponent extends Component
         "delete" => false,
         "addProduct" => false,
         "newCustomer" => false,
+        "payments" => false,
     ];
     public $event, $initialEvent = [
         "customer_id" => null,
@@ -92,6 +93,9 @@ class ShowComponent extends Component
         switch ($name) {
             case 'save':
                 if ($value === true) $this->event = $this->initialEvent;
+                else
+                    $this->modals["payments"] = false;
+
                 if ($data) {
                     if (gettype($data) != "array" && array_keys($data->toArray()) > 2) {
                         $this->event = array_merge(
@@ -105,6 +109,7 @@ class ShowComponent extends Component
                         );
                     else $this->event = array_merge($this->event, $data);
                 }
+
                 break;
 
             case 'newCustomer':
