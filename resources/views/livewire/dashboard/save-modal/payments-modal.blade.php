@@ -6,7 +6,7 @@
     <div
         class="{{ $modals['payments'] ? 'block' : 'hidden' }} w-11/12 md:block lg:w-96 absolute right-0 top-0 h-full p-4 bg-base-100 text-base-content">
         <h3 class="text-xl text-center">{{ __('calendar-lang.Payments') }}</h3>
-        <h4 class="text-lg text-center">{{ __('calendar-lang.total') }}: {{ $this->getTotal() }} </h4>
+        <h4 class="text-lg text-center">{{ __('calendar-lang.total') }}: ${{ $this->getTotal() }} </h4>
 
         <ul class="menu">
             <div class=" overflow-y-auto max-h-48">

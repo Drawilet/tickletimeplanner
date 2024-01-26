@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Dashboard;
 
 use App\Events\CustomerEvent;
 use App\Events\EventEvent;
+use App\Events\PaymentEvent;
 use App\Http\Socket\WithCrudSockets;
 use App\Models\Customer;
 use App\Models\Event;
@@ -63,7 +64,7 @@ class ShowComponent extends Component
         "notes" => null,
     ];
 
-    public $events, $products, $filteredProducts, $customers, $spaces;
+    public $events, $products, $filteredProducts, $customers, $spaces, $payments;
 
     public $currentSpace;
 
@@ -73,6 +74,8 @@ class ShowComponent extends Component
         $this->addSocketListener("product", ["useItemsKey" => false, "get" => true]);
         $this->addSocketListener("customer", ["useItemsKey" => false, "get" => true]);
         $this->addSocketListener("space", ["useItemsKey" => false, "get" => true]);
+        $this->addSocketListener("payment", ["useItemsKey" => false, "get" => true, "afterUpdate" => "updateEventPayments"]);
+
 
         $this->event = $this->initialEvent;
         $this->payment = $this->initialPayment;
@@ -179,9 +182,52 @@ class ShowComponent extends Component
         $this->Modal("save", true, $event);
     }
 
-    public function updateEvents()
+    public function updateEvents($action, $data)
     {
         $this->emit("update-events", $this->events->load("space", "customer"));
+
+        if (isset($this->event["id"]) && $this->event["id"] == $data["id"]) {
+            $this->event = $this->events->find($data["id"])->load("products", "payments", "customer", "space")->toArray();
+        }
+    }
+
+    public function updateEventPayments($action, $data)
+    {
+
+        if (!isset($data["event_id"])) return;
+
+        $eventIndex = array_search($data["event_id"], array_column($this->events->toArray(), "id"));
+        if ($eventIndex === false) return;
+
+        $event = $this->events[$eventIndex];
+
+        $paymentIndex = array_search($data["id"], array_column($event["payments"]->toArray(), "id"));
+
+        switch ($action) {
+            case 'create':
+                if ($paymentIndex === false) {
+                    $event["payments"][] = $data;
+                }
+                break;
+
+            case 'update':
+                if ($paymentIndex !== false) {
+                    $event["payments"][$paymentIndex] = $data;
+                }
+                break;
+
+            case 'delete':
+                if ($paymentIndex !== false) {
+                    unset($event["payments"][$paymentIndex]);
+                }
+                break;
+        }
+
+        $this->events[$eventIndex] = $event;
+        if (isset($this->event["id"]) && $this->event["id"] == $event["id"])
+            $this->event = $event;
+
+        event(new EventEvent("update", $event));
     }
 
     public function productAction($product_id, $action, $quantity = 1)
@@ -255,7 +301,7 @@ class ShowComponent extends Component
 
         $this->emit("toast", "success", "Payment added successfully");
 
-        event(new EventEvent("update", $this->event));
+        event(new PaymentEvent("create", $payment));
     }
 
     public function newCustomer()

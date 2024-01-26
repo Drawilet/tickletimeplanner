@@ -89,7 +89,7 @@ trait WithCrudSockets
             "message" =>  $data[$this->mainKey] . " $this->name " . $action . "d"
         ]); */
 
-        if (isset($socket["afterUpdate"])) $this->{$socket["afterUpdate"]}();
+        if (isset($socket["afterUpdate"])) $this->{$socket["afterUpdate"]}($action, $data);
     }
 
     public $socketListeners = [];
