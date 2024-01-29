@@ -20,7 +20,11 @@
             <div tabindex="0" role="button" class="btn m-1">
                 {{ Auth::user()->name }}
 
-                <img src="/storage/{{ Auth::user()->profile_photo_path }}" alt="" class="h-7">
+                @isset(Auth::user()->profile_photo_path)
+                    <img src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}"
+                        class="w-8 h-8 rounded-full">
+                @endisset
+
             </div>
             <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
                 <!-- Account Management -->
