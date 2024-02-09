@@ -17,6 +17,7 @@ trait WithCrudActions
 
         $action = $e["action"];
         $data = $e["data"];
+        if (is_object($data)) $data =  $data->toArray();
 
         switch ($action) {
             case 'create':
