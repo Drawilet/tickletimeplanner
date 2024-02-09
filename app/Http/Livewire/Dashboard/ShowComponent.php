@@ -88,6 +88,9 @@ class ShowComponent extends Component
             if ($this->filters["product_name"] && !str_contains(strtolower($product->name), strtolower($this->filters["product_name"]))) return false;
             return true;
         });
+
+        $this->currentSpace = $this->spaces->find($this->event["space_id"]) ?? null;
+
         return view('livewire.dashboard.show-component');
     }
 
@@ -348,11 +351,6 @@ class ShowComponent extends Component
         $this->event["customer_id"] = $customer->id;
 
         $this->emit("toast", "success", __('toast-lang.Customeraddedsuccessfully'));
-    }
-
-    public function updateSpace()
-    {
-        $this->currentSpace = $this->spaces->find($this->event["space_id"]) ?? null;
     }
 
     public function getSchedule()

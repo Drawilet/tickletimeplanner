@@ -38,8 +38,8 @@
 
                     <x-form-control>
                         <x-label for="space_id" value="{{ __('calendar-lang.Space') }}" />
-                        <select class="select select-bordered" wire:model="event.space_id" wire:change='updateSpace'
-                            wire:loading.attr="disabled" wire:target="saveEvent">
+                        <select class="select select-bordered" wire:model="event.space_id" wire:loading.attr="disabled"
+                            wire:target="saveEvent">
                             <option value="{{ null }}">{{ __('calendar-lang.Pickone') }}</option>
                             @foreach ($spaces as $space)
                                 <option value="{{ $space->id }}">{{ $space->name }}
