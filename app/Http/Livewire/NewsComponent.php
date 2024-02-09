@@ -2,17 +2,17 @@
 
 namespace App\Http\Livewire;
 
-use App\Http\Socket\WithCrudSockets;
+use App\Http\Traits\WithCrudActions;
 use App\Models\Event;
 use App\Models\EventProduct;
+use App\Models\Product;
 use Carbon\Carbon;
 use Livewire\Component;
 
 class NewsComponent extends Component
 {
-    use WithCrudSockets;
+    use WithCrudActions;
     protected $listeners = [
-        "socket" => "handleSocket",
         "toggleNews" => "toggleNews"
     ];
 
@@ -24,8 +24,8 @@ class NewsComponent extends Component
 
     public function mount()
     {
-        $this->addSocketListener("event", ["useItemsKey" => false, "get" => false, "afterUpdate" => "getProducts"]);
-        $this->addSocketListener("product", ["useItemsKey" => false, "get" => true]);
+        $this->addCrud(Event::class, ["useItemsKey" => false, "get" => false, "afterUpdate" => "getProducts"]);
+        $this->addCrud(Product::class, ["useItemsKey" => false, "get" => true]);
 
         $this->events = Event::whereBetween("date", [
             Carbon::now()->format("Y-m-d"),
