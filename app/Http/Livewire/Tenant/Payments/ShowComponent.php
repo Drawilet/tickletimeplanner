@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Tenant\Payments;
 
+use App\Events\PaymentEvent;
 use App\Http\Livewire\Util\CrudComponent;
 use App\Models\Event;
 use App\Models\Payment;
@@ -18,7 +19,7 @@ class ShowComponent extends CrudComponent
 
     public function mount()
     {
-        $this->setup(Payment::class, Payment::class, [
+        $this->setup(Payment::class,  [
             "mainKey" => "id",
             "types" => [
                 "event_id" => [
@@ -37,7 +38,6 @@ class ShowComponent extends CrudComponent
                     "type" => "number",
                 ],
             ],
-            "foreigns" => ["events"],
         ]);
     }
 }

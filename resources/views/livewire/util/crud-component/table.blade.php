@@ -1,6 +1,6 @@
 <div class="overflow-scroll" style="max-height: calc(100vh - 200px)">
     @if ($items->isNotEmpty())
-        <table class="table">
+        <table class="table-xs md:table">
             <thead class="sticky top-0 bg-base-100">
                 <tr>
                     <th></th>
@@ -96,7 +96,7 @@
                             </td>
                         @endforeach
 
-                        @can($name . 's' . '.manage')
+                        @can('tenant.' . $name . 's' . '.manage')
                             <td>
                                 <button wire:click="Modal('save', true, '{{ $item->id }}')">
                                     @component('components.icons.pencil-square')
@@ -114,11 +114,11 @@
         </table>
     @else
         <div class="flex flex-col items-center justify-center mt-5">
-            <h2 class="text-2xl opacity-90"> {{ __($name . '-lang.' . "notfound") }}</h2>
+            <h2 class="text-2xl opacity-90"> {{ __($name . '-lang.' . 'notfound') }}</h2>
             <button wire:click="Modal('save', true)" class=" btn btn-primary py-2 px-4 mt-4">
                 @component('components.icons.plus')
                 @endcomponent
-                {{ __($name . '-lang.' . "create") }}
+                {{ __($name . '-lang.' . 'create') }}
             </button>
         </div>
     @endif

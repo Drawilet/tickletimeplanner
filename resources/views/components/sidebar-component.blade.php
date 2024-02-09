@@ -1,4 +1,4 @@
-<div class="drawer">
+<div class="drawer z-50">
     <input id="sidebar" type="checkbox" class="drawer-toggle" />
     <div class="drawer-content">
         <label for="sidebar" class="btn btn-square btn-ghost">
@@ -24,7 +24,8 @@
                 @else
                     @can(isset($item['permission']) ? $item['permission'] : null)
                         <li class="{{ isset($item['sub']) ? 'dropdown dropdown-hover dropdown-right' : '' }}">
-                           <a href="{{ route($item['route']) }}" class="{{ $currentRoute == $item['route'] ? 'active' : '' }}">
+                            <a href="{{ route($item['route']) }}"
+                                class="{{ $currentRoute == $item['route'] ? 'active' : '' }}">
                                 @component('components.icons.' . $item['icon'])
                                 @endcomponent
 
@@ -59,10 +60,4 @@
             </li>
     </div>
     </ul>
-    <style>
-    .active {
-    border-left: 3px solid blue;
-}
-    
-    </style>
 </div>

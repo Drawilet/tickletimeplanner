@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Util;
 
-use App\Http\Socket\WithCrudSockets;
+use App\Http\Traits\WithCrudActions;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Livewire\Component;
@@ -10,9 +10,9 @@ use Livewire\WithFileUploads;
 
 class CrudComponent extends Component
 {
-    protected $listeners =  ["socket" => "handleSocket", "update-data" => "handleData"];
+    protected $listeners =  ["update-data" => "handleData"];
 
-    use WithFileUploads, WithCrudSockets;
+    use WithFileUploads, WithCrudActions;
 
     public $mainKey, $keys;
     public $Model, $ItemEvent;
@@ -44,12 +44,11 @@ class CrudComponent extends Component
 
     public $foreigns = [];
 
-    public function setup($Model, $ItemEvent, array $params)
+    public function setup($Model, array $params)
     {
         $this->Model = $Model;
-        $this->ItemEvent = $ItemEvent;
 
-        $this->addSocketListener(class_basename($this->Model), ["get" => false]);
+        $this->addCrud($Model, ["get" => false]);
         $this->items = $this->Model::where("tenant_id", auth()->user()->tenant_id)->get();
 
         $this->initialData = ["id"  => ""];
@@ -195,7 +194,13 @@ class CrudComponent extends Component
         $item->save();
         if (in_array("afterSave", $this->events)) $this->afterSave($item, $this->data);
 
-        event(new $this->ItemEvent($this->data["id"] ? "update" : "create", $item));
+        $this->handleCrudActions(
+            $this->name,
+            [
+                "action" => $this->data["id"] ? "update" : "create",
+                "data" => $item->toArray()
+            ]
+        );
 
         $this->Modal("save", false);
         $this->emit("toast", "success", $this->Name . " " . __("toast-lang.savedsuccessfully"));
@@ -209,14 +214,21 @@ class CrudComponent extends Component
             $items = $item->$foreign;
             if (count($items) != 0) {
                 $this->modals["error"] = true;
-                $this->emit("toast", "error", __('toast-lang.cannotdelete') . " " . __("show-lang." . strtolower(($this->Name))) . " " . __('toast-lang.because') . " " . __('toast-lang.has') . " " . $foreign);
+                $this->emit("toast", "error", __('toast-lang.cannotdelete') . " " . __(strtolower($item->{$this->mainKey})) . " " . __('toast-lang.because') . " " . __('toast-lang.has') . " " . __("toast-lang." . $foreign));
                 return;
             }
         }
 
         $item->delete();
 
-        event(new $this->ItemEvent("delete", $this->data));
+        $this->handleCrudActions(
+            $this->name,
+            [
+                "action" => "delete",
+                "data" => $this->data
+            ]
+        );
+
         $this->emit("toast", "success", $this->Name . " " . __('toast-lang.deletedsuccessfully'));
     }
 

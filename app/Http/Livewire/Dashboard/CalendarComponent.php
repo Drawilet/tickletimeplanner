@@ -2,7 +2,8 @@
 
 namespace App\Http\Livewire\Dashboard;
 
-use App\Http\Socket\WithCrudSockets;
+use App\Http\Traits\WithCrudActions;
+use App\Models\Space;
 use Asantibanez\LivewireCalendar\LivewireCalendar;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
@@ -10,8 +11,7 @@ use Illuminate\Support\Facades\Log;
 
 class CalendarComponent extends LivewireCalendar
 {
-    use WithCrudSockets;
-
+    use WithCrudActions;
     protected $listeners = [
         "update-events" => "updateEvents"
     ];
@@ -33,10 +33,11 @@ class CalendarComponent extends LivewireCalendar
                 'id' => $event["id"],
                 'title' => $event["name"],
                 "location" => $event["space"]["name"],
-                'description' => \Carbon\Carbon::createFromFormat('H:i:s', $event["start_time"])->format('g:i A') . ' - ' . \Carbon\Carbon::createFromFormat('H:i:s', $event["end_time"])->format('g:i A'),
+                'description' => Carbon::createFromFormat('H:i:s', $event["start_time"])->format('g:i A') . ' - ' . \Carbon\Carbon::createFromFormat('H:i:s', $event["end_time"])->format('g:i A'),
                 'date' => $event["date"],
                 'color' => $event["space"]["color"],
                 "start_time" => $event["start_time"],
+                "isDraft" => isset($event["payments"]) && count($event["payments"]) == 0,
             ];
         })->sortBy('start_time')->values()->toArray());
     }
@@ -68,7 +69,8 @@ class CalendarComponent extends LivewireCalendar
 
     public function afterMount($extras = [])
     {
-        $this->addSocketListener("space", ["useItemsKey" => false, "get" => true]);
+        $this->addCrud(Space::class, ["useItemsKey" => false, "get" => true]);
+
         $this->filters["spaces"] = $this->spaces->pluck("id")->toArray();
     }
 

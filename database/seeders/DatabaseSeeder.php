@@ -37,16 +37,16 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->cleanStorageDir();
+   //     $this->cleanStorageDir();
 
         $this->call(
             [
                 PermissionSeeder::class,
                 UserSeeder::class,
-                ProductSeeder::class,
+          /*       ProductSeeder::class,
                 CustomerSeeder::class,
                 SpaceSeeder::class,
-                EventSeeder::class,
+                EventSeeder::class, */
             ]
         );
     }

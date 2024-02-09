@@ -18,3 +18,5 @@ yarn-error.log
 
 ./package-lock.json
 .vercel
+
+_ide_helper.php

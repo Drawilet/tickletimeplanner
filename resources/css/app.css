@@ -30,3 +30,12 @@
 [data-theme="dark"] {
     color: #ffffff;
 }
+
+@media screen and (max-width: 640px) {
+    .mockup-browser-toolbar::before {
+        content: none !important;
+    }
+    .mockup-browser-toolbar {
+        padding-left: 1rem;
+    }
+}

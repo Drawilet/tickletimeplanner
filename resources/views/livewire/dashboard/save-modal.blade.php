@@ -2,6 +2,12 @@
 <div class="modal" role="dialog">
     <div class="modal-box">
         <div class="px-6 py-4">
+            <div>
+                <h2>
+                    {{ !isset($event['id']) || count($event['payments']) == 0 ? __('calendar-lang.draft') : __('calendar-lang.sale') }}
+                </h2>
+            </div>
+
             <div class="flex justify-between items-center">
                 <h3 class="text-2xl">
                     @isset($event['date'])
@@ -129,10 +135,10 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($event['products'] as $event)
+                                @foreach ($event['products'] as $event_product)
                                     @php
-                                        $product = $products->find($event['product_id']);
-                                        $price = $product->price * $event['quantity'];
+                                        $product = $products->find($event_product['product_id']);
+                                        $price = $product->price * $event_product['quantity'];
                                         $id = $product->id;
                                     @endphp
                                     <tr>
@@ -140,7 +146,7 @@
                                         <td class="join">
                                             <button class="btn"
                                                 wire:click="productAction('{{ $id }}', 'decrease')">-</button>
-                                            <span class="btn">{{ $event['quantity'] }}</span>
+                                            <span class="btn">{{ $event_product['quantity'] }}</span>
                                             <button class="btn"
                                                 wire:click="productAction('{{ $id }}', 'add')">+</button>
                                         </td>
@@ -161,7 +167,9 @@
                     </div>
                 </section>
             </div>
+
         </div>
+
 
         <div class="flex flex-row items-center justify-end px-6 py-4">
             <span class="text-xl mr-auto block">{{ __('calendar-lang.total') }}: $ {{ $this->getTotal() }}</span>
@@ -175,6 +183,19 @@
                 </span>
             </button>
 
+
+        </div>
+
+        <div class="w-11/12 mx-auto flex md:hidden gap-2">
+            <button class="w-1/3 btn btn-neutral" wire:click='Modal("save",false)'>
+                {{ __('calendar-lang.close') }}
+            </button>
+
+            @isset($event['id'])
+                <button class="w-2/3 btn btn-secondary" wire:click="Modal('payments', true)">
+                    {{ __('calendar-lang.show-payments') }}
+                </button>
+            @endisset
 
         </div>
     </div>

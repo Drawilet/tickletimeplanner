@@ -10,7 +10,7 @@ class ShowComponent extends CrudComponent
 {
     public function mount()
     {
-        $this->setup(Product::class, ProductEvent::class, [
+        $this->setup(Product::class,  [
             "mainKey" => "name",
             "types" => [
                 "photo" => [
@@ -22,7 +22,7 @@ class ShowComponent extends CrudComponent
                 "description" => ["type" => "textarea",  "rows" => 4],
                 "cost" => ["type" => "number"],
                 "price" => ["type" => "number"],
-                "notes" => ["type" => "text",],
+                "notes" => ["type" => "text", "rules" => "nullable"],
             ],
             "foreigns" => ["events"],
         ]);

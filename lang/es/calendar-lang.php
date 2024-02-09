@@ -1,5 +1,8 @@
 <?php
 return [
+    "draft" => "Borrador",
+    "sale" => "Venta",
+
     'Eventname' => 'Nombre del evento',
     'Space' => 'Espacio',
     'Customer' => 'Cliente',
@@ -38,4 +41,7 @@ return [
     "delete" => "Eliminar",
     "cancel" => "Cancelar",
     "delete-success" => "¡Evento eliminado con éxito!",
+
+    "show-payments" => "Mostrar pagos",
+    "hide-payments" => "Ocultar pagos",
 ];

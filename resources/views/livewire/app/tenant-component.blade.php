@@ -1,6 +1,6 @@
 <div class="flex flex-wrap gap-6">
     @foreach ($tenants as $tenant)
-        <div class="card card-side shadow-xl p-4 flex-1 relative"
+        <div class="card md:card-side shadow-xl p-4 flex-1 relative"
             style="background: linear-gradient(rgba(0, 0, 0, 0.562), rgba(255, 255, 255, 0.1)), url('{{ $tenant->background_image }}'); background-size: cover;">
             <figure class="mb-4">
                 <img src="{{ $tenant->profile_image }}" alt="Foto"
