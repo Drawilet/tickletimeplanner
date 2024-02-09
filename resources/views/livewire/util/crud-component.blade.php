@@ -36,7 +36,4 @@
             @include('livewire.util.crud-component.table')
         </div>
     </div>
-
-    @component('components.util.crud-socket-scripts', ['socketListeners' => $socketListeners])
-    @endcomponent
 </div>

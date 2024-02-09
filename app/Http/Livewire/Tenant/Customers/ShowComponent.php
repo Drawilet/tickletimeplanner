@@ -10,7 +10,7 @@ class ShowComponent extends CrudComponent
 {
     public function mount()
     {
-        $this->setup(Customer::class, CustomerEvent::class, [
+        $this->setup(Customer::class, [
             "mainKey" => "firstname",
             "types" => [
                 "firstname" => ["type" => "text"],
