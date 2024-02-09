@@ -1,10 +1,11 @@
 <main class="py-2 px-5 md:px-20 ">
     <div class="flex justify-center items-center w-full mb-1 flex-wrap gap-1">
-        <input type="text" class="input input-bordered w-full md:w-1/2 " placeholder="{{__('spaces.Search') }}..."
+        <input type="text" class="input input-bordered w-full md:w-1/2 " placeholder="{{ __('spaces.Search') }}..."
             wire:model="filters.name">
-            
+
         <div class="w-full mt-2 flex gap-1 md:w-1/3 md:mt-0">
-            <input type="text" class="input input-bordered w-1/2" placeholder="{{ __('spaces.City') }}" wire:model="filters.city">
+            <input type="text" class="input input-bordered w-1/2" placeholder="{{ __('spaces.City') }}"
+                wire:model="filters.city">
             <input type="text" class="input input-bordered w-1/2" placeholder="{{ __('spaces.Country') }}"
                 wire:model="filters.country">
         </div>
@@ -137,7 +138,4 @@
 
         getLocation();
     </script>
-
-    @component('components.util.crud-socket-scripts', ['socketListeners' => $socketListeners])
-    @endcomponent
 </main>

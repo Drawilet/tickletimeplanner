@@ -2,12 +2,13 @@
 
 namespace App\Http\Livewire\Dashboard;
 
-use App\Http\Socket\WithCrudSockets;
+use App\Http\Traits\WithCrudActions;
+use App\Models\Space;
 use Livewire\Component;
 
 class FilterComponent extends Component
 {
-    use WithCrudSockets;
+    use WithCrudActions;
 
     public $filters = [
         "spaces" => [],
@@ -16,7 +17,7 @@ class FilterComponent extends Component
     public $spaces;
     public function mount()
     {
-        $this->addSocketListener("space", ["useItemsKey" => false, "get" => true]);
+        $this->addCrud(Space::class, ["useItemsKey" => false, "get" => true]);
         $this->filters["spaces"] = $this->spaces->pluck("id")->toArray();
     }
 

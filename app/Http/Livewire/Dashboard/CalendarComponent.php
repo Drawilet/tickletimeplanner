@@ -2,7 +2,8 @@
 
 namespace App\Http\Livewire\Dashboard;
 
-use App\Http\Socket\WithCrudSockets;
+use App\Http\Traits\WithCrudActions;
+use App\Models\Space;
 use Asantibanez\LivewireCalendar\LivewireCalendar;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
@@ -10,8 +11,7 @@ use Illuminate\Support\Facades\Log;
 
 class CalendarComponent extends LivewireCalendar
 {
-    use WithCrudSockets;
-
+    use WithCrudActions;
     protected $listeners = [
         "update-events" => "updateEvents"
     ];
@@ -69,7 +69,8 @@ class CalendarComponent extends LivewireCalendar
 
     public function afterMount($extras = [])
     {
-        $this->addSocketListener("space", ["useItemsKey" => false, "get" => true]);
+        $this->addCrud(Space::class, ["useItemsKey" => false, "get" => true]);
+
         $this->filters["spaces"] = $this->spaces->pluck("id")->toArray();
     }
 

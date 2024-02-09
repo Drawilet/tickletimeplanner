@@ -2,16 +2,15 @@
 
 namespace App\Http\Livewire;
 
-use App\Http\Socket\WithCrudSockets;
+use App\Http\Traits\WithCrudActions;
 use App\Models\Space;
 use Livewire\Component;
 
 class SpacesComponent extends Component
 {
-    use WithCrudSockets;
+    use WithCrudActions;
 
     protected $listeners = [
-        "socket" => "handleSocket",
         "setFilter" => "setFilter",
     ];
 
@@ -29,7 +28,7 @@ class SpacesComponent extends Component
 
     public function mount()
     {
-        $this->addSocketListener("space", ["useItemsKey" => false, "get" => true]);
+        $this->addCrud(Space::class, ["useItemsKey" => false, "get" => true]);
     }
 
     public function render()
