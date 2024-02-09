@@ -40,7 +40,6 @@ Ever wished planning events could be as fun as a tickle? Look no further! Tickle
 
     ```
     php artisan serve
-    php artisan websockets:serve
     npm run dev
     ```
 
