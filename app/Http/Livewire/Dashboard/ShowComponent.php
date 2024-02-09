@@ -5,10 +5,12 @@ namespace App\Http\Livewire\Dashboard;
 use App\Events\CustomerEvent;
 use App\Events\EventEvent;
 use App\Events\PaymentEvent;
-use App\Http\Socket\WithCrudSockets;
+use App\Http\Traits\WithCrudActions;
 use App\Models\Customer;
 use App\Models\Event;
 use App\Models\Payment;
+use App\Models\Product;
+use App\Models\Space;
 use App\Rules\PhoneNumber;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
@@ -16,10 +18,9 @@ use Livewire\Component;
 
 class ShowComponent extends Component
 {
-    use WithCrudSockets;
+    use WithCrudActions;
     protected $listeners = [
         "Modal" => "Modal",
-        "socket" => "handleSocket",
     ];
 
     public $modals = [
@@ -70,12 +71,11 @@ class ShowComponent extends Component
 
     public function mount()
     {
-        $this->addSocketListener("event", ["useItemsKey" => false, "get" => true, "afterUpdate" => "updateEvents"]);
-        $this->addSocketListener("product", ["useItemsKey" => false, "get" => true]);
-        $this->addSocketListener("customer", ["useItemsKey" => false, "get" => true]);
-        $this->addSocketListener("space", ["useItemsKey" => false, "get" => true]);
-        $this->addSocketListener("payment", ["useItemsKey" => false, "get" => true, "afterUpdate" => "updateEventPayments"]);
-
+        $this->addCrud(Event::class, ["useItemsKey" => false, "get" => true, "afterUpdate" => "updateEvents"]);
+        $this->addCrud(Payment::class, ["useItemsKey" => false, "get" => true, "afterUpdate" => "updateEventPayments"]);
+        $this->addCrud(Customer::class, ["useItemsKey" => false, "get" => true]);
+        $this->addCrud(Space::class, ["useItemsKey" => false, "get" => true]);
+        $this->addCrud(Product::class, ["useItemsKey" => false, "get" => true]);
 
         $this->event = $this->initialEvent;
         $this->payment = $this->initialPayment;
@@ -162,8 +162,6 @@ class ShowComponent extends Component
             }
         }
 
-
-
         $event = Event::updateOrCreate(["id" => $this->event["id"] ?? ""], $this->event);
 
         $event->products()->delete();
@@ -177,7 +175,14 @@ class ShowComponent extends Component
         if (strlen($event["start_time"]) == 5) $event["start_time"] .= ":00";
         if (strlen($event["end_time"]) == 5) $event["end_time"] .= ":00";
 
-        event(new EventEvent(isset($this->event["id"]) ? "update" : "create", $event));
+        $this->handleCrudActions(
+            "event",
+            [
+                "action" => isset($this->event["id"]) ? "update" : "create",
+                "data" => $event
+            ]
+        );
+
 
         $this->Modal("save", true, $event);
     }
@@ -227,7 +232,13 @@ class ShowComponent extends Component
         if (isset($this->event["id"]) && $this->event["id"] == $event["id"])
             $this->event = $event;
 
-        event(new EventEvent("update", $event));
+        $this->handleCrudActions(
+            "event",
+            [
+                "action" => "update",
+                "data" => $event
+            ]
+        );
     }
 
     public function productAction($product_id, $action, $quantity = 1)
@@ -301,7 +312,13 @@ class ShowComponent extends Component
 
         $this->emit("toast", "success", "Payment added successfully");
 
-        event(new PaymentEvent("create", $payment));
+        $this->handleCrudActions(
+            "payment",
+            [
+                "action" => "create",
+                "data" => $payment
+            ]
+        );
     }
 
     public function newCustomer()
@@ -320,7 +337,13 @@ class ShowComponent extends Component
 
         $this->Modal("newCustomer", false);
 
-        event(new CustomerEvent("create", $customer));
+        $this->handleCrudActions(
+            "customer",
+            [
+                "action" => "create",
+                "data" => $customer
+            ]
+        );
 
         $this->event["customer_id"] = $customer->id;
 
@@ -364,7 +387,13 @@ class ShowComponent extends Component
 
         $event->delete();
 
-        event(new EventEvent("delete", $this->event));
+        $this->handleCrudActions(
+            "event",
+            [
+                "action" => "delete",
+                "data" => $this->event
+            ]
+        );
 
         $this->emit("toast", "success", __('calendar-lang.delete-success'));
     }

@@ -8,7 +8,4 @@
         'dragAndDropEnabled' => false,
         'beforeCalendarView' => '/livewire/dashboard/filter-component',
     ])
-
-    @component('components.util.crud-socket-scripts', ['socketListeners' => $socketListeners])
-    @endcomponent
 </div>
