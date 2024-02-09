@@ -13,7 +13,7 @@ class ShowComponent extends CrudComponent
 {
     public function mount()
     {
-        $this->setup(Space::class, SpaceEvent::class, [
+        $this->setup(Space::class,  [
             "mainKey" => "name",
             "types" => [
                 "name" => ["type" => "text"],

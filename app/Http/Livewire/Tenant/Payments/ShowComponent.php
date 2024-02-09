@@ -19,7 +19,7 @@ class ShowComponent extends CrudComponent
 
     public function mount()
     {
-        $this->setup(Payment::class, PaymentEvent::class, [
+        $this->setup(Payment::class,  [
             "mainKey" => "id",
             "types" => [
                 "event_id" => [

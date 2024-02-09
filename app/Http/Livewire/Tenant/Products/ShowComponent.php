@@ -10,7 +10,7 @@ class ShowComponent extends CrudComponent
 {
     public function mount()
     {
-        $this->setup(Product::class, ProductEvent::class, [
+        $this->setup(Product::class,  [
             "mainKey" => "name",
             "types" => [
                 "photo" => [

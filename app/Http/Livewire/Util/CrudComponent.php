@@ -10,7 +10,7 @@ use Livewire\WithFileUploads;
 
 class CrudComponent extends Component
 {
-    protected $listeners =  ["socket" => "handleSocket", "update-data" => "handleData"];
+    protected $listeners =  ["update-data" => "handleData"];
 
     use WithFileUploads, WithCrudActions;
 
@@ -44,10 +44,9 @@ class CrudComponent extends Component
 
     public $foreigns = [];
 
-    public function setup($Model, $ItemEvent, array $params)
+    public function setup($Model, array $params)
     {
         $this->Model = $Model;
-        $this->ItemEvent = $ItemEvent;
 
         $this->addCrud($Model, ["get" => false]);
         $this->items = $this->Model::where("tenant_id", auth()->user()->tenant_id)->get();
