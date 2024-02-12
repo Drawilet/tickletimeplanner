@@ -12,6 +12,7 @@ use App\Models\Payment;
 use App\Models\Product;
 use App\Models\Space;
 use App\Rules\PhoneNumber;
+use App\Rules\Price;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use Livewire\Component;
@@ -152,7 +153,8 @@ class ShowComponent extends Component
 
             "date" => "required",
 
-            "price" => "required",
+            "price" => new Price(),
+
         ])->validate();
 
         if (!isset($this->event["id"])) {
