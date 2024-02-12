@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Tenant\Products;
 use App\Events\ProductEvent;
 use App\Http\Livewire\Util\CrudComponent;
 use App\Models\Product;
+use App\Rules\Price;
 
 class ShowComponent extends CrudComponent
 {
@@ -20,7 +21,9 @@ class ShowComponent extends CrudComponent
                 ],
                 "name" => ["type" => "text"],
                 "description" => ["type" => "textarea",  "rows" => 4],
-                "cost" => ["type" => "number"],
+                "cost" => [
+                    "type" => "number", "rules" => "required|numeric|min:0|max:999999.99",
+                ],
                 "price" => ["type" => "number"],
                 "notes" => ["type" => "text", "rules" => "nullable"],
             ],
