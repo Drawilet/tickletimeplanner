@@ -108,12 +108,20 @@ class ShowComponent extends Component
                             $this->event,
                             $data->load("products", "payments")->toArray()
                         );
-                    } else if (isset($data["id"]))
-                        $this->event = array_merge(
-                            $this->event,
-                            $this->events->find($data["id"])->load("products", "payments")->toArray()
-                        );
-                    else $this->event = array_merge($this->event, $data);
+                    } else if (isset($data["id"])) {
+                        $event = $this->events->find($data["id"]);
+                        if ($event)
+                            $this->event = array_merge(
+                                $this->event,
+                                $event->load("products", "payments")->toArray()
+                            );
+                        else {
+                            $this->events = $this->events->filter(function ($event) use ($data) {
+                                return $event->id != $data["id"];
+                            });
+                            return;
+                        }
+                    } else $this->event = array_merge($this->event, $data);
                 }
 
                 break;
