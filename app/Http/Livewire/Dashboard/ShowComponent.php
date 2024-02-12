@@ -195,7 +195,10 @@ class ShowComponent extends Component
         $this->emit("update-events", $this->events->load("space", "customer"));
 
         if (isset($this->event["id"]) && $this->event["id"] == $data["id"]) {
-            $this->event = $this->events->find($data["id"])->load("products", "payments", "customer", "space")->toArray();
+            $event =  $this->events->find($data["id"]);
+            if ($event) $this->event = $event->load("products", "payments", "customer", "space")->toArray();
+            else
+                $this->event = $this->initialEvent;
         }
     }
 
@@ -379,6 +382,8 @@ class ShowComponent extends Component
 
         $event = Event::find($id);
         if (!$event) return;
+
+
 
         $event->payments()->delete();
         $event->products()->delete();
