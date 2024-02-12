@@ -311,6 +311,9 @@ class ShowComponent extends Component
 
     public function addPayment()
     {
+        if (!$this->event["id"] || !$this->events->find($this->event["id"]))
+            return $this->emit("toast", "error", __("calendar-lang.event-not-found"));
+
         Validator::make($this->payment, [
             "amount" => "required|numeric|max:" . $this->getRemaining() . "|min:0",
             "notes" => "required",
