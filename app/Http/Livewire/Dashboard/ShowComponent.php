@@ -2,10 +2,8 @@
 
 namespace App\Http\Livewire\Dashboard;
 
-use App\Events\CustomerEvent;
-use App\Events\EventEvent;
-use App\Events\PaymentEvent;
 use App\Http\Traits\WithCrudActions;
+use App\Http\Traits\WithValidations;
 use App\Models\Customer;
 use App\Models\Event;
 use App\Models\Payment;
@@ -19,7 +17,7 @@ use Livewire\Component;
 
 class ShowComponent extends Component
 {
-    use WithCrudActions;
+    use WithCrudActions, WithValidations;
     protected $listeners = [
         "Modal" => "Modal",
     ];
@@ -147,13 +145,13 @@ class ShowComponent extends Component
         $schedule = $this->getSchedule();
 
         Validator::make($this->event, [
-            "name" => "required",
-            "space_id" => "required",
-            "customer_id" => "required",
+            "name" => "required|" . $this->validations["text"],
+            "space_id" => "required|" . $this->validations["text"],
+            "customer_id" => "required|" . $this->validations["text"],
 
             "date" => "required",
 
-            "price" => new Price(),
+            "price" => "required|" . $this->validations["number"],
 
         ])->validate();
 
@@ -317,8 +315,8 @@ class ShowComponent extends Component
             return $this->emit("toast", "error", __("calendar-lang.event-not-found"));
 
         Validator::make($this->payment, [
-            "amount" => "required|numeric|max:" . $this->getRemaining() . "|min:0",
-            "notes" => "required",
+            "amount" => "required|" . $this->getRemaining() . $this->validations["number"],
+            "notes" => "required|" . $this->validations["text"],
         ])->validate();
 
         $this->payment["amount"] = (float) $this->payment["amount"];
@@ -343,12 +341,12 @@ class ShowComponent extends Component
     public function newCustomer()
     {
         Validator::make($this->customer, [
-            "firstname" => "required",
-            "lastname" => "required",
-            "email" => "required|email",
-            "phone" => ["required", new PhoneNumber()],
-            "address" => "required",
-            "notes" => "max:255"
+            "firstname" => "required|" . $this->validations["text"],
+            "lastname" => "required|" . $this->validations["text"],
+            "email" => "required|" . $this->validations["email"],
+            "phone" => "required|" . $this->validations["tel"],
+            "address" => "required|" . $this->validations["textarea"],
+            "notes" => $this->validations["text"],
         ])->validate();
 
         $customer = Customer::create($this->customer);
