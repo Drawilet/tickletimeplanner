@@ -43,11 +43,16 @@ class DatabaseSeeder extends Seeder
             [
                 PermissionSeeder::class,
                 UserSeeder::class,
+            ]
+        );
+
+        if (config('app.env') === 'local') {
+            $this->call([
                 ProductSeeder::class,
                 CustomerSeeder::class,
                 SpaceSeeder::class,
                 EventSeeder::class,
-            ]
-        );
+            ]);
+        }
     }
 }
