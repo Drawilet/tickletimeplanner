@@ -313,7 +313,7 @@ class ShowComponent extends Component
             return $this->emit("toast", "error", __("calendar-lang.event-not-found"));
 
         Validator::make($this->payment, [
-            "amount" => "required|" . $this->getRemaining() . $this->validations["number"],
+            "amount" => "required|" . "max:" . $this->getRemaining() . "|" . $this->validations["number"],
             "notes" => "required|" . $this->validations["textarea"],
         ])->validate();
 
