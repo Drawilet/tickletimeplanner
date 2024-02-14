@@ -139,6 +139,11 @@ class CrudComponent extends Component
 
     public function save()
     {
+        if (in_array("specialValidator", $this->events)) {
+            $specialRules = $this->specialValidator($this->data);
+            $this->crudRules = array_merge($this->crudRules, $specialRules);
+        }
+
         Validator::make($this->data, $this->crudRules)->validate();
 
         if (in_array("beforeSave", $this->events)) $this->data = $this->beforeSave($this->data);

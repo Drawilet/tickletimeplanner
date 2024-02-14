@@ -9,14 +9,13 @@ use App\Models\Payment;
 
 class ShowComponent extends CrudComponent
 {
-    public $events = ["beforeSave"];
+    public $events = ["beforeSave", "specialValidator"];
 
     public function beforeSave($data)
     {
         $data["user_id"] = auth()->user()->id;
         return $data;
     }
-
     public function mount()
     {
         $this->setup(Payment::class,  [
@@ -39,5 +38,33 @@ class ShowComponent extends CrudComponent
                 ],
             ],
         ]);
+    }
+
+    public function getTotal($event)
+    {
+        $total = $event["price"] ?? 0;
+        foreach ($event["products"] as $data) {
+            $total += $this->products->find($data["product_id"])->price * $data["quantity"];
+        }
+        return $total;
+    }
+
+    public function getRemaining($event)
+    {
+        $remaining = $this->getTotal($event);
+        foreach ($event["payments"] as $payment) {
+            $remaining -= $payment["amount"];
+        }
+        return $remaining;
+    }
+
+    public function specialValidator($payment)
+    {
+        $event = Event::find($payment["event_id"]);
+        $remaining = $this->getRemaining($event);
+
+        return [
+            "amount" => "numeric|max:" . $remaining,
+        ];
     }
 }
