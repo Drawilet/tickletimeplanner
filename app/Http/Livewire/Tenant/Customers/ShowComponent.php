@@ -18,7 +18,7 @@ class ShowComponent extends CrudComponent
                 "email" => ["type" => "email"],
                 "phone" => ["type" => "tel"],
                 "address" => ["type" => "textarea",  "rows" => 4],
-                "notes" => ["type" => "text", "rules" => "nullable"],
+                "notes" => ["type" => "textarea", "rules" => "nullable"],
             ],
             "foreigns" => ["events"],
         ]);

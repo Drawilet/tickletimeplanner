@@ -146,13 +146,11 @@ class ShowComponent extends Component
 
         Validator::make($this->event, [
             "name" => "required|" . $this->validations["text"],
-            "space_id" => "required|" . $this->validations["text"],
-            "customer_id" => "required|" . $this->validations["text"],
-
+            "space_id" => "required",
+            "customer_id" => "required",
             "date" => "required",
-
             "price" => "required|" . $this->validations["number"],
-
+            "notes" => "nullable|" . $this->validations["textarea"],
         ])->validate();
 
         if (!isset($this->event["id"])) {
@@ -316,7 +314,7 @@ class ShowComponent extends Component
 
         Validator::make($this->payment, [
             "amount" => "required|" . $this->getRemaining() . $this->validations["number"],
-            "notes" => "required|" . $this->validations["text"],
+            "notes" => "required|" . $this->validations["textarea"],
         ])->validate();
 
         $this->payment["amount"] = (float) $this->payment["amount"];
@@ -346,7 +344,7 @@ class ShowComponent extends Component
             "email" => "required|" . $this->validations["email"],
             "phone" => "required|" . $this->validations["tel"],
             "address" => "required|" . $this->validations["textarea"],
-            "notes" => $this->validations["text"],
+            "notes" => "nullable|" . $this->validations["textarea"],
         ])->validate();
 
         $customer = Customer::create($this->customer);

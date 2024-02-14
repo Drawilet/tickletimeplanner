@@ -23,7 +23,7 @@ class ShowComponent extends CrudComponent
                 "description" => ["type" => "textarea",  "rows" => 4],
                 "cost" => ["type" => "number"],
                 "price" => ["type" => "number"],
-                "notes" => ["type" => "text", "rules" => "nullable"],
+                "notes" => ["type" => "textarea", "rules" => "nullable"],
             ],
             "foreigns" => ["events"],
         ]);
