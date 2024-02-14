@@ -3,6 +3,8 @@
 namespace App\Http\Livewire\Util;
 
 use App\Http\Traits\WithCrudActions;
+use App\Http\Traits\WithValidations;
+use App\Rules\PhoneNumber;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Livewire\Component;
@@ -12,7 +14,7 @@ class CrudComponent extends Component
 {
     protected $listeners =  ["update-data" => "handleData"];
 
-    use WithFileUploads, WithCrudActions;
+    use WithFileUploads, WithCrudActions, WithValidations;
 
     public $mainKey, $keys;
     public $Model, $ItemEvent;
@@ -55,7 +57,9 @@ class CrudComponent extends Component
         $this->initialFiles = [];
         foreach ($params["types"] as $key => $type) {
             if ($type["type"] != "file")
-                $this->crudRules[$key] = $type["rules"] ?? "required";
+                $this->crudRules[$key] = $type["rules"] ?? "required|" . $this->validations[$type["type"]];
+
+
 
             if (isset($type["hidden"]) && $type["hidden"] == true) continue;
             $this->keys[] = $key;

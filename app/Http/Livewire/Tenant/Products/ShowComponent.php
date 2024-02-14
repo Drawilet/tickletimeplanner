@@ -21,9 +21,7 @@ class ShowComponent extends CrudComponent
                 ],
                 "name" => ["type" => "text"],
                 "description" => ["type" => "textarea",  "rows" => 4],
-                "cost" => [
-                    "type" => "number", "rules" => "required|numeric|min:0|max:999999.99",
-                ],
+                "cost" => ["type" => "number"],
                 "price" => ["type" => "number"],
                 "notes" => ["type" => "text", "rules" => "nullable"],
             ],
