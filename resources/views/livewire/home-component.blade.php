@@ -19,6 +19,6 @@
     </section>
 
     <section class="md:w-1/2 md:flex md:justify-center md:items-center">
-        <x-vectors.booking width="400px" />
+        <x-vectors.booking width="300" />
     </section>
 </main>
