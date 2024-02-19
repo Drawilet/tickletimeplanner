@@ -38,6 +38,7 @@ class ShowComponent extends CrudComponent
     {
         $this->setup(User::class, [
             "mainKey" => "name",
+            "getItems" => false,
             "types" => [
                 "name" => ["type" => "text"],
                 "email" => ["type" => "email"],
@@ -52,5 +53,8 @@ class ShowComponent extends CrudComponent
                 ],
             ],
         ]);
+
+        $user = auth()->user();
+        $this->items = User::where("tenant_id", $user->tenant_id)->where("id", "<>", $user->id)->get();
     }
 }
