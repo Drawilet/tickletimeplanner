@@ -19,7 +19,8 @@
                 <x-icons.arrow-up-tray class="w-16" />
             </label>
 
-            <input wire:model="data.background_image" type="file" id="background_image" class="hidden">
+            <input wire:model="data.background_image" type="file" id="background_image" class="hidden"
+                accept="image/*">
         </div>
     </div>
 
@@ -35,7 +36,7 @@
                 <x-icons.arrow-up-tray class="w-10" />
             </label>
 
-            <input wire:model="data.profile_image" type="file" id="profile_image" class="hidden">
+            <input wire:model="data.profile_image" type="file" id="profile_image" class="hidden" accept="image/*">
         </div>
     </div>
     <x-input-error for="background_image" />
