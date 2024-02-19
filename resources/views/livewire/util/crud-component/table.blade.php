@@ -1,6 +1,6 @@
 <div class="overflow-scroll" style="max-height: calc(100vh - 200px)">
     @if ($items->isNotEmpty())
-        <table class="mt-2 md:table">
+        <table class="mt-2 md:table w-full">
             <thead class="hidden md:table-header-group sticky top-0 bg-base-100">
                 <tr>
                     <th></th>
@@ -14,7 +14,7 @@
             <tbody class="flex flex-wrap gap-5 md:table-row-group ">
                 @foreach ($showingItems as $item)
                     <tr
-                        class="hover flex flex-col p-4 border border-base-200 rounded-lg relative md:table-row md:border-0">
+                        class="hover w-full flex flex-col p-4 border border-base-200 rounded-lg relative md:table-row md:border-0">
                         <td class="absolute right-0 top-0 mt-2 mr-4 md:static md:m-0 md:table-cell">{{ $item->id }}
                         </td>
 
