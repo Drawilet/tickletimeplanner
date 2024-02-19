@@ -1,7 +1,7 @@
 <div class="overflow-scroll" style="max-height: calc(100vh - 200px)">
     @if ($items->isNotEmpty())
-        <table class="table-xs md:table">
-            <thead class="sticky top-0 bg-base-100">
+        <table class="mt-2 md:table">
+            <thead class="hidden md:table-header-group sticky top-0 bg-base-100">
                 <tr>
                     <th></th>
                     @foreach ($keys as $key)
@@ -11,17 +11,22 @@
                     <th></th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="flex flex-wrap gap-5 md:table-row-group ">
                 @foreach ($showingItems as $item)
-                    <tr class="hover">
-                        <td>{{ $item->id }}</td>
+                    <tr
+                        class="hover flex flex-col p-4 border border-base-200 rounded-lg relative md:table-row md:border-0">
+                        <td class="absolute right-0 top-0 mt-2 mr-4 md:static md:m-0 md:table-cell">{{ $item->id }}
+                        </td>
 
                         @foreach ($types as $key => $type)
                             @isset($type['hidden'])
                                 @continue
                             @endisset
 
-                            <td>
+                            <td class="flex flex-wrap md:table-cell">
+                                <span class="font-medium mr-10 opacity-80 md:hidden">
+                                    {{ __($name . '-lang.' . $key) }}</span>
+
                                 @if (isset($type['parser']))
                                     @php
                                         $value = $type['parser']($item[$key]);
@@ -97,12 +102,16 @@
                         @endforeach
 
                         @can('tenant.' . $name . 's' . '.manage')
-                            <td>
-                                <button wire:click="Modal('save', true, '{{ $item->id }}')">
+                            <td class="w-full flex gap-2 mt-2 md:m-0 ">
+                                <button
+                                    class="w-full bg-yellow-300 px-4 py-2 flex justify-center items-center rounded-lg text-black"
+                                    wire:click="Modal('save', true, '{{ $item->id }}')">
                                     @component('components.icons.pencil-square')
                                     @endcomponent
                                 </button>
-                                <button wire:click="Modal('delete', true, '{{ $item->id }}')">
+                                <button
+                                    class="w-full bg-red-500 px-4 py-2 flex justify-center items-center rounded-lg text-black"
+                                    wire:click="Modal('delete', true, '{{ $item->id }}')">
                                     @component('components.icons.trash')
                                     @endcomponent
                                 </button>
