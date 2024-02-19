@@ -51,15 +51,16 @@ class CrudComponent extends Component
         $this->Model = $Model;
 
         $this->addCrud($Model, ["get" => false]);
-        $this->items = $this->Model::where("tenant_id", auth()->user()->tenant_id)->get();
+
+        if (!isset($params["getItems"])) $params["getItems"] = true;
+        if ($params["getItems"])
+            $this->items = $this->Model::where("tenant_id", auth()->user()->tenant_id)->get();
 
         $this->initialData = ["id"  => ""];
         $this->initialFiles = [];
         foreach ($params["types"] as $key => $type) {
             if ($type["type"] != "file")
                 $this->crudRules[$key] = $type["rules"] ?? "required|" . $this->validations[$type["type"]];
-
-
 
             if (isset($type["hidden"]) && $type["hidden"] == true) continue;
             $this->keys[] = $key;
