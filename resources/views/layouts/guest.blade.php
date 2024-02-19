@@ -18,26 +18,27 @@
 </head>
 
 <body>
-    <header class="navbar bg-base-100">
+    <header class="bg-base-100 flex flex-col navbar md:flex-row">
         <div class="flex-1">
             <a class="btn btn-ghost text-xl" href="/">
                 <x-application-mark />
             </a>
         </div>
         <nav class="flex-none">
-            <ul class="menu flex-row px-1">
+            <ul class="menu flex-row px-1 -my-3 ">
                 @auth
                     <li>
                         <a href="{{ url('/dashboard') }}" class="text-sm underline">{{ __('login-register.Dashboard') }}</a>
                     </li>
                 @else
                     <li>
-                        <a href="{{ route('login') }}" class="text-sm underline">{{__('login-register.Login')}}</a>
+                        <a href="{{ route('login') }}" class="text-sm underline">{{ __('login-register.Login') }}</a>
                     </li>
 
                     @if (Route::has('register'))
                         <li>
-                            <a href="{{ route('register') }}" class="ml-4 text-sm  underline">{{ __('login-register.Register') }}</a>
+                            <a href="{{ route('register') }}"
+                                class="md:ml-4 text-sm  underline">{{ __('login-register.Register') }}</a>
                         </li>
                     @endif
                 @endauth
