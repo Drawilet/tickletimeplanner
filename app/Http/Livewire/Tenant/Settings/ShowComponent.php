@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Tenant\Settings;
 
+use App\Http\Traits\WithValidations;
 use App\Models\Tenant;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -10,7 +11,7 @@ use Illuminate\Support\Facades\Validator;
 
 class ShowComponent extends Component
 {
-    use WithFileUploads;
+    use WithFileUploads, WithValidations;
 
     public $data, $initialData = [
         "background_image" => "",
@@ -61,10 +62,10 @@ class ShowComponent extends Component
             'profile_image' => isset($this->data["id"]) ? "" :  'required|image|max:2048',
             'background_image' =>  isset($this->data["id"]) ? "" : 'required|image|max:2048',
 
-            'name' => 'required',
-            'description' => 'required',
-            'phone' => 'required',
-            'email' => 'required',
+            'name' => $this->validations["text"],
+            'description' => $this->validations["textarea"],
+            'phone' => $this->validations["tel"],
+            'email' => $this->validations["email"],
             /*    'social_nets' => 'required', */
         ])->validate();
 
