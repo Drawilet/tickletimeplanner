@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Http\Controllers;
+
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
@@ -14,11 +16,12 @@ class LanguageControllers extends Controller
      */
     public function switchLeng($lang)
     {
-        if(array_key_exists($lang, Config::get('Languages')))
-        {
-            Session::put('applocale', $lang);
-            app()->setLocale($lang);
+        if (array_key_exists($lang, Config::get('Languages'))) {
+
+            // Almacenar la preferencia de idioma en una cookie
+            return back()->withCookie(cookie()->forever('applocale', $lang));
         }
+        
         return Redirect::back();
     }
 }

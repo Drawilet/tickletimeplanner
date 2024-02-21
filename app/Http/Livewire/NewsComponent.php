@@ -20,7 +20,7 @@ class NewsComponent extends Component
         "news" => false,
     ];
 
-    public $events, $filteredEvents, $products;
+    public $events, $filteredEvents, $products,$offON;
 
     public function mount()
     {
@@ -46,6 +46,9 @@ class NewsComponent extends Component
 
     if ($this->filteredEvents->isEmpty()) {
         $this->modals["news"] = false;
+        $this->offON = false;
+    }else{
+        $this->offON = true;
     }
 
     return view('livewire.news-component');
