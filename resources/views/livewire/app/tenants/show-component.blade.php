@@ -1,9 +1,9 @@
 <div class="relative">
     <a href="{{ url()->previous() ?: url('/fallback-url') }}" class="btn font-bold py-2 px-4 rounded absolute top-0 left-0 m-4">
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
-    </svg>
-</a>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
+        </svg>
+    </a>
     <div class="bg-base rounded-lg w-full md:w-5/12 mx-auto shadow-xl pb-8">
         <div class="w-full h-[250px]">
             <div class="mx-auto w-full h-[250px] bg-base-300 rounded-md overflow-hidden relative">
@@ -15,7 +15,7 @@
         <div class="flex flex-col items-center -mt-20">
             <div class="mx-auto h-32 w-32 bg-base-300 rounded-full overflow-hidden relative">
                 @if ($tenant['profile_image'])
-                <img src="{{ gettype($tenant['profile_image']) == 'object' ? $tenant['profile_image']->temporaryUrl() : $tenant['profile_image'] }}" alt="Profile Image" class="mx-auto overflow-hidden rounded-full max-h-32 object-cover">
+                <img src="{{ gettype($tenant['profile_image']) == 'object' ? $tenant['profile_image']->temporaryUrl() : $tenant['profile_image'] }}" alt="Profile Image" class="w-32 h-32 object-cover rounded-full mx-auto">
                 @endif
             </div>
         </div>
