@@ -16,13 +16,17 @@ class Language
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
     public function handle(Request $request, Closure $next)
-    {
-        if (session()->has('applocale') && array_key_exists(session()->get('applocale'), config('Languages'))) {
-            App::setLocale(session()->get('applocale'));
-        } else {
-            App::setLocale(config('app.fallback_locale'));
-        }
+{
+    // Leer la preferencia de idioma de la cookie
+    $language = $request->cookie('applocale');
 
-        return $next($request);
+    // Si la cookie existe, establecer el idioma de la aplicación
+    if ($language && array_key_exists($language, config('Languages'))) {
+        App::setLocale($language);
+    } else {
+        App::setLocale(config('app.fallback_locale'));
     }
+
+    return $next($request);
+}
 }
