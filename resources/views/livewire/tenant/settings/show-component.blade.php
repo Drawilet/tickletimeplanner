@@ -28,7 +28,7 @@
         <div class="mx-auto h-32 w-32 bg-base-300 rounded-full overflow-hidden relative">
             @if ($data['profile_image'])
                 <img src="{{ gettype($data['profile_image']) == 'object' ? $data['profile_image']->temporaryUrl() : $data['profile_image'] }}"
-                    alt="" class="mx-auto overflow-hidden rounded-full max-h-32 object-cover">
+                    alt="" class="w-32 h-32 object-cover rounded-full mx-auto">
             @endif
 
             <label for="profile_image"
