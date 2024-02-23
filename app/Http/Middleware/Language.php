@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Config;
 
 class Language
 {
@@ -16,17 +17,16 @@ class Language
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
     public function handle(Request $request, Closure $next)
-{
-    // Leer la preferencia de idioma de la cookie
-    $language = $request->cookie('applocale');
+    {
+        $locale = $request->cookie('locale');
 
-    // Si la cookie existe, establecer el idioma de la aplicación
-    if ($language && array_key_exists($language, config('Languages'))) {
-        App::setLocale($language);
-    } else {
-        App::setLocale(config('app.fallback_locale'));
+        if ($locale && in_array($locale, config("app.available_locales"))) {
+            App::setLocale($locale);
+        } else {
+            $lang = $request->getPreferredLanguage(config('app.available_locales'));
+            App::setLocale($lang ?? config('app.fallback_locale'));
+        }
+
+        return $next($request);
     }
-
-    return $next($request);
-}
 }
