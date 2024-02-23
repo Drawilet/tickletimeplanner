@@ -1,5 +1,5 @@
 <div
-    class="dropdown dropdown-top dropdown-hover dropdown-left fixed z-50 top-0 right-0 translate-y-16 lg:top-auto  lg:bottom-0 lg:translate-y-0">
+    class="dropdown dropdown-bottom lg:dropdown-top dropdown-hover dropdown-left fixed z-50 top-0 right-0 translate-y-16 lg:top-auto  lg:bottom-0 lg:translate-y-0">
     <div tabindex="0" role="button" class="btn m-1 ">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
             class="w-6 h-6">
