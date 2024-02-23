@@ -229,6 +229,31 @@ class CrudComponent extends Component
             }
         }
 
+        foreach ($this->types as $key => $type) {
+            if ($type["type"] != "file") continue;
+
+            $files = $item->$key;
+            if (gettype($files) == "string") {
+                $file = $files;
+                $file = str_replace("/storage", "public", $file);
+                Storage::delete($file);
+            } else if (isset($this->types[$key]["foreign"])) {
+                $foreignFile = $this->types[$key]["foreign"];
+                $model = $foreignFile["model"];
+                $foreign_key = $foreignFile["key"];
+                $foreign_name = $foreignFile["name"];
+
+                foreach ($files as $file) {
+                    $_file = $file->$foreign_name;
+                    $_file = str_replace("/storage", "public", $_file);
+
+                    Storage::delete($_file);
+
+                    $model::where($foreign_key, $item->id)->where($foreign_name, $file[$foreign_name])->delete();
+                }
+            }
+        }
+
         $item->delete();
 
         $this->handleCrudActions(
