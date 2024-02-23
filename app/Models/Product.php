@@ -11,6 +11,6 @@ class Product extends Base
 
     public function events()
     {
-        return $this->hasMany(Event::class);
+        return $this->hasMany(EventProduct::class);
     }
 }
