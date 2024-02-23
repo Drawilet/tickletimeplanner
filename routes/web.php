@@ -21,7 +21,7 @@ $defaultMiddleware = [
 ];
 
 
-Route::get('lang/{lang}', [\App\Http\Controllers\LanguageControllers::class, 'switchLeng'])->name('lang');
+Route::get('/locale/{locale}', [\App\Http\Controllers\LocaleController::class, 'switchLocale'])->name('locale');
 
 Route
     ::get('/', \App\Http\Livewire\HomeComponent::class)

@@ -32,9 +32,9 @@
             </label>
         </li>
         <li>
-            @foreach (config('Languages') as $lang => $Languages)
-                <a href="{{ route('lang', $lang) }}"
-                    @if ($lang == App::getLocale()) class="active" @endif>{{ $Languages }}</a>
+            @foreach (config('app.available_locales') as $locale)
+                <a href="{{ route('locale', $locale) }}"
+                    @if ($locale == App::getLocale()) class="active" @endif>{{ __('locales.' . $locale) }}</a>
             @endforeach
         </li>
     </ul>
