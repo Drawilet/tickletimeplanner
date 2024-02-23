@@ -59,10 +59,11 @@ class CrudComponent extends Component
         $this->initialData = ["id"  => ""];
         $this->initialFiles = [];
         foreach ($params["types"] as $key => $type) {
+            if (isset($type["hidden"]) && $type["hidden"] == true) continue;
+
             if ($type["type"] != "file")
                 $this->crudRules[$key] = $type["rules"] ?? "required|" . $this->validations[$type["type"]];
 
-            if (isset($type["hidden"]) && $type["hidden"] == true) continue;
             $this->keys[] = $key;
             if ($type["type"] == "file") $this->initialFiles[$key] = [];
             $this->initialData[$key] = $type["default"] ?? $this->defaultValues[$type["type"]] ?? "";
@@ -146,6 +147,15 @@ class CrudComponent extends Component
         }
 
         Validator::make($this->data, $this->crudRules)->validate();
+
+        $isCreating = isset($this->data["id"]) && $this->data["id"] == "";
+        foreach ($this->types as $key => $type) {
+            if (!isset($type["hidden"]) || !$type["hidden"])
+                continue;
+
+            if ($isCreating)
+                Validator::make($this->data, [$key => "required|" . $this->validations[$type["type"]]])->validate();
+        }
 
         if (in_array("beforeSave", $this->events)) $this->data = $this->beforeSave($this->data);
         $item = $this->Model::updateOrCreate(["id" => $this->data["id"]], $this->data);
