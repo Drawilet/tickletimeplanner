@@ -38,18 +38,22 @@
         </div>
     </div>
     <script>
-        document.addEventListener('livewire:load', function() {
-            Livewire.hook('message.processed', (message, component) => {
-                setTimeout(function() {
-                    var dots = document.querySelectorAll('.dot');
-                    dots.forEach(function(dot) {
-                        dot.classList.remove('animate-bounce-1');
-                        dot.classList.remove('animate-bounce-2');
-                        dot.classList.remove('animate-bounce-3');
-                    });
-                }, 3280);
-            });
-        });
+document.addEventListener('livewire:load', function () {
+    Livewire.hook('message.processed', (message, component) => {
+        var dot1 = document.getElementById('Myelement-1');
+        var dot2 = document.getElementById('Myelement-2');
+        var dot3 = document.getElementById('Myelement-3');
 
-    </script>
+        dot1.classList.add('animate-bounce-1');
+        dot2.classList.add('animate-bounce-2');
+        dot3.classList.add('animate-bounce-3');
+
+        setTimeout(function(){
+            dot1.classList.remove('animate-bounce-1');
+            dot2.classList.remove('animate-bounce-2');
+            dot3.classList.remove('animate-bounce-3');
+        }, 3000);
+    });
+});
+</script>
 </div>
