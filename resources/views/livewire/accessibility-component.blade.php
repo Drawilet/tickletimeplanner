@@ -39,4 +39,14 @@
         </li>
     </ul>
 
+    <script>
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            document.documentElement.setAttribute('data-theme', savedTheme);
+
+            if (savedTheme === 'dark') {
+                document.documentElement.classList.add('dark')
+            }
+        }
+    </script>
 </div>
