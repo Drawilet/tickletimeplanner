@@ -21,7 +21,7 @@
         <div class="bg-base-100 overflow-hidden shadow-xl sm:rounded-lg px-4 py-4">
             <div class="mockup-browser border border-base-300">
                 <div class="mockup-browser-toolbar flex items-center ">
-                    <div class="dots">
+                    <div class="hidden lg:flex dots">
                         <div class="dot animate-bounce-1" id="Myelement-1" wire:target="">&#9679;</div>
                         <div class="dot animate-bounce-2" id="Myelement-2" wire:target="">&#9679;</div>
                         <div class="dot animate-bounce-3" id="Myelement-3" wire:target="">&#9679;</div>
@@ -38,22 +38,23 @@
         </div>
     </div>
     <script>
-document.addEventListener('livewire:load', function () {
-    Livewire.hook('message.processed', (message, component) => {
-        var dot1 = document.getElementById('Myelement-1');
-        var dot2 = document.getElementById('Myelement-2');
-        var dot3 = document.getElementById('Myelement-3');
+        document.addEventListener('livewire:load', function() {
+            Livewire.hook('message.processed', (message, component) => {
+                var dot1 = document.getElementById('Myelement-1');
+                var dot2 = document.getElementById('Myelement-2');
+                var dot3 = document.getElementById('Myelement-3');
 
-        dot1.classList.add('animate-bounce-1');
-        dot2.classList.add('animate-bounce-2');
-        dot3.classList.add('animate-bounce-3');
+                dot1.classList.add('animate-bounce-1');
+                dot2.classList.add('animate-bounce-2');
+                dot3.classList.add('animate-bounce-3');
 
-        setTimeout(function(){
-            dot1.classList.remove('animate-bounce-1');
-            dot2.classList.remove('animate-bounce-2');
-            dot3.classList.remove('animate-bounce-3');
-        }, 3000);
-    });
-});
-</script>
+                setTimeout(function() {
+                    dot1.classList.remove('animate-bounce-1');
+                    dot2.classList.remove('animate-bounce-2');
+                    dot3.classList.remove('animate-bounce-3');
+                }, 3000);
+            });
+        });
+
+    </script>
 </div>
