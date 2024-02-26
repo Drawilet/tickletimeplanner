@@ -1,10 +1,8 @@
-
 <div class="flex items-center">
-@if($this->offON)
     <button id="toggle-news" class="btn btn-circle">
         <x-icons.newspaper />
     </button>
-@endif
+
     <dialog id="news_modal" class="modal modal-bottom sm:modal-middle" @if ($modals['news']) open @endif>
         <div class="modal-box overflow-hidden">
             <h2 class="text-3xl text-center text-blue-500 mb-4">{{ __('news-modal.title') }}</h2>
