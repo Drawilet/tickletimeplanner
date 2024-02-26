@@ -104,13 +104,13 @@
                         @can('tenant.' . $name . 's' . '.manage')
                             <td class="w-full flex gap-2 mt-2 md:m-0 ">
                                 <button
-                                    class="w-full bg-yellow-300 px-4 py-2 flex justify-center items-center rounded-lg text-black"
+                                    class="w-full bg-yellow-300 px-4 py-2 flex justify-center items-center rounded-lg text-black lg:max-w-[52px] lg:bg-transparent lg:text-base-content  lg:hover:scale-125 transition-transform "
                                     wire:click="Modal('save', true, '{{ $item->id }}')">
                                     @component('components.icons.pencil-square')
                                     @endcomponent
                                 </button>
                                 <button
-                                    class="w-full bg-red-500 px-4 py-2 flex justify-center items-center rounded-lg text-black"
+                                    class="w-full bg-red-500 px-4 py-2 flex justify-center items-center rounded-lg text-black lg:max-w-[52px] lg:bg-transparent lg:text-base-content  lg:hover:scale-125 transition-transform "
                                     wire:click="Modal('delete', true, '{{ $item->id }}')">
                                     @component('components.icons.trash')
                                     @endcomponent
