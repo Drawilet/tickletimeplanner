@@ -15,7 +15,11 @@ module.exports = {
         extend: {
             fontFamily: {
                 sans: ["Figtree", ...defaultTheme.fontFamily.sans],
-            },
+            }, animation: {
+                'bounce-1': 'bounce 1s infinite',
+                'bounce-2': 'bounce 1s infinite 0.2s',
+                'bounce-3': 'bounce 1s infinite 0.4s',
+            }
         },
     },
 
