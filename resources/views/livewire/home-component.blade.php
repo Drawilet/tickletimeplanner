@@ -5,7 +5,7 @@
             <div class="max-w-md">
                 <h1 class="mb-5 text-5xl font-bold text-white">{{ __('home-lang.hero.title') }}</h1>
                 <p class="mb-5 text-white">{{ __('home-lang.hero.description') }}</p>
-                <button class="btn btn-primary">{{ __('home-lang.hero.cta') }}</button>
+                <a class="btn btn-primary" href="#contact">{{ __('home-lang.hero.cta') }}</a>
             </div>
         </div>
     </section>
@@ -23,7 +23,7 @@
     <x-hero-component title="{{ __('home-lang.payment.title') }}"
         description="{{ __('home-lang.payment.description') }}" src="payment.png" alt="Tickle Time Planner" />
 
-    <section class="hero lg:min-h-screen">
+    <section class="hero lg:min-h-screen" id="contact">
         <div class="hero-content flex-col lg:flex-row lg:justify-between w-full">
             <div class="max-w-lg">
                 <h2 class="text-5xl font-bold mb-4 text-center">{{ __('home-lang.contact.title') }}</h2>
