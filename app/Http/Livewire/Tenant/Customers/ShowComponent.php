@@ -20,6 +20,27 @@ class ShowComponent extends CrudComponent
                 "address" => ["type" => "textarea",  "rows" => 4],
                 "notes" => ["type" => "textarea", "rules" => "nullable"],
             ],
+            "mobileStyles" => "
+                .firstname,
+                .lastname {
+                     width: 50%;
+                     font-size: 1.2rem;
+                }
+
+                .firstname, .email {
+                    justify-content: flex-end;
+                    padding-right: 5px;
+                }
+
+                .email,
+                .phone {
+                     width: 50%;
+
+                }
+
+
+
+            ",
             "foreigns" => ["events"],
         ]);
     }

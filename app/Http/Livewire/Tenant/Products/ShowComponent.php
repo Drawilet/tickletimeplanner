@@ -25,6 +25,38 @@ class ShowComponent extends CrudComponent
                 "price" => ["type" => "number"],
                 "notes" => ["type" => "textarea", "rules" => "nullable"],
             ],
+            "mobileStyles" => "
+                .photo {
+                    width: 100%;
+                    justify-content: center;
+                    margin-bottom: 10px;
+                }
+
+                .photo img {
+                   height: 200px;
+                   width: 200px;
+                }
+
+                .name {
+                    width: 100%;
+                    justify-content: center;
+                    font-size: 1.2rem;
+                    margin-bottom: -8px;
+                }
+
+                .description {
+                    width: 100%;
+                    justify-content: center;
+                    font-size: 1rem;
+                }
+
+                .cost, .price {
+                    width: 50%;
+                    justify-content: center;
+                    font-size: 1rem;
+                }
+
+            ",
             "foreigns" => ["events"],
         ]);
     }

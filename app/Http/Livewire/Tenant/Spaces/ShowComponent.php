@@ -41,6 +41,45 @@ class ShowComponent extends CrudComponent
                 "color" => ["type" => "color"],
                 "notes" => ["type" => "textarea", "rules" => "nullable"],
             ],
+            "mobileStyles" => "
+                .name {
+                    width: 100%;
+                    justify-content: center;
+                    font-size: 1.2rem;
+                    margin-bottom: -8px;
+                }
+
+                .photos {
+                    width: 100%;
+                    justify-content: center;
+                    margin-bottom: 10px;
+                }
+
+                .description {
+                    width: 100%;
+                    justify-content: center;
+                    font-size: 1rem;
+                }
+
+                .address, .city, .state, .country {
+                    width: 25%;
+                    justify-content: center;
+                    font-size: 1rem;
+                }
+
+                .color {
+                    width: 100%;
+                    justify-content: center;
+                    font-size: 1rem;
+                }
+
+                .color span {
+                    margin-top: 10px;
+                    width: 100% !important;
+                    border-radius: 5px !important;
+                }
+
+            ",
             "foreigns" => ["events"],
         ]);
     }
