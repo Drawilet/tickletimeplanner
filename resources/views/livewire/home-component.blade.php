@@ -1,6 +1,14 @@
 <main>
-    <x-hero-component title="{{ __('home-lang.hero.title') }}" description="{{ __('home-lang.hero.description') }}"
-        cta="{{ __('home-lang.hero.cta') }}" href="#contact" src="welcome.png" alt="Tickle Time Planner" type="hero" />
+    <section class="hero min-h-screen" style="background-image: url('/jumbotron.png');">
+        <div class="hero-overlay bg-opacity-50"></div>
+        <div class="hero-content text-center text-neutral-content">
+            <div class="max-w-md">
+                <h1 class="mb-5 text-5xl font-bold text-white">{{ __('home-lang.hero.title') }}</h1>
+                <p class="mb-5 text-white">{{ __('home-lang.hero.description') }}</p>
+                <button class="btn btn-primary">{{ __('home-lang.hero.cta') }}</button>
+            </div>
+        </div>
+    </section>
 
     <x-hero-component title="{{ __('home-lang.event.title') }}" description="{{ __('home-lang.event.description') }}"
         src="event.png" alt="Tickle Time Planner" align="left" />
