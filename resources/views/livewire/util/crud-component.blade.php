@@ -21,7 +21,7 @@
         <div class="bg-base-100 overflow-hidden shadow-xl sm:rounded-lg px-4 py-4">
             <div class="mockup-browser border border-base-300">
                 <div class="mockup-browser-toolbar flex items-center ">
-                    <div class="dots">
+                    <div class="hidden lg:flex dots">
                         <div class="dot animate-bounce-1" id="Myelement-1" wire:target="">&#9679;</div>
                         <div class="dot animate-bounce-2" id="Myelement-2" wire:target="">&#9679;</div>
                         <div class="dot animate-bounce-3" id="Myelement-3" wire:target="">&#9679;</div>
