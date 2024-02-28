@@ -18,7 +18,7 @@
 </head>
 
 <body>
-    <header class="bg-base-100 flex flex-col navbar sticky lg:fixed top-0 z-50 md:flex-row">
+    <header id="header" class="transition-colors flex flex-col navbar fixed top-0 z-50 md:flex-row">
         <div class="flex-1">
             <a class="btn btn-ghost text-xl" href="/">
                 <x-application-mark />
@@ -52,7 +52,17 @@
 
     @livewire('accessibility-component')
     @livewireScripts
-</body>
 
+    <script>
+        const header = document.getElementById('header');
+        document.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                header.classList.add('bg-base-100');
+            } else {
+                header.classList.remove('bg-base-100');
+            }
+        });
+    </script>
+</body>
 
 </html>
