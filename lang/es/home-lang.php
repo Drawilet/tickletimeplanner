@@ -32,6 +32,8 @@ return [
         "name" => "Nombre",
         "email" => "Correo",
         "message" => "Mensaje",
-        "submit" => "Enviar"
+        "submit" => "Enviar",
+
+        "success" => "¡Mensaje enviado con éxito!",
     ]
 ];
