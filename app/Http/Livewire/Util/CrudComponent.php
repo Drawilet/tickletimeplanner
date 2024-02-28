@@ -23,7 +23,9 @@ class CrudComponent extends Component
     public $initialData, $data, $initialFiles, $files;
     public $types;
 
-    public $crudRules = [];
+    public $mobileStyles;
+
+    public $crudRules;
     public $defaultValues = [
         "text" => "",
         "textarea" => "",
@@ -88,6 +90,8 @@ class CrudComponent extends Component
         $this->filter = $this->initialFilter;
 
         $this->foreigns = $params["foreigns"] ?? [];
+
+        if (isset($params["mobileStyles"])) $this->mobileStyles = $params["mobileStyles"];
     }
 
     public function render()

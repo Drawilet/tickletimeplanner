@@ -1,4 +1,16 @@
 <div class="overflow-scroll" style="max-height: calc(100vh - 200px)">
+    @isset($mobileStyles)
+        <style>
+            @media screen and (max-width: 768px) {
+                {{ $mobileStyles }} .notes {
+                    width: 100%;
+                    justify-content: center;
+                    font-size: .8rem;
+                }
+            }
+        </style>
+    @endisset
+
     @if (count($items))
         <table class="mt-2 md:table w-full">
             <thead class="hidden md:table-header-group sticky top-0 bg-base-100">
@@ -14,7 +26,7 @@
             <tbody class="flex flex-wrap gap-5 md:table-row-group ">
                 @foreach ($shownItems as $item)
                     <tr
-                        class="hover w-full flex flex-col p-4 border border-base-200 rounded-lg relative md:table-row md:border-0">
+                        class="hover w-full flex {{ isset($mobileStyles) ? '' : 'flex-col' }} flex-wrap p-4 border border-base-200 rounded-lg relative md:table-row md:border-0">
                         <td class="absolute right-0 top-0 mt-2 mr-4 md:static md:m-0 md:table-cell">{{ $item['id'] }}
                         </td>
 
@@ -23,9 +35,11 @@
                                 @continue
                             @endisset
 
-                            <td class="flex flex-wrap md:table-cell">
-                                <span class="font-medium mr-10 opacity-80 md:hidden">
-                                    {{ __($name . '-lang.' . $key) }}</span>
+                            <td class="{{ $key }} flex flex-wrap md:table-cell">
+                                @if (!isset($mobileStyles))
+                                    <span class="font-medium mr-10 opacity-80 md:hidden">
+                                        {{ __($name . '-lang.' . $key) }}</span>
+                                @endif
 
                                 @if (isset($type['parser']))
                                     @php
@@ -139,8 +153,4 @@
             </button>
         </div>
     @endif
-
-
-
-
 </div>
