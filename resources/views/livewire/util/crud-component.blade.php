@@ -12,8 +12,8 @@
                         <div class="dot animate-bounce-2" id="Myelement-2" wire:target="">&#9679;</div>
                         <div class="dot animate-bounce-3" id="Myelement-3" wire:target="">&#9679;</div>
                     </div>
-                    <input id="ItemDot" class="input py-5" wire:model="filter.search" wire:laoding type="text"
-                        placeholder="{{ __($name . '-lang.' . 'search') }}">
+                    <input id="ItemDot" class="input py-5" wire:model.live.debounce.500ms="filter.search" wire:laoding
+                        type="text" placeholder="{{ __($name . '-lang.' . 'search') }}">
                     <button wire:click="Modal('save', true)"
                         class=" btn btn-ghost bg-base-100 hover:bg-base-300 hover:text-blue-50 py-2 px-4 ml-2">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"

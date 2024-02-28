@@ -1,5 +1,5 @@
 <div class="overflow-scroll" style="max-height: calc(100vh - 200px)">
-    @if ($items->isNotEmpty())
+    @if (count($items))
         <table class="mt-2 md:table w-full">
             <thead class="hidden md:table-header-group sticky top-0 bg-base-100">
                 <tr>
@@ -12,10 +12,10 @@
                 </tr>
             </thead>
             <tbody class="flex flex-wrap gap-5 md:table-row-group ">
-                @foreach ($showingItems as $item)
+                @foreach ($shownItems as $item)
                     <tr
                         class="hover w-full flex flex-col p-4 border border-base-200 rounded-lg relative md:table-row md:border-0">
-                        <td class="absolute right-0 top-0 mt-2 mr-4 md:static md:m-0 md:table-cell">{{ $item->id }}
+                        <td class="absolute right-0 top-0 mt-2 mr-4 md:static md:m-0 md:table-cell">{{ $item['id'] }}
                         </td>
 
                         @foreach ($types as $key => $type)
@@ -105,13 +105,13 @@
                             <td class="w-full flex gap-2 mt-2 md:m-0 ">
                                 <button
                                     class="w-full bg-yellow-300 px-4 py-2 flex justify-center items-center rounded-lg text-black lg:max-w-[52px] lg:bg-transparent lg:text-base-content  lg:hover:scale-125 transition-transform "
-                                    wire:click="Modal('save', true, '{{ $item->id }}')">
+                                    wire:click="Modal('save', true, '{{ $item['id'] }}')">
                                     @component('components.icons.pencil-square')
                                     @endcomponent
                                 </button>
                                 <button
                                     class="w-full bg-red-500 px-4 py-2 flex justify-center items-center rounded-lg text-black lg:max-w-[52px] lg:bg-transparent lg:text-base-content  lg:hover:scale-125 transition-transform "
-                                    wire:click="Modal('delete', true, '{{ $item->id }}')">
+                                    wire:click="Modal('delete', true, '{{ $item['id'] }}')">
                                     @component('components.icons.trash')
                                     @endcomponent
                                 </button>
@@ -121,6 +121,14 @@
                 @endforeach
             </tbody>
         </table>
+
+        @if ($CAN_LOAD_MORE)
+            <div x-data="{ shown: false }" x-intersect="shown = true; $wire.loadMore()">
+                <div x-show="shown" class="flex justify-center items-center mt-5">
+                    <p>Loading more...</p>
+                </div>
+            </div>
+        @endif
     @else
         <div class="flex flex-col items-center justify-center mt-5">
             <h2 class="text-2xl opacity-90"> {{ __($name . '-lang.' . 'notfound') }}</h2>
@@ -131,4 +139,8 @@
             </button>
         </div>
     @endif
+
+
+
+
 </div>

@@ -36,7 +36,8 @@ class CrudComponent extends Component
         "error" => false
     ];
 
-    public $items, $showingItems, $count = 0;
+    public $count = 0;
+    public $items, $shownItems;
 
     public $initialFilter = [
         "search" => ""
@@ -46,15 +47,21 @@ class CrudComponent extends Component
 
     public $foreigns = [];
 
+    public $skip_rows = 0;
+
+    public $ITEMS_PER_PAGE = 10;
+    public $CAN_LOAD_MORE = true;
+
     public function setup($Model, array $params)
     {
         $this->Model = $Model;
 
         $this->addCrud($Model, ["get" => false]);
 
+        $this->items = collect([]);
         if (!isset($params["getItems"])) $params["getItems"] = true;
         if ($params["getItems"])
-            $this->items = $this->Model::where("tenant_id", auth()->user()->tenant_id)->get();
+            $this->loadMore();
 
         $this->initialData = ["id"  => ""];
         $this->initialFiles = [];
@@ -85,18 +92,24 @@ class CrudComponent extends Component
 
     public function render()
     {
-        $this->showingItems = $this->items->filter(function ($item) {
-            $search = $this->filter["search"];
-            if ($search == "") return true;
+        if ($this->filter["search"] != "") {
+            $this->shownItems = $this->Model::where($this->mainKey, "like", "%" . $this->filter["search"] . "%")->get();
 
-            if (isset($item[$this->mainKey])) {
-                $value = $item[$this->mainKey];
-                if (stripos($value, $search) !== false) return true;
-            }
+            $this->CAN_LOAD_MORE = count($this->shownItems) > 10;
+        } else {
+            $this->shownItems = $this->items;
+            $this->CAN_LOAD_MORE = count($this->items) == $this->skip_rows;
+        }
 
-            return false;
-        });
         return view('livewire.util.crud-component');
+    }
+
+    public function loadMore()
+    {
+        $newItems = $this->Model::skip($this->skip_rows)->take($this->ITEMS_PER_PAGE)->get();
+        $this->items = $this->items->merge($newItems);
+
+        $this->skip_rows += $this->ITEMS_PER_PAGE;
     }
 
     public function handleData($data)
