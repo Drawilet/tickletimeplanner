@@ -3,6 +3,10 @@
 @tailwind utilities;
 
 @layer base {
+    * {
+        @apply scroll-smooth;
+    }
+
     body {
         @apply bg-base-100;
     }
@@ -38,7 +42,6 @@
 .mockup-browser-toolbar {
     padding-left: 1rem;
 }
-
 
 .dots {
     position: absolute;
