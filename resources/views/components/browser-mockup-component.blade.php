@@ -1,6 +1,6 @@
 @props(['src', 'alt'])
 
-<div class="w-full md:max-w-lg mockup-browser bg-base-300">
+<div class="w-full max-w-sm md:max-w-lg mockup-browser bg-base-300">
     <div class="mockup-browser-toolbar">
         <div class="input">https://tickletimeplanner.drawilet.me</div>
     </div>
