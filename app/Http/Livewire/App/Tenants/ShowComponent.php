@@ -14,11 +14,9 @@ class ShowComponent extends Component
     public function mount($id)
     {
         $this->tenant = Tenant::find($id);
-        
-        $this->customer=Customer::find($id);
-    }
-    
 
+        $this->customer = Customer::find($id);
+    }
 
     public function render()
     {

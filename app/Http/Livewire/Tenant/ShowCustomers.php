@@ -1,26 +1,25 @@
 <?php
 
-namespace App\Http\Livewire\Tenant\Customers;
+namespace App\Http\Livewire\Tenant;
 
-use App\Events\CustomerEvent;
 use App\Http\Livewire\Util\CrudComponent;
 use App\Models\Customer;
 
-class ShowComponent extends CrudComponent
+class ShowCustomers extends CrudComponent
 {
     public function mount()
     {
         $this->setup(Customer::class, [
-            "mainKey" => "firstname",
-            "types" => [
-                "firstname" => ["type" => "text"],
-                "lastname" => ["type" => "text"],
-                "email" => ["type" => "email"],
-                "phone" => ["type" => "tel"],
-                "address" => ["type" => "textarea",  "rows" => 4],
-                "notes" => ["type" => "textarea", "rules" => "nullable"],
+            'mainKey' => 'firstname',
+            'types' => [
+                'firstname' => ['type' => 'text'],
+                'lastname' => ['type' => 'text'],
+                'email' => ['type' => 'email'],
+                'phone' => ['type' => 'tel'],
+                'address' => ['type' => 'textarea', 'rows' => 4],
+                'notes' => ['type' => 'textarea', 'rules' => 'nullable'],
             ],
-            "mobileStyles" => "
+            'mobileStyles' => "
                 .firstname,
                 .lastname {
                      width: 50%;
@@ -41,7 +40,7 @@ class ShowComponent extends CrudComponent
 
 
             ",
-            "foreigns" => ["events"],
+            'foreigns' => ['events'],
         ]);
     }
 }

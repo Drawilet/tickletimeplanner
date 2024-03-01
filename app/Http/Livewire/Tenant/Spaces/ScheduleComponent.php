@@ -6,21 +6,13 @@ use Livewire\Component;
 
 class ScheduleComponent extends Component
 {
-    protected $listeners =  ["update-data" => "handleData"];
+    protected $listeners = ['update-data' => 'handleData'];
 
     public $data = [
-        "schedule" => [],
+        'schedule' => [],
     ];
 
-    public $days = [
-        "sunday",
-        "monday",
-        "tuesday",
-        "wednesday",
-        "thursday",
-        "friday",
-        "saturday",
-    ];
+    public $days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
     public $selectedDay;
 
     public function render()
@@ -30,39 +22,39 @@ class ScheduleComponent extends Component
 
     public function handleData($data)
     {
-        if (isset($data["schedule"]))
-            $this->data["schedule"] = $data["schedule"];
+        if (isset($data['schedule'])) {
+            $this->data['schedule'] = $data['schedule'];
+        }
     }
 
     public function handleScheduleChange()
     {
-        $this->emit("update-data", $this->data);
+        $this->emit('update-data', $this->data);
     }
 
     public function toggleDay($day)
     {
         if (!isset($this->data['schedule'][$day])) {
             $this->data['schedule'][$day] = [
-                "opening" => "",
-                "closing" => "",
+                'opening' => '',
+                'closing' => '',
             ];
         }
 
         $this->selectedDay = $day;
     }
 
-
     function removeDay()
     {
         unset($this->data['schedule'][$this->selectedDay]);
-        $this->emit("update-data", $this->data);
+        $this->emit('update-data', $this->data);
     }
     function copyDay()
     {
         foreach ($this->days as $day) {
-            $this->data["schedule"][$day] = $this->data["schedule"][$this->selectedDay];
+            $this->data['schedule'][$day] = $this->data['schedule'][$this->selectedDay];
         }
 
-        $this->emit("update-data", $this->data);
+        $this->emit('update-data', $this->data);
     }
 }
