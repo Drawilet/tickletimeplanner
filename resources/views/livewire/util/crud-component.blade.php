@@ -12,7 +12,7 @@
                         <div class="dot animate-bounce-2" id="Myelement-2" wire:target="">&#9679;</div>
                         <div class="dot animate-bounce-3" id="Myelement-3" wire:target="">&#9679;</div>
                     </div>
-                    <input id="ItemDot" class="input py-5" wire:model.debounce.500ms="filter.search"
+                    <input id="crud-search" class="input py-5" wire:model.debounce.500ms="filter.search"
                         wire:keyup.debounce.500ms="filterUpdated" type="text"
                         placeholder="{{ __($name . '-lang.' . 'search') }}">
                     <button wire:click="Modal('save', true)"
@@ -40,5 +40,13 @@
                 }, 3280);
             });
         });
+    </script>
+
+    <script>
+        const crudContainer = document.getElementById('crud-container');
+        const searchInput = document.getElementById('crud-search');
+        searchInput.addEventListener("keyup", () => {
+            crudContainer.scrollTop = 0;
+        })
     </script>
 </div>
