@@ -123,12 +123,17 @@ class CrudComponent extends Component
         $this->items = $this->items->merge($newItems);
 
         $this->skip_rows += $this->ITEMS_PER_PAGE;
+
+        if ($newItems->count() < $this->ITEMS_PER_PAGE) {
+            $this->CAN_LOAD_MORE = false;
+        }
     }
 
     public function filterUpdated()
     {
         $this->skip_rows = 0;
         $this->items = new Collection();
+        $this->CAN_LOAD_MORE = true;
         $this->loadMore();
     }
 
