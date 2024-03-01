@@ -10,6 +10,7 @@ use App\Models\Payment;
 use App\Models\Product;
 use App\Models\Space;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Validator;
 use Livewire\Component;
 
@@ -65,9 +66,16 @@ class ShowComponent extends Component
     public  $products, $filteredProducts, $customers, $spaces, $payments;
 
     public $currentSpace;
+    public $searchTerm;
+    public $SelectCustomer;
+    public $skip_customer = 0;
+    public $CUSTOMER_PER_PAGE = 5;
+    public $NewCustomers;
+    public $CAN_LOAD_MORE;
 
     public function mount()
     {
+
         $this->addCrud(Payment::class, ["useItemsKey" => false, "get" => true]);
         $this->addCrud(Customer::class, ["useItemsKey" => false, "get" => true]);
         $this->addCrud(Space::class, ["useItemsKey" => false, "get" => true]);
@@ -76,7 +84,33 @@ class ShowComponent extends Component
         $this->event = $this->initialEvent;
         $this->payment = $this->initialPayment;
         $this->filters = $this->initialFilters;
+
+        $this->customers = Customer::take($this->CUSTOMER_PER_PAGE)->get();
+        $this->skip_customer = $this->CUSTOMER_PER_PAGE;
     }
+    public function updatedSearchTerm()
+    {
+        $this->customers = Customer::where('firstname', 'like', '%' . $this->searchTerm . '%')
+            ->orWhere('lastname', 'like', '%' . $this->searchTerm . '%')
+            ->get();
+    }
+    public function SetCustomer($id)
+    {
+        $this->SelectCustomer = Customer::find($id);
+        $this->searchTerm = $this->SelectCustomer->firstname . ' ' . $this->SelectCustomer->lastname;
+        $this->event['customer_id'] = $id;
+    }
+    public function loadMore()
+{
+    $newCustomers = Customer::skip($this->skip_customer)->take($this->CUSTOMER_PER_PAGE)->get();
+    $this->customers = $this->customers->concat($newCustomers);
+    $this->skip_customer += $this->CUSTOMER_PER_PAGE;
+    $this->CAN_LOAD_MORE = Customer::count() > $this->skip_customer;
+}
+public function updateCustomerId($value)
+{
+    $this->event['customer_id'] = $value;
+}
 
     public function render()
     {
@@ -87,6 +121,7 @@ class ShowComponent extends Component
 
         $this->currentSpace = $this->spaces->find($this->event["space_id"]) ?? null;
 
+        $this->CAN_LOAD_MORE = $this->customers->count() > $this->skip_customer;
         return view('livewire.dashboard.show-component');
     }
 
@@ -275,6 +310,7 @@ class ShowComponent extends Component
         ])->validate();
 
         $customer = Customer::create($this->customer);
+        $this->setCustomer($customer->id);
         $this->customer = $this->initialCustomer;
 
         $this->Modal("newCustomer", false);
