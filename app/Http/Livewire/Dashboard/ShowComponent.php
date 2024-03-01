@@ -9,8 +9,6 @@ use App\Models\Event;
 use App\Models\Payment;
 use App\Models\Product;
 use App\Models\Space;
-use App\Rules\PhoneNumber;
-use App\Rules\Price;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Validator;
@@ -66,6 +64,7 @@ class ShowComponent extends Component
     ];
 
     public $events, $products, $filteredProducts, $customers, $spaces, $payments;
+
     public $currentSpace;
     public $searchTerm;
     public $SelectCustomer;
@@ -76,9 +75,8 @@ class ShowComponent extends Component
 
     public function mount()
     {
-        $this->addCrud(Event::class, ["useItemsKey" => false, "get" => true, "afterUpdate" => "updateEvents"]);
-        $this->addCrud(Payment::class, ["useItemsKey" => false, "get" => true, "afterUpdate" => "updateEventPayments"]);
-        $this->addCrud(Customer::class, ["useItemsKey" => false, "get" => false]);
+        $this->addCrud(Payment::class, ["useItemsKey" => false, "get" => true]);
+        $this->addCrud(Customer::class, ["useItemsKey" => false, "get" => true]);
         $this->addCrud(Space::class, ["useItemsKey" => false, "get" => true]);
         $this->addCrud(Product::class, ["useItemsKey" => false, "get" => true]);
 
@@ -141,18 +139,12 @@ public function updateCustomerId($value)
                             $data->load("products", "payments")->toArray()
                         );
                     } else if (isset($data["id"])) {
-                        $event = $this->events->find($data["id"]);
+                        $event = Event::find($data["id"]);
                         if ($event)
                             $this->event = array_merge(
                                 $this->event,
                                 $event->load("products", "payments")->toArray()
                             );
-                        else {
-                            $this->events = $this->events->filter(function ($event) use ($data) {
-                                return $event->id != $data["id"];
-                            });
-                            return;
-                        }
                     } else $this->event = array_merge($this->event, $data);
                 }
 
@@ -192,7 +184,7 @@ public function updateCustomerId($value)
                 "end_time" => "required|after:start_time|before_or_equal:" . $schedule["closing"],
             ])->validate();
 
-            $events = $this->events->where("space_id", $this->event["space_id"])->where("date", $this->event["date"]);
+            $events = Event::where("space_id", $this->event["space_id"])->where("date", $this->event["date"]);
             foreach ($events as $event) {
                 if (
                     ($this->event["start_time"] >= $event->start_time && $this->event["start_time"] < $event->end_time) ||
@@ -217,73 +209,7 @@ public function updateCustomerId($value)
         if (strlen($event["start_time"]) == 5) $event["start_time"] .= ":00";
         if (strlen($event["end_time"]) == 5) $event["end_time"] .= ":00";
 
-        $this->handleCrudActions(
-            "event",
-            [
-                "action" => isset($this->event["id"]) ? "update" : "create",
-                "data" => $event
-            ]
-        );
-
-
-        $this->Modal("save", true, $event);
-    }
-
-    public function updateEvents($action, $data)
-    {
-        $this->emit("update-events", $this->events->load("space", "customer"));
-
-        if (isset($this->event["id"]) && $this->event["id"] == $data["id"]) {
-            $event =  $this->events->find($data["id"]);
-            if ($event) $this->event = $event->load("products", "payments", "customer", "space")->toArray();
-            else
-                $this->event = $this->initialEvent;
-        }
-    }
-
-    public function updateEventPayments($action, $data)
-    {
-
-        if (!isset($data["event_id"])) return;
-
-        $eventIndex = array_search($data["event_id"], array_column($this->events->toArray(), "id"));
-        if ($eventIndex === false) return;
-
-        $event = $this->events[$eventIndex];
-
-        $paymentIndex = array_search($data["id"], array_column($event["payments"]->toArray(), "id"));
-
-        switch ($action) {
-            case 'create':
-                if ($paymentIndex === false) {
-                    $event["payments"][] = $data;
-                }
-                break;
-
-            case 'update':
-                if ($paymentIndex !== false) {
-                    $event["payments"][$paymentIndex] = $data;
-                }
-                break;
-
-            case 'delete':
-                if ($paymentIndex !== false) {
-                    unset($event["payments"][$paymentIndex]);
-                }
-                break;
-        }
-
-        $this->events[$eventIndex] = $event;
-        if (isset($this->event["id"]) && $this->event["id"] == $event["id"])
-            $this->event = $event;
-
-        $this->handleCrudActions(
-            "event",
-            [
-                "action" => "update",
-                "data" => $event
-            ]
-        );
+        $this->emit("update-event", $this->event);
     }
 
     public function productAction($product_id, $action, $quantity = 1)
@@ -342,7 +268,7 @@ public function updateCustomerId($value)
 
     public function addPayment()
     {
-        if (!$this->event["id"] || !$this->events->find($this->event["id"]))
+        if (!$this->event["id"] || !Event::find($this->event["id"]))
             return $this->emit("toast", "error", __("calendar-lang.event-not-found"));
 
         Validator::make($this->payment, [
@@ -367,6 +293,8 @@ public function updateCustomerId($value)
                 "data" => $payment
             ]
         );
+
+        $this->emit("update-event", $this->event);
     }
 
     public function newCustomer()
@@ -425,8 +353,6 @@ public function updateCustomerId($value)
 
         $event = Event::find($id);
         if (!$event) return;
-
-
 
         $event->payments()->delete();
         $event->products()->delete();

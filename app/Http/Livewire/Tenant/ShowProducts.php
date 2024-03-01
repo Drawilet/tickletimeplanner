@@ -1,31 +1,29 @@
 <?php
 
-namespace App\Http\Livewire\Tenant\Products;
+namespace App\Http\Livewire\Tenant;
 
-use App\Events\ProductEvent;
 use App\Http\Livewire\Util\CrudComponent;
 use App\Models\Product;
-use App\Rules\Price;
 
-class ShowComponent extends CrudComponent
+class ShowProducts extends CrudComponent
 {
     public function mount()
     {
-        $this->setup(Product::class,  [
-            "mainKey" => "name",
-            "types" => [
-                "photo" => [
-                    "type" => "file",
-                    "max" => 1,
-                    "accept" => ["image/jpeg", "image/png"],
+        $this->setup(Product::class, [
+            'mainKey' => 'name',
+            'types' => [
+                'photo' => [
+                    'type' => 'file',
+                    'max' => 1,
+                    'accept' => ['image/jpeg', 'image/png'],
                 ],
-                "name" => ["type" => "text"],
-                "description" => ["type" => "textarea",  "rows" => 4],
-                "cost" => ["type" => "number"],
-                "price" => ["type" => "number"],
-                "notes" => ["type" => "textarea", "rules" => "nullable"],
+                'name' => ['type' => 'text'],
+                'description' => ['type' => 'textarea', 'rows' => 4],
+                'cost' => ['type' => 'number'],
+                'price' => ['type' => 'number'],
+                'notes' => ['type' => 'textarea', 'rules' => 'nullable'],
             ],
-            "mobileStyles" => "
+            'mobileStyles' => "
                 .photo {
                     width: 100%;
                     justify-content: center;
@@ -57,7 +55,7 @@ class ShowComponent extends CrudComponent
                 }
 
             ",
-            "foreigns" => ["events"],
+            'foreigns' => ['events'],
         ]);
     }
 }
