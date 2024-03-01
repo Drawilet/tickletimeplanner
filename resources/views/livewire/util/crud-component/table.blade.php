@@ -24,7 +24,7 @@
                 </tr>
             </thead>
             <tbody class="flex flex-wrap gap-5 md:table-row-group ">
-                @foreach ($shownItems as $item)
+                @foreach ($items as $item)
                     <tr
                         class="hover w-full flex {{ isset($mobileStyles) ? '' : 'flex-col' }} flex-wrap p-4 border border-base-200 rounded-lg relative md:table-row md:border-0">
                         <td class="absolute right-0 top-0 mt-2 mr-4 md:static md:m-0 md:table-cell">{{ $item['id'] }}
