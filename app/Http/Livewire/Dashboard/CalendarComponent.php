@@ -46,10 +46,6 @@ class CalendarComponent extends LivewireCalendar
         $month = str_pad($month, 2, '0', STR_PAD_LEFT);
         $day = str_pad($day, 2, '0', STR_PAD_LEFT);
 
-        /*  $selectedDate = Carbon::create($year, $month, $day);
-        if ($selectedDate->isPast())
-            return; */
-
         $this->emit('Modal', 'save', true, [
             'date' => $year . '-' . $month . '-' . $day,
         ]);
