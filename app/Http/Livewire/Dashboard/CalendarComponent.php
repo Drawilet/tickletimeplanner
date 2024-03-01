@@ -7,7 +7,6 @@ use App\Models\Space;
 use Asantibanez\LivewireCalendar\LivewireCalendar;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Log;
 
 class CalendarComponent extends LivewireCalendar
 {
@@ -33,7 +32,7 @@ class CalendarComponent extends LivewireCalendar
                 'id' => $event["id"],
                 'title' => $event["name"],
                 "location" => $event["space"]["name"],
-                'description' => Carbon::createFromFormat('H:i:s', $event["start_time"])->format('g:i A') . ' - ' . \Carbon\Carbon::createFromFormat('H:i:s', $event["end_time"])->format('g:i A'),
+                'description' => Carbon::createFromFormat('H:i:s', $event["start_time"])->format('g:i A') . ' - ' . Carbon::createFromFormat('H:i:s', $event["end_time"])->format('g:i A'),
                 'date' => $event["date"],
                 'color' => $event["space"]["color"],
                 "start_time" => $event["start_time"],
