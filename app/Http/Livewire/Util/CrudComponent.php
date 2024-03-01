@@ -4,7 +4,7 @@ namespace App\Http\Livewire\Util;
 
 use App\Http\Traits\WithCrudActions;
 use App\Http\Traits\WithValidations;
-use App\Rules\PhoneNumber;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Livewire\Component;
@@ -60,7 +60,7 @@ class CrudComponent extends Component
 
         $this->addCrud($Model, ["get" => false]);
 
-        $this->items = collect([]);
+        $this->items = new Collection();
         if (!isset($params["getItems"])) $params["getItems"] = true;
         if ($params["getItems"])
             $this->loadMore();
