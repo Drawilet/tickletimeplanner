@@ -13,7 +13,7 @@
 
     @if (count($items))
         <table class="mt-2 md:table w-full">
-            <thead class="hidden md:table-header-group sticky top-0 bg-base-100">
+            <thead class="hidden md:table-header-group sticky top-0 z-10 bg-base-100">
                 <tr>
                     <th></th>
                     @foreach ($keys as $key)
