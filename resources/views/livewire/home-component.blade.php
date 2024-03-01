@@ -5,7 +5,7 @@
             <div class="max-w-md">
                 <h1 class="mb-5 text-5xl font-bold text-white">{{ __('home-lang.hero.title') }}</h1>
                 <p class="mb-5 text-white">{{ __('home-lang.hero.description') }}</p>
-                <a class="btn btn-primary" href="#contact">{{ __('home-lang.hero.cta') }}</a>
+                <a class="btn btn-primary w-full max-w-xs" href="#contact">{{ __('home-lang.hero.cta') }}</a>
             </div>
         </div>
     </section>
