@@ -1,5 +1,5 @@
 <main>
-    <section class="hero min-h-screen" style="background-image: url('/jumbotron.png');">
+    <section class="hero min-h-screen bg-right md:bg-center" style="background-image: url('/jumbotron.png');">
         <div class="hero-overlay bg-opacity-50"></div>
         <div class="hero-content text-center text-neutral-content">
             <div class="max-w-md">
