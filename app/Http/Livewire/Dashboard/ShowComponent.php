@@ -63,7 +63,7 @@ class ShowComponent extends Component
         "notes" => null,
     ];
 
-    public $events, $products, $filteredProducts, $customers, $spaces, $payments;
+    public  $products, $filteredProducts, $customers, $spaces, $payments;
 
     public $currentSpace;
     public $searchTerm;
@@ -75,6 +75,7 @@ class ShowComponent extends Component
 
     public function mount()
     {
+
         $this->addCrud(Payment::class, ["useItemsKey" => false, "get" => true]);
         $this->addCrud(Customer::class, ["useItemsKey" => false, "get" => true]);
         $this->addCrud(Space::class, ["useItemsKey" => false, "get" => true]);
