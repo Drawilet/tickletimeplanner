@@ -1,4 +1,4 @@
-<x-dialog-modal wire:model="modals.save">
+<x-dialog-modal wire:model.defer="modals.save">
     <x-slot name="title">
         {{ gettype($data['id']) == 'string' ? __($name . '-lang.' . 'create') : __($name . '-lang.' . 'update') }}
     </x-slot>
@@ -13,7 +13,7 @@
                 @else
                     @switch($type["type"])
                         @case('textarea')
-                            <textarea id="{{ $key }}" wire:model="data.{{ $key }}" class="textarea textarea-bordered"
+                            <textarea id="{{ $key }}" wire:model.defer="data.{{ $key }}" class="textarea textarea-bordered"
                                 @foreach ($type as $key => $value)
                                     @if ($key != 'type')
                                      {{ $key }}="{{ $value }}"
@@ -21,7 +21,7 @@
                         @break
 
                         @case('select')
-                            <select id="{{ $key }}" wire:model="data.{{ $key }}"
+                            <select id="{{ $key }}" wire:model.defer="data.{{ $key }}"
                                 class="select select-bordered">
                                 <option value=""></option>
                                 @foreach ($type['options'] as $option)
@@ -31,7 +31,7 @@
                         @break
 
                         @case('file')
-                            <input id="{{ $key }}" wire:model="files.{{ $key }}" type="file"
+                            <input id="{{ $key }}" wire:model.defer="files.{{ $key }}" type="file"
                                 class="file-input file-input-bordered"
                                 @foreach ($type as $key => $value)
             @if ($key != 'type')
@@ -40,7 +40,7 @@
                         @break
 
                         @default
-                            <x-input id="{{ $key }}" wire:model="data.{{ $key }}"
+                            <x-input id="{{ $key }}" wire:model.defer="data.{{ $key }}"
                                 type="{{ $type['type'] }}" />
                     @endswitch
                 @endif
@@ -55,11 +55,11 @@
             class="btn w-28 mr-2">{{ __('show-lang.cancel') }}</button>
         <button class="btn btn-primary px-8" wire:click="save" wire:loading.attr="disabled">
             <span wire:loading wire:target="save">
-                    {{ __('auth.cargando') }}...
-                </span>
-                <span wire:loading.remove wire:target="save">
-                    {{ __('calendar-lang.Save') }}
-                </span>
+                {{ __('auth.cargando') }}...
+            </span>
+            <span wire:loading.remove wire:target="save">
+                {{ __('calendar-lang.Save') }}
+            </span>
         </button>
     </x-slot>
 </x-dialog-modal>
