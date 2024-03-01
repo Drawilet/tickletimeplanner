@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Tenant\Settings;
+namespace App\Http\Livewire\Tenant;
 
 use App\Http\Traits\WithValidations;
 use App\Models\Tenant;
@@ -8,7 +8,7 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Validator;
 
-class ShowComponent extends Component
+class ShowSettings extends Component
 {
     use WithFileUploads, WithValidations;
 

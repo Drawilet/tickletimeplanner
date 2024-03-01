@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Livewire\Tenant\Customers;
+namespace App\Http\Livewire\Tenant;
 
 use App\Http\Livewire\Util\CrudComponent;
 use App\Models\Customer;
 
-class ShowComponent extends CrudComponent
+class ShowCustomers extends CrudComponent
 {
     public function mount()
     {

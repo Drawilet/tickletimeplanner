@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Tenant\Spaces;
+namespace App\Http\Livewire\Tenant;
 
 use App\Http\Livewire\Tenant\Spaces\ScheduleComponent;
 use App\Http\Livewire\Util\CrudComponent;
@@ -8,7 +8,7 @@ use App\Http\Livewire\Util\CrudComponent;
 use App\Models\Space;
 use App\Models\SpacePhoto;
 
-class ShowComponent extends CrudComponent
+class ShowSpaces extends CrudComponent
 {
     public function mount()
     {

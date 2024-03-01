@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Livewire\Tenant\Users;
+namespace App\Http\Livewire\Tenant;
 
 use App\Http\Livewire\Util\CrudComponent;
 use App\Http\Livewire\Users\PermissionsComponent;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
-class ShowComponent extends CrudComponent
+class ShowUsers extends CrudComponent
 {
     public $events = ['beforeOpenSaveModal', 'beforeSave', 'afterSave'];
     public function beforeOpenSaveModal($user)

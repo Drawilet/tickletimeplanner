@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Livewire\Tenant\Payments;
+namespace App\Http\Livewire\Tenant;
 
 use App\Http\Livewire\Util\CrudComponent;
 use App\Models\Event;
 use App\Models\Payment;
 
-class ShowComponent extends CrudComponent
+class ShowPayments extends CrudComponent
 {
     public $events = ['beforeSave', 'specialValidator'];
 
