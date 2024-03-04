@@ -1,4 +1,4 @@
-<div class="overflow-scroll" style="max-height: calc(100vh - 200px)">
+<div class="overflow-scroll" style="max-height: calc(100vh - 200px)" id="crud-container">
     @isset($mobileStyles)
         <style>
             @media screen and (max-width: 768px) {
