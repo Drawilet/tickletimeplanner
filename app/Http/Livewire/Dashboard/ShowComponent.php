@@ -69,7 +69,7 @@ class ShowComponent extends Component
     public $searchTerm;
     public $SelectCustomer;
     public $skip_customer = 0;
-    public $CUSTOMER_PER_PAGE = 5;
+    public $CUSTOMER_PER_PAGE = 10;
     public $NewCustomers;
     public $CAN_LOAD_MORE;
 
@@ -102,15 +102,29 @@ class ShowComponent extends Component
     }
     public function loadMore()
 {
-    $newCustomers = Customer::skip($this->skip_customer)->take($this->CUSTOMER_PER_PAGE)->get();
-    $this->customers = $this->customers->concat($newCustomers);
+    $customers = Customer::when($this->searchTerm != '', function ($query) {
+        return $query->where('firstname', 'like', '%' . $this->searchTerm . '%')
+                     ->orWhere('lastname', 'like', '%' . $this->searchTerm . '%');
+    })
+        ->skip($this->skip_customer)
+        ->take($this->CUSTOMER_PER_PAGE)
+        ->get();
+
+    $this->customers = $this->customers->merge($customers);
+
     $this->skip_customer += $this->CUSTOMER_PER_PAGE;
-    $this->CAN_LOAD_MORE = Customer::count() > $this->skip_customer;
+
+    if ($customers->count() < $this->CUSTOMER_PER_PAGE) {
+        $this->CAN_LOAD_MORE = false;
+    }
 }
-public function updateCustomerId($value)
-{
-    $this->event['customer_id'] = $value;
-}
+    public function filterUpdated()
+    {
+        $this->skip_customer = 0;
+        $this->customers = new Collection();
+        $this->CUSTOMER_PER_PAGE = 10;
+        $this->loadMore();
+    }
 
     public function render()
     {

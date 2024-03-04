@@ -51,13 +51,13 @@
                         <x-label for="customer_id" value="{{ __('calendar-lang.Customer') }}" />
                         <div class="flex items-center">
                             <div x-data="{ open: false }" class="flex-grow relative">
-                                <input type="text" class="input input-bordered w-full" wire:model="searchTerm" @input="open = true" @blur="setTimeout(() => open = false, 200)">
-                                <div class="absolute z-10 mt-2 w-full  shadow-md max-h-44 overflow-y-scroll" x-show="open">
+                                <input type="text" class="input input-bordered w-full" wire:model.debounce.500ms="searchTerm" wire:keyup.debounce.500ms="filterUpdated" @input="open = true" @blur="setTimeout(() => open = false, 200)">
+                                <div class="absolute z-10 mt-2 w-full  shadow-md h-44 overflow-y-scroll" x-show="open">
                                     <ul class="p-1 menu dropdown-content bg-base-200 rounded-box ">
                                         @foreach($customers as $customer)
                                         <li class="cursor-pointer hover:bg-base-300 p-1 w-full" wire:click="SetCustomer('{{$customer->id}}')">{{ $customer->firstname }} {{ $customer->lastname }}</li>
                                         @endforeach
-                                        @if ($CAN_LOAD_MORE)
+                                        @if ($CUSTOMER_PER_PAGE)
                                         <div x-data="{ shown: false }" x-intersect="shown = true; $wire.loadMore()">
                                             <div x-show="shown" class="flex justify-center items-center mt-5">
                                                 <p>Loading more...</p>
