@@ -62,6 +62,10 @@ class CrudComponent extends Component
 
     public $changelog = [];
 
+    public $additionalSql = [
+        "default" => null
+    ];
+
     public function setup($Model, array $params)
     {
         $this->Model = $Model;
@@ -70,13 +74,12 @@ class CrudComponent extends Component
 
         $this->filter = $this->initialFilter;
 
+        if (isset($params['additionalSql'])) {
+            $this->additionalSql["default"] = $params['additionalSql'];
+        }
+
         $this->items = new Collection();
-        if (!isset($params['getItems'])) {
-            $params['getItems'] = true;
-        }
-        if ($params['getItems']) {
-            $this->loadMore();
-        }
+        $this->loadMore();
 
         $this->initialData = ['id' => ''];
         $this->initialFiles = [];
@@ -120,7 +123,8 @@ class CrudComponent extends Component
     public function loadMore()
     {
         $newItems = $this->Model
-            ::when($this->filter['search'] != '', function ($query) {
+            ::when($this->additionalSql["default"], $this->additionalSql["default"])
+            ->when($this->filter['search'] != '', function ($query) {
                 return $query->where($this->mainKey, 'like', '%' . $this->filter['search'] . '%');
             })
             ->skip($this->skip_rows)
