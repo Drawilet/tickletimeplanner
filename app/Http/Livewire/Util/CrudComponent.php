@@ -248,28 +248,6 @@ class CrudComponent extends Component
             }
 
             $files = gettype($this->files[$key]) == 'array' ? $this->files[$key] : [$this->files[$key]];
-            if ($this->data['id'] && count($files) != 0) {
-                $oldFiles = $item->$key;
-                if (gettype($oldFiles) == 'string') {
-                } elseif (isset($this->types[$key]['foreign'])) {
-                    $foreignFile = $this->types[$key]['foreign'];
-                    $model = $foreignFile['model'];
-                    $foreign_key = $foreignFile['key'];
-                    $foreign_name = $foreignFile['name'];
-
-                    foreach ($oldFiles as $oldFile) {
-                        $_file = $oldFile->$foreign_name;
-                        $_file = str_replace('/storage', 'public', $_file);
-
-                        Storage::delete($_file);
-
-                        $model
-                            ::where($foreign_key, $id)
-                            ->where($foreign_name, $oldFile[$foreign_name])
-                            ->delete();
-                    }
-                }
-            }
 
             foreach ($files as $file) {
                 $fileName = $file->getClientOriginalName();
