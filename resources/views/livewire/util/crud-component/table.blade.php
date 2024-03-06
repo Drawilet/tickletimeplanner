@@ -1,7 +1,7 @@
 <div class="overflow-scroll" style="max-height: calc(100vh - 200px)" id="crud-container">
     @isset($mobileStyles)
         <style>
-            @media screen and (max-width: 768px) {
+            @media screen and (max-width: 100px) {
                 {{ $mobileStyles }} .notes {
                     width: 100%;
                     justify-content: center;
@@ -20,27 +20,24 @@
                         <th class="capitalize {{ $mainKey == $key ? '' : '' }}">
                             {{ __($name . '-lang.' . $key) }}</th>
                     @endforeach
-                    <th></th>
+                    @can('tenant.' . $name . 's' . '.manage')
+                        <th></th>
+                    @endcan
                 </tr>
             </thead>
-            <tbody class="flex flex-wrap gap-5 md:table-row-group ">
+            <tbody class="flex flex-wrap gap-5 md:table-row-group">
                 @foreach ($items as $item)
-                    <tr
-                        class="hover w-full flex {{ isset($mobileStyles) ? '' : 'flex-col' }} flex-wrap p-4 border border-base-200 rounded-lg relative md:table-row md:border-0">
-                        <td class="absolute right-0 top-0 mt-2 mr-4 md:static md:m-0 md:table-cell">{{ $item['id'] }}
-                        </td>
-
+                    <tr class="hover w-full flex {{ isset($mobileStyles) ? '' : 'flex-col' }} flex-wrap p-4 border border-base-200 rounded-lg relative md:table-row md:border-0">
+                        <td></td>
                         @foreach ($types as $key => $type)
                             @isset($type['hidden'])
                                 @continue
                             @endisset
-
                             <td class="{{ $key }} flex flex-wrap md:table-cell">
                                 @if (!isset($mobileStyles))
                                     <span class="font-medium mr-10 opacity-80 md:hidden">
                                         {{ __($name . '-lang.' . $key) }}</span>
                                 @endif
-
                                 @if (isset($type['parser']))
                                     @php
                                         $value = $type['parser']($item[$key]);
@@ -102,30 +99,22 @@
 
                                         @default
                                             @if ($type['type'] == 'color')
-                                                <span
-                                                    style="background-color: {{ $item[$key] }}; width: 20px; height: 20px; display: inline-block;"></span>
+                                                <span style="background-color: {{ $item[$key] }}; width: 20px; height: 20px; display: inline-block;"></span>
                                             @else
                                                 {{ $item[$key] }}
                                             @endif
                                         @break
                                     @endswitch
                                 @endif
-
-
                             </td>
                         @endforeach
-
                         @can('tenant.' . $name . 's' . '.manage')
                             <td class="w-full flex gap-2 mt-2 md:m-0 ">
-                                <button
-                                    class="w-full bg-yellow-300 px-4 py-2 flex justify-center items-center rounded-lg text-black lg:max-w-[52px] lg:bg-transparent lg:text-base-content  lg:hover:scale-125 transition-transform "
-                                    wire:click="Modal('save', true, '{{ $item['id'] }}')">
+                                <button class="w-full bg-yellow-300 px-4 py-2 flex justify-center items-center rounded-lg text-black lg:max-w-[52px] lg:bg-transparent lg:text-base-content  lg:hover:scale-125 transition-transform " wire:click="Modal('save', true, '{{ $item['id'] }}')">
                                     @component('components.icons.pencil-square')
                                     @endcomponent
                                 </button>
-                                <button
-                                    class="w-full bg-red-500 px-4 py-2 flex justify-center items-center rounded-lg text-black lg:max-w-[52px] lg:bg-transparent lg:text-base-content  lg:hover:scale-125 transition-transform "
-                                    wire:click="Modal('delete', true, '{{ $item['id'] }}')">
+                                <button class="w-full bg-red-500 px-4 py-2 flex justify-center items-center rounded-lg text-black lg:max-w-[52px] lg:bg-transparent lg:text-base-content  lg:hover:scale-125 transition-transform " wire:click="Modal('delete', true, '{{ $item['id'] }}')">
                                     @component('components.icons.trash')
                                     @endcomponent
                                 </button>
@@ -135,7 +124,6 @@
                 @endforeach
             </tbody>
         </table>
-
         @if ($CAN_LOAD_MORE)
             <div x-data="{ shown: false }" x-intersect="shown = true; $wire.loadMore()">
                 <div x-show="shown" class="flex justify-center items-center mt-5">
