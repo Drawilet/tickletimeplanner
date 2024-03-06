@@ -8,8 +8,14 @@
             <x-form-control class="mt-2">
                 <x-label for="" value="{{ __($name . '-lang.' . $key) }}" />
 
-                @if (isset($type['component']))
-                    @livewire($type['component'])
+                @isset($type['component'])
+                    @livewire(
+                        $type['component'],
+                        [
+                            'data' => $data,
+                        ],
+                        key($key)
+                    )
                 @else
                     @switch($type["type"])
                         @case('textarea')
@@ -34,17 +40,16 @@
                             <input id="{{ $key }}" wire:model.defer="files.{{ $key }}" type="file"
                                 class="file-input file-input-bordered"
                                 @foreach ($type as $key => $value)
-            @if ($key != 'type')
-            {{ $key }}="{{ $this->parseValue($value) }}"
-            @endif @endforeach>
+                            @if ($key != 'type')
+                      {{ $key }}="{{ $this->parseValue($value) }}"
+                     @endif @endforeach>
                         @break
 
                         @default
                             <x-input id="{{ $key }}" wire:model.defer="data.{{ $key }}"
                                 type="{{ $type['type'] }}" />
                     @endswitch
-                @endif
-
+                @endisset
                 <x-input-error for="{{ $key }}" class="mt-2" />
             </x-form-control>
         @endforeach

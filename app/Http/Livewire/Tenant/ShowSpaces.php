@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Tenant;
 
 use App\Http\Livewire\Tenant\Spaces\ScheduleComponent;
+use App\Http\Livewire\Tenant\Spaces\PhotosComponent;
 use App\Http\Livewire\Util\CrudComponent;
 
 use App\Models\Space;
@@ -18,9 +19,8 @@ class ShowSpaces extends CrudComponent
                 'name' => ['type' => 'text'],
                 'photos' => [
                     'type' => 'file',
-                    'max' => 5,
-                    'multiple' => true,
-                    'accept' => ['image/jpeg', 'image/png'],
+                    'component' => PhotosComponent::class,
+                    'hidden' => true,
                     'foreign' => [
                         'model' => SpacePhoto::class,
                         'key' => 'space_id',
