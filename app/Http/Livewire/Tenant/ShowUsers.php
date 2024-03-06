@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Hash;
 
 class ShowUsers extends CrudComponent
 {
-    public $events = ['beforeOpenSaveModal', 'beforeSave', 'afterSave'];
+    public $events = ['beforeOpenSaveModal', 'beforeSave', 'afterSave', "additionalSql"];
     public function beforeOpenSaveModal($user)
     {
         $data = $user->toArray();
@@ -38,8 +38,6 @@ class ShowUsers extends CrudComponent
 
     public function mount()
     {
-        $user = auth()->user();
-
         $this->setup(User::class, [
             'mainKey' => 'name',
             'types' => [
@@ -55,10 +53,15 @@ class ShowUsers extends CrudComponent
                     'component' => PermissionsComponent::class,
                 ],
             ],
-            "additionalSql" => function ($query) use ($user) {
-                $query->where('id', '!=', $user->id);
-                $query->where('id', '!=', 1);
-            },
+
         ]);
+    }
+
+    public function additionalSql($query)
+    {
+        $user = auth()->user();
+
+        $query->where('id', '!=', $user->id);
+        $query->where('id', '!=', 1);
     }
 }
