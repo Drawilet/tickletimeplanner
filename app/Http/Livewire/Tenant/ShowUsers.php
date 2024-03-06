@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Hash;
 
 class ShowUsers extends CrudComponent
 {
-    public $events = ['beforeOpenSaveModal', 'beforeSave', 'afterSave', "additionalSql"];
+    public $events = ['beforeOpenSaveModal', 'beforeSave', 'afterSave', "additionalSql", "beforeDelete"];
     public function beforeOpenSaveModal($user)
     {
         $data = $user->toArray();
@@ -63,5 +63,10 @@ class ShowUsers extends CrudComponent
 
         $query->where('id', '!=', $user->id);
         $query->where('id', '!=', 1);
+    }
+
+    public function beforeDelete($user)
+    {
+        $user->notifications()->delete();
     }
 }
