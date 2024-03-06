@@ -38,9 +38,10 @@ class ShowUsers extends CrudComponent
 
     public function mount()
     {
+        $user = auth()->user();
+
         $this->setup(User::class, [
             'mainKey' => 'name',
-            'getItems' => false,
             'types' => [
                 'name' => ['type' => 'text'],
                 'email' => ['type' => 'email'],
@@ -54,11 +55,10 @@ class ShowUsers extends CrudComponent
                     'component' => PermissionsComponent::class,
                 ],
             ],
+            "additionalSql" => function ($query) use ($user) {
+                $query->where('id', '!=', $user->id);
+                $query->where('id', '!=', 1);
+            },
         ]);
-
-        $user = auth()->user();
-        $this->items = User::where('tenant_id', $user->tenant_id)
-            ->where('id', '<>', $user->id)
-            ->get();
     }
 }
