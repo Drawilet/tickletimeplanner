@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Tenant\Spaces;
 use App\Models\SpacePhoto;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Livewire\Attributes\Validate;
 
 class PhotosComponent extends Component
 {
@@ -12,6 +13,7 @@ class PhotosComponent extends Component
     use WithFileUploads;
     protected $listeners = ['update-data' => 'handleData'];
 
+    #[Validate('image|max:1024')]
     public $uploadedPhotos;
 
     public $data = [

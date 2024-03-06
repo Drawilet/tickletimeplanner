@@ -9,4 +9,5 @@ return [
     'events' => 'eventos',
 
     "invalid-file" => "Tipo de archivo inválido",
+    "exceded-file-size" => "Tamaño de archivo excedido (1 MB)",
 ];
