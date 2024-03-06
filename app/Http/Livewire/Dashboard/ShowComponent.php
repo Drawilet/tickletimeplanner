@@ -68,14 +68,17 @@ class ShowComponent extends Component
     public $currentSpace;
     public $searchTerm;
     public $SelectCustomer;
+
+    public $customerName = '';
+
     public $skip_customer = 0;
+
     public $CUSTOMER_PER_PAGE = 10;
-    public $NewCustomers;
-    public $CAN_LOAD_MORE;
+    public $CAN_LOAD_MORE = true;
 
     public function mount()
     {
-
+        $this->addCrud(Event::class, ["useItemsKey" => false, "get" => false, "afterUpdate" => "updateEvents"]);
         $this->addCrud(Payment::class, ["useItemsKey" => false, "get" => true]);
         $this->addCrud(Customer::class, ["useItemsKey" => false, "get" => true]);
         $this->addCrud(Space::class, ["useItemsKey" => false, "get" => true]);
@@ -87,37 +90,35 @@ class ShowComponent extends Component
 
         $this->customers = Customer::take($this->CUSTOMER_PER_PAGE)->get();
         $this->skip_customer = $this->CUSTOMER_PER_PAGE;
-    }
-    public function updatedSearchTerm()
-    {
-        $this->customers = Customer::where('firstname', 'like', '%' . $this->searchTerm . '%')
-            ->orWhere('lastname', 'like', '%' . $this->searchTerm . '%')
-            ->get();
+
     }
     public function SetCustomer($id)
     {
         $this->SelectCustomer = Customer::find($id);
         $this->searchTerm = $this->SelectCustomer->firstname . ' ' . $this->SelectCustomer->lastname;
         $this->event['customer_id'] = $id;
+
     }
+
     public function loadMore()
-{
-    $customers = Customer::when($this->searchTerm != '', function ($query) {
-        return $query->where('firstname', 'like', '%' . $this->searchTerm . '%')
-                     ->orWhere('lastname', 'like', '%' . $this->searchTerm . '%');
-    })
-        ->skip($this->skip_customer)
-        ->take($this->CUSTOMER_PER_PAGE)
-        ->get();
+    {
+        $NewCustomers = Customer::when($this->searchTerm != '', function ($query) {
+            return $query->where('firstname', 'like', '%' . $this->searchTerm . '%')
+                ->orWhere('lastname', 'like', '%' . $this->searchTerm . '%');
+        })
+            ->skip($this->skip_customer)
+            ->take($this->CUSTOMER_PER_PAGE)
+            ->get();
 
-    $this->customers = $this->customers->merge($customers);
+        $this->customers = $this->customers->merge($NewCustomers);
 
-    $this->skip_customer += $this->CUSTOMER_PER_PAGE;
+        $this->skip_customer += $this->CUSTOMER_PER_PAGE;
 
-    if ($customers->count() < $this->CUSTOMER_PER_PAGE) {
-        $this->CAN_LOAD_MORE = false;
+        if ($NewCustomers->count() < $this->CUSTOMER_PER_PAGE) {
+            $this->CUSTOMER_PER_PAGE = false;
+        }
+
     }
-}
     public function filterUpdated()
     {
         $this->skip_customer = 0;
@@ -187,7 +188,7 @@ class ShowComponent extends Component
         Validator::make($this->event, [
             "name" => "required|" . $this->validations["text"],
             "space_id" => "required",
-            "customer_id" => "required",
+            "customer_id" => "required|exists:customers,id",
             "date" => "required",
             "price" => "required|" . $this->validations["number"],
             "notes" => "nullable|" . $this->validations["textarea"],
@@ -224,7 +225,21 @@ class ShowComponent extends Component
         if (strlen($event["start_time"]) == 5) $event["start_time"] .= ":00";
         if (strlen($event["end_time"]) == 5) $event["end_time"] .= ":00";
 
-        $this->emit("update-event", $this->event);
+        $this->Modal("save", true, $event);
+
+        $this->emit("update-event", $event);
+        $this->emit("toast", "success", __("calendar-lang.save-success") . " " . $event->name);
+    }
+    public function updateEvents($action, $data)
+    {
+        $this->emit("update-events", $this->events->load("space", "customer"));
+
+        if (isset($this->event["id"]) && $this->event["id"] == $data["id"]) {
+            $event =  $this->events->find($data["id"]);
+            if ($event) $this->event = $event->load("products", "payments", "customer", "space")->toArray();
+            else
+                $this->event = $this->initialEvent;
+        }
     }
 
     public function productAction($product_id, $action, $quantity = 1)
