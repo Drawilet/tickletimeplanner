@@ -8,11 +8,16 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Livewire\Component;
+use Livewire\TemporaryUploadedFile;
 use Livewire\WithFileUploads;
 
 class CrudComponent extends Component
 {
-    protected $listeners = ['update-data' => 'handleData'];
+    protected $listeners = [
+        'update-data' => 'handleData',
+        'update-files' => 'handleFiles',
+        'update-changelog' => 'handleChangelog',
+    ];
 
     use WithFileUploads, WithCrudActions, WithValidations;
 
@@ -54,6 +59,8 @@ class CrudComponent extends Component
 
     public $ITEMS_PER_PAGE = 10;
     public $CAN_LOAD_MORE = true;
+
+    public $changelog = [];
 
     public function setup($Model, array $params)
     {
@@ -142,6 +149,23 @@ class CrudComponent extends Component
         $this->data = array_merge($this->data, $data);
     }
 
+    public function handleFiles($data)
+    {
+        foreach ($data as $fileKey => $files) {
+            $this->files[$fileKey] = [];
+            foreach ($files as $key => $file) {
+                if (isset($file['photo'])) {
+                    $this->files[$fileKey][$key] = new TemporaryUploadedFile($file['photo'], config('filesystems.default'));
+                }
+            }
+        }
+    }
+
+    public function handleChangelog($data)
+    {
+        $this->changelog[] = $data;
+    }
+
     /*<──  ───────    UTILS   ───────  ──>*/
     public function clean()
     {
@@ -192,6 +216,10 @@ class CrudComponent extends Component
         $isCreating = isset($this->data['id']) && $this->data['id'] == '';
         foreach ($this->types as $key => $type) {
             if (!isset($type['hidden']) || !$type['hidden']) {
+                continue;
+            }
+
+            if ($type['type'] == 'file') {
                 continue;
             }
 
@@ -261,6 +289,39 @@ class CrudComponent extends Component
                     ]);
                 } else {
                     $item->$key = $path;
+                }
+            }
+        }
+
+        foreach ($this->changelog as $change) {
+            $type = $this->types[$change['key']];
+
+            if ($change['type'] == 'file') {
+                switch ($change["action"]) {
+                    case 'delete':
+                        if (isset($type['foreign'])) {
+                            $foreignFile = $type['foreign'];
+                            $model = $foreignFile['model'];
+                            $foreign_key = $foreignFile['key'];
+                            $foreign_name = $foreignFile['name'];
+
+                            $model
+                                ::where($foreign_key, $id)
+                                ->where("id", $change['id'])->delete();
+
+                            $file = $change['id'];
+                            $file = str_replace('/storage', 'public', $file);
+                            Storage::delete($file);
+                        } else {
+                            $file = $item->{$change['key']};
+                            $file = str_replace('/storage', 'public', $file);
+                            Storage::delete($file);
+                        }
+                        break;
+
+                    default:
+                        # code...
+                        break;
                 }
             }
         }
