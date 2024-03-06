@@ -28,12 +28,15 @@ class CalendarComponent extends LivewireCalendar
 
     public function updateEvent($event)
     {
-        $this->currentEvents = $this->currentEvents->map(function ($e) use ($event) {
-            if ($e->id == $event['id']) {
-                $e = Event::find($event['id']);
-            }
-            return $e;
+        $key = $this->currentEvents->search(function ($item) use ($event) {
+            return $item->id == $event['id'];
         });
+
+        if ($key !== false) {
+            $this->currentEvents[$key] = Event::find($event['id']);
+        } else {
+            $this->currentEvents->push(Event::find($event['id']));
+        }
     }
 
     public function events(): Collection
@@ -54,7 +57,7 @@ class CalendarComponent extends LivewireCalendar
                         'date' => $event->date,
                         'color' => $event->space->color,
                         'start_time' => $event->start_time,
-                        'isDraft' => isset ($event->payments) && count($event->payments) == 0,
+                        'isDraft' => isset($event->payments) && count($event->payments) == 0,
                     ];
                 })
                 ->sortBy('start_time')
