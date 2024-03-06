@@ -63,7 +63,7 @@ class ShowComponent extends Component
         "notes" => null,
     ];
 
-    public  $products, $filteredProducts, $customers, $spaces, $payments;
+    public $products, $filteredProducts, $customers, $spaces, $payments;
 
     public $currentSpace;
     public $searchTerm;
@@ -130,7 +130,8 @@ class ShowComponent extends Component
     public function render()
     {
         $this->filteredProducts = $this->products->filter(function ($product) {
-            if ($this->filters["product_name"] && !str_contains(strtolower($product->name), strtolower($this->filters["product_name"]))) return false;
+            if ($this->filters["product_name"] && !str_contains(strtolower($product->name), strtolower($this->filters["product_name"])))
+                return false;
             return true;
         });
 
@@ -144,30 +145,38 @@ class ShowComponent extends Component
     {
         switch ($name) {
             case 'save':
-                if ($value === true) $this->event = $this->initialEvent;
-                else
+                if ($value === true) {
+                    $this->event = $this->initialEvent;
+                    $this->searchTerm = '';
+                } else
                     $this->modals["payments"] = false;
 
                 if ($data) {
                     if (gettype($data) != "array" && array_keys($data->toArray()) > 2) {
                         $this->event = array_merge(
                             $this->event,
-                            $data->load("products", "payments")->toArray()
+                            $data->load("products", "payments", "customer")->toArray()
                         );
                     } else if (isset($data["id"])) {
                         $event = Event::find($data["id"]);
                         if ($event)
                             $this->event = array_merge(
                                 $this->event,
-                                $event->load("products", "payments")->toArray()
+                                $event->load("products", "payments", "customer")->toArray()
                             );
-                    } else $this->event = array_merge($this->event, $data);
+                    } else
+                        $this->event = array_merge($this->event, $data);
+                }
+
+                if (isset($event) && isset($event["customer"])) {
+                    $this->searchTerm = $event["customer"]["firstname"] . ' ' . $event["customer"]["lastname"];
                 }
 
                 break;
 
             case 'newCustomer':
-                if ($value === true) $this->customer = $this->initialCustomer;
+                if ($value === true)
+                    $this->customer = $this->initialCustomer;
                 break;
 
             case 'delete':
@@ -215,17 +224,19 @@ class ShowComponent extends Component
         $event = Event::updateOrCreate(["id" => $this->event["id"] ?? ""], $this->event);
 
         $event->products()->delete();
-        foreach ($this->event["products"] as  $product) {
+        foreach ($this->event["products"] as $product) {
             $event->products()->create([
                 "product_id" => $product["product_id"],
                 "quantity" => $product["quantity"],
             ]);
         }
 
-        if (strlen($event["start_time"]) == 5) $event["start_time"] .= ":00";
-        if (strlen($event["end_time"]) == 5) $event["end_time"] .= ":00";
+        if (strlen($event["start_time"]) == 5)
+            $event["start_time"] .= ":00";
+        if (strlen($event["end_time"]) == 5)
+            $event["end_time"] .= ":00";
 
-        $this->Modal("save", true, $event);
+        $this->Modal("save", true, $event->load("products", "payments", "customer")->toArray());
 
         $this->emit("update-event", $event);
         $this->emit("toast", "success", __("calendar-lang.save-success") . " " . $event->name);
@@ -235,8 +246,9 @@ class ShowComponent extends Component
         $this->emit("update-events", $this->events->load("space", "customer"));
 
         if (isset($this->event["id"]) && $this->event["id"] == $data["id"]) {
-            $event =  $this->events->find($data["id"]);
-            if ($event) $this->event = $event->load("products", "payments", "customer", "space")->toArray();
+            $event = $this->events->find($data["id"]);
+            if ($event)
+                $this->event = $event->load("products", "payments", "customer", "space")->toArray();
             else
                 $this->event = $this->initialEvent;
         }
@@ -368,12 +380,13 @@ class ShowComponent extends Component
                 'closing' => '00:00',
             ];
 
-        return  $schedule;
+        return $schedule;
     }
 
     function updateEndTime()
     {
-        if ($this->event["end_time"]) return;
+        if ($this->event["end_time"])
+            return;
         $this->event["end_time"] = $this->event["start_time"];
     }
 
@@ -382,7 +395,8 @@ class ShowComponent extends Component
         $this->Modal("delete", false);
 
         $event = Event::find($id);
-        if (!$event) return;
+        if (!$event)
+            return;
 
         $event->payments()->delete();
         $event->products()->delete();
