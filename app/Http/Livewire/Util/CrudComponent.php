@@ -360,6 +360,10 @@ class CrudComponent extends Component
             }
         }
 
+        if (in_array('beforeDelete', $this->events)) {
+            $this->beforeDelete($item);
+        }
+
         $item->delete();
 
         $this->handleCrudActions($this->name, [
