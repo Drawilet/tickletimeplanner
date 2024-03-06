@@ -51,14 +51,6 @@
                         <x-label for="customer_id" value="{{ __('calendar-lang.Customer') }}" />
                         <div class="flex items-center">
                             <div x-data="{ open: false }" class="flex-grow relative">
-                                <select class="select select-bordered w-full" wire:model="event.customer_id" wire:loading.attr="disabled">
-                                    <option value="{{ null }}">{{ __('calendar-lang.Pickone') }}</option>
-                                    @foreach ($customers as $customer)
-                                    <option value="{{ $customer->id }}">{{ $customer->firstname }}
-                                        {{ $customer->lastname }}
-                                    </option>
-                                    @endforeach
-                                </select>
                                 <input type="text" class="input input-bordered w-full"  wire:model.debounce.500ms="searchTerm" wire:keyup.debounce.500ms="filterUpdated" wire:target="saveEvent" @focus="open = true" @click.away="open = false">
                                 <div class="absolute z-10 mt-2 w-full  shadow-md h-44 overflow-y-scroll" x-show="open">
                                     <ul class="p-1 menu dropdown-content bg-base-200 rounded-box ">
