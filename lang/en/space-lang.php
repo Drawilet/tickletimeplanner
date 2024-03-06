@@ -15,4 +15,6 @@ return [
     'create' => 'Create space',
     "update" => "Update space",
     'notfound' => 'Space not found',
+
+    "uploading" => "Uploading...",
 ];
