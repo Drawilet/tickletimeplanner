@@ -9,13 +9,7 @@
                 <x-label for="" value="{{ __($name . '-lang.' . $key) }}" />
 
                 @isset($type['component'])
-                    @livewire(
-                        $type['component'],
-                        [
-                            'data' => $data,
-                        ],
-                        key($key)
-                    )
+                    @livewire($type['component'], key($key))
                 @else
                     @switch($type["type"])
                         @case('textarea')

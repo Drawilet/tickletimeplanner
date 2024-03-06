@@ -24,6 +24,8 @@ class ScheduleComponent extends Component
     {
         if (isset($data['schedule'])) {
             $this->data['schedule'] = $data['schedule'];
+        } else {
+            $this->data['schedule'] = [];
         }
     }
 
