@@ -22,4 +22,10 @@
     <label for="imgs-id" class="border border-dashed rounded-md p-6 cursor-pointer">
         <x-icons.plus name="plus" class="w-6 h-6" />
     </label>
+
+    <div class="w-full" wire:loading wire:target="uploadedPhotos">
+        <div class="bg-blue-500 text-white px-4 py-2 rounded-md">
+            {{ __('space-lang.uploading') }}
+        </div>
+    </div>
 </section>
