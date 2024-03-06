@@ -62,9 +62,6 @@ class CrudComponent extends Component
 
     public $changelog = [];
 
-    public $additionalSql = [
-        "default" => null
-    ];
 
     public function setup($Model, array $params)
     {
@@ -73,10 +70,6 @@ class CrudComponent extends Component
         $this->addCrud($Model, ['get' => false]);
 
         $this->filter = $this->initialFilter;
-
-        if (isset($params['additionalSql'])) {
-            $this->additionalSql["default"] = $params['additionalSql'];
-        }
 
         $this->items = new Collection();
         $this->loadMore();
@@ -123,7 +116,9 @@ class CrudComponent extends Component
     public function loadMore()
     {
         $newItems = $this->Model
-            ::when($this->additionalSql["default"], $this->additionalSql["default"])
+            ::when(in_array('additionalSql', $this->events), function ($query) {
+                $this->additionalSql($query);
+            })
             ->when($this->filter['search'] != '', function ($query) {
                 return $query->where($this->mainKey, 'like', '%' . $this->filter['search'] . '%');
             })
@@ -363,6 +358,10 @@ class CrudComponent extends Component
                         ->delete();
                 }
             }
+        }
+
+        if (in_array('beforeDelete', $this->events)) {
+            $this->beforeDelete($item);
         }
 
         $item->delete();
