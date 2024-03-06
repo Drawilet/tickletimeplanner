@@ -20,7 +20,11 @@
 <body>
     <header id="header" class="transition-colors flex flex-col navbar fixed top-0 z-50 md:flex-row">
         <div class="flex-1">
-            <a class="btn btn-ghost text-xl" href="/">
+            <a class="btn btn-ghost text-xl"
+                @auth
+href="{{ url('/dashboard') }}"
+                @else
+href="{{ url('/') }}" @endauth>
                 <x-application-mark />
             </a>
         </div>
