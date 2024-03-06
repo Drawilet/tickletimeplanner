@@ -47,6 +47,7 @@
                             @endisset
 
                         </li>
+                    @else
                     @endcan
                 @endif
             @endforeach
