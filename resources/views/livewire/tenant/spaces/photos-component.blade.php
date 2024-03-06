@@ -10,7 +10,14 @@
         </div>
     @endforeach
 
-    <input type="file" id="imgs-id" wire:model="uploadedPhotos" multiple class="hidden" accept="image/*" />
+    <input type="file" id="imgs-id" class="hidden" accept="image/*"
+        x-on:change="
+        if($event.target.files[0].size > 1000000) {
+            $wire.emit('toast', 'error','{{ __('toast-lang.exceded-file-size') }}')
+        } else {
+            $wire.upload('uploadedPhotos', $event.target.files[0])
+        }
+            " />
 
     <label for="imgs-id" class="border border-dashed rounded-md p-6 cursor-pointer">
         <x-icons.plus name="plus" class="w-6 h-6" />

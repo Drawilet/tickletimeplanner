@@ -9,4 +9,5 @@ return [
     'Customeraddedsuccessfully' => 'Customer added successfully',
     'events' => 'events',
     "invalid-file" => "Invalid file type",
+    "exceded-file-size" => "Exceded file size (1 MB)",
 ];
