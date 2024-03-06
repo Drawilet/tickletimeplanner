@@ -45,9 +45,19 @@ class PhotosComponent extends Component
 
         if (is_array($this->uploadedPhotos)) {
             foreach ($this->uploadedPhotos as $photo) {
+                if (!in_array($photo->getMimeType(), ['image/jpeg', 'image/png', 'image/jpg'])) {
+                    $this->emit("toast", "error", __("toast-lang.invalid-file"));
+                    continue;
+                }
+
                 array_push($this->files['photos'], ['url' => $photo->temporaryUrl(), 'photo' => $photo->getRealPath()]);
             }
         } else {
+            if (!in_array($this->uploadedPhotos->getMimeType(), ['image/jpeg', 'image/png', 'image/jpg'])) {
+                $this->emit("toast", "error", "Invalid file type");
+                return;
+            }
+
             array_push($this->files['photos'], ['url' => $this->uploadedPhotos->temporaryUrl(), 'photo' => $this->uploadedPhotos->getRealPath()]);
         }
 
