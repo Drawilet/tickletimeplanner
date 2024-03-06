@@ -11,7 +11,6 @@ class Payment extends Base
 
     protected $fillable = [
         "event_id",
-        "user_id",
         "amount",
         "notes",
     ];
