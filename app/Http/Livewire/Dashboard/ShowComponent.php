@@ -11,6 +11,7 @@ use App\Models\Product;
 use App\Models\Space;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Livewire\Component;
 
@@ -157,7 +158,7 @@ class ShowComponent extends Component
                             $this->event,
                             $data->load("products", "payments", "customer")->toArray()
                         );
-                    } else if (isset($data["id"])) {
+                    } else if (isset ($data["id"])) {
                         $event = Event::find($data["id"]);
                         if ($event)
                             $this->event = array_merge(
@@ -168,7 +169,7 @@ class ShowComponent extends Component
                         $this->event = array_merge($this->event, $data);
                 }
 
-                if (isset($event) && isset($event["customer"])) {
+                if (isset ($event) && isset ($event["customer"])) {
                     $this->searchTerm = $event["customer"]["firstname"] . ' ' . $event["customer"]["lastname"];
                 }
 
@@ -203,7 +204,7 @@ class ShowComponent extends Component
             "notes" => "nullable|" . $this->validations["textarea"],
         ])->validate();
 
-        if (!isset($this->event["id"])) {
+        if (!isset ($this->event["id"])) {
             Validator::make($this->event, [
                 "start_time" => "required|after_or_equal:" . $schedule["opening"] . "|before_or_equal:" . $schedule["closing"],
                 "end_time" => "required|after:start_time|before_or_equal:" . $schedule["closing"],
@@ -240,12 +241,19 @@ class ShowComponent extends Component
 
         $this->emit("update-event", $event);
         $this->emit("toast", "success", __("calendar-lang.save-success") . " " . $event->name);
+
+        $user = Auth::user();
+        $events = Event::where('tenant_id', $user->tenant_id)->get();
+        if ($events->count() == 1) {
+            $user->wizard_step = 4;
+            $user->save();
+        }
     }
     public function updateEvents($action, $data)
     {
         $this->emit("update-events", $this->events->load("space", "customer"));
 
-        if (isset($this->event["id"]) && $this->event["id"] == $data["id"]) {
+        if (isset ($this->event["id"]) && $this->event["id"] == $data["id"]) {
             $event = $this->events->find($data["id"]);
             if ($event)
                 $this->event = $event->load("products", "payments", "customer", "space")->toArray();
