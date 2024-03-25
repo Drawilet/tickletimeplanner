@@ -40,6 +40,8 @@ class WizardComponent extends Component
         $this->step = $this->steps[$step] ?? null;
 
         $this->currentRoute = request()->route()->getName();
+        if ($this->currentRoute == "profile.show")
+            $this->step = null;
     }
 
     public function render()
