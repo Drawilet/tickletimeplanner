@@ -14,7 +14,7 @@ class PermissionsComponent extends Component
     ];
     public function handleData($data)
     {
-        if (isset($data['permissions'])) {
+        if (isset ($data['permissions'])) {
             $this->data['permissions'] = $data['permissions'];
         }
     }
@@ -22,7 +22,7 @@ class PermissionsComponent extends Component
     public $permissions;
     public function mount()
     {
-        $this->permissions = Permission::all();
+        $this->permissions = Permission::where('name', 'like', 'tenant.%')->get();
     }
 
     public function render()
