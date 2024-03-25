@@ -18,11 +18,12 @@ class UserSeeder extends Seeder
     {
         $tenant = Tenant::factory()->create();
 
-        $user =  User::factory()->create(
+        $user = User::factory()->create(
             [
                 "name" => "admin",
                 "email" => "admin@example.com",
                 "tenant_id" => $tenant->id,
+                "wizard_step" => 1000
             ]
         );
         $user->assignRole("tenant.admin");
