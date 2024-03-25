@@ -8,9 +8,12 @@ use App\Http\Livewire\Util\CrudComponent;
 
 use App\Models\Space;
 use App\Models\SpacePhoto;
+use Illuminate\Support\Facades\Auth;
 
 class ShowSpaces extends CrudComponent
 {
+    public $events = ["afterSave"];
+
     public function mount()
     {
         $this->setup(Space::class, [
@@ -81,5 +84,19 @@ class ShowSpaces extends CrudComponent
             ",
             'foreigns' => ['events'],
         ]);
+    }
+
+    public function afterSave($space, $data)
+    {
+        $user = Auth::user();
+        $spaces = Space::where('tenant_id', $user->tenant_id)->get();
+
+        if ($spaces->count() == 1) {
+            $user = Auth::user();
+            $user->wizard_step = 2;
+            $user->save();
+
+            redirect()->route("tenant.spaces.show");
+        }
     }
 }

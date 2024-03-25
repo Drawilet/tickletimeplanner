@@ -38,4 +38,9 @@ class Space extends Base
     {
         return $this->hasMany(Event::class);
     }
+
+    public function tenant()
+    {
+        return $this->belongsTo(Tenant::class);
+    }
 }

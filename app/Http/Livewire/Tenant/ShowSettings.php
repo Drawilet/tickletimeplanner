@@ -59,8 +59,8 @@ class ShowSettings extends Component
     public function save()
     {
         Validator::make($this->data, [
-            'profile_image' => isset($this->data['id']) ? '' : 'required|image|max:2048',
-            'background_image' => isset($this->data['id']) ? '' : 'required|image|max:2048',
+            'profile_image' => isset ($this->data['id']) ? '' : 'required|image|max:2048',
+            'background_image' => isset ($this->data['id']) ? '' : 'required|image|max:2048',
 
             'name' => $this->validations['text'],
             'description' => $this->validations['textarea'],
@@ -87,6 +87,7 @@ class ShowSettings extends Component
         $user = Auth()->user();
         if (!$user->tenant) {
             $user->tenant_id = $tenant->id;
+            $user->wizard_step = 1;
             $user->save();
 
             $user->assignRole('tenant.admin');
