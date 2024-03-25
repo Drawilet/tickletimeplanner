@@ -36,6 +36,10 @@ class WizardComponent extends Component
     public function mount()
     {
         $this->user = Auth::user();
+        $tenant = $this->user->tenant;
+        if ($tenant && !$this->user->hasRole("tenant.admin"))
+            return $this->step = null;
+
         $step = $this->user->wizard_step;
         $this->step = $this->steps[$step] ?? null;
 
