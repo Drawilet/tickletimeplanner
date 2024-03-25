@@ -49,12 +49,13 @@ class WizardComponent extends Component
 
     public function skip()
     {
-        if (count($this->steps) == $this->user->wizard_step) {
-            $this->user->wizard_step++;
-            $this->user->save();
+        $this->user->wizard_step++;
+        $this->user->save();
 
-        }
-
-
+        $step = $this->steps[$this->user->wizard_step] ?? null;
+        if ($step)
+            redirect()->route($step['route']);
+        else
+            redirect()->route('dashboard.show');
     }
 }
