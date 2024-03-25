@@ -64,8 +64,7 @@
     <x-livewire-alert::scripts />
 
     @livewire('toaster-component')
-
-
+    @livewire('wizard-component')
 </body>
 
 </html>

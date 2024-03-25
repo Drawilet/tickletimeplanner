@@ -4,9 +4,12 @@ namespace App\Http\Livewire\Tenant;
 
 use App\Http\Livewire\Util\CrudComponent;
 use App\Models\Product;
+use Auth;
 
 class ShowProducts extends CrudComponent
 {
+    public $events = ["afterSave"];
+
     public function mount()
     {
         $this->setup(Product::class, [
@@ -57,5 +60,19 @@ class ShowProducts extends CrudComponent
             ",
             'foreigns' => ['events'],
         ]);
+    }
+
+    public function afterSave($product, $data)
+    {
+        $user = Auth::user();
+        $products = Product::where('tenant_id', $user->tenant_id)->get();
+
+        if ($products->count() == 1) {
+            $user = Auth::user();
+            $user->wizard_step = 3;
+            $user->save();
+
+            return redirect()->route('tenant.products.show');
+        }
     }
 }

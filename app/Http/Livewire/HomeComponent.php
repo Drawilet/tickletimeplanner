@@ -39,7 +39,7 @@ class HomeComponent extends Component
             "message" => "required|max:500"
         ])->validate();
 
-        Mail::to(env("MAIL_TO"))->send(new ContactEmail($this->data));
+        Mail::to($this->data["email"])->send(new ContactEmail($this->data));
 
         $this->reset("data");
 
