@@ -38,8 +38,7 @@ Route::middleware($defaultMiddleware)->group(function () {
 
 Route::prefix("tenant")->name("tenant.")->middleware($defaultMiddleware)->group(function () {
     Route
-        ::middleware("role:tenant.admin")
-        ->get("settings", \App\Http\Livewire\Tenant\ShowSettings::class)
+        ::get("settings", \App\Http\Livewire\Tenant\ShowSettings::class)
         ->name("settings.show");
 
     Route
