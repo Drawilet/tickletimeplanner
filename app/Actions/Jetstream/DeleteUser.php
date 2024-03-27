@@ -16,7 +16,9 @@ class DeleteUser implements DeletesUsers
         DB::transaction(function () use ($user) {
             $user->deleteProfilePhoto();
             $user->tokens->each->delete();
+            $user->notifications()->delete();
             $user->delete();
+            
         });
     }
 }
