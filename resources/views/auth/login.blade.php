@@ -21,11 +21,15 @@
                     autofocus autocomplete="username" />
             </x-form-control>
 
-            <x-form-control class="mt-4">
+            <x-form-control class="mt-3">
                 <x-label for="password" value="{{ __('login-register.Password') }}" />
-                <x-input id="password" class="block mt-1 w-full" type="password" name="password" required
-                    autocomplete="current-password" />
+                <x-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="current-password" />
+                <label class="flex items-center mt-4">
+                    <x-checkbox id="show-password" name="remember" />
+                    <span class="ml-2 text-sm ">{{ __("login-register.passwprd") }}</span>
+                </label>
             </x-form-control>
+
 
             <div class="block mt-4">
                 <label for="remember_me" class="flex items-center">
@@ -47,4 +51,14 @@
             </div>
         </form>
     </x-authentication-card>
+    <script>
+        document.getElementById('show-password').addEventListener('change', function () {
+            const passwordInput = document.getElementById('password');
+            if (this.checked) {
+                passwordInput.type = 'text';
+            } else {
+                passwordInput.type = 'password';
+            }
+        });
+    </script>
 </x-guest-layout>
