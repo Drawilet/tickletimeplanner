@@ -21,10 +21,35 @@
                     autofocus autocomplete="username" />
             </x-form-control>
 
-            <x-form-control class="mt-4">
+            <x-form-control class="mt-3">
                 <x-label for="password" value="{{ __('login-register.Password') }}" />
-                <x-input id="password" class="block mt-1 w-full" type="password" name="password" required
-                    autocomplete="current-password" />
+                <label class="input-bordered flex items-center ">
+                    <x-input id="password" class="block mt-1 w-full mr-3" type="password" name="password" required
+                        autocomplete="current-password" />
+                    <kbd class="kbd kbd-sm">
+
+                        <label class="swap swap-rotate">
+                            <!-- this hidden checkbox controls the state -->
+                            <x-checkbox id="show-password" class="theme-controller sr-only" value="synthwave" />
+
+                            <!-- eye -->
+                            <svg class="swap-on fill-current w-6 h-6" xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24">
+                                <path
+                                d="M12 4.5C7.30558 4.5 3.3408 7.55025 2.05025 12C3.3408 16.4497 7.30558 19.5 12 19.5C16.6944 19.5 20.6592 16.4497 21.9497 12C20.6592 7.55025 16.6944 4.5 12 4.5ZM12 17C9.23858 17 7 14.7614 7 12C7 9.23858 9.23858 7 12 7C14.7614 7 17 9.23858 17 12C17 14.7614 14.7614 17 12 17Z" />
+                            <!-- line -->
+                            <path d="M2 2 L22 22" stroke="white" stroke-width="2" />
+                            </svg>
+
+                            <!-- eye-slash -->
+                            <svg class="swap-off fill-current w-6 h-6" xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24">
+                                <path
+                                    d="M12 4.5C7.30558 4.5 3.3408 7.55025 2.05025 12C3.3408 16.4497 7.30558 19.5 12 19.5C16.6944 19.5 20.6592 16.4497 21.9497 12C20.6592 7.55025 16.6944 4.5 12 4.5ZM12 17C9.23858 17 7 14.7614 7 12C7 9.23858 9.23858 7 12 7C14.7614 7 17 9.23858 17 12C17 14.7614 14.7614 17 12 17Z" />
+                            </svg>
+                        </label>
+                    </kbd>
+                </label>
             </x-form-control>
 
             <div class="block mt-4">
@@ -47,4 +72,14 @@
             </div>
         </form>
     </x-authentication-card>
+    <script>
+        document.getElementById('show-password').addEventListener('change', function() {
+            const passwordInput = document.getElementById('password');
+            if (this.checked) {
+                passwordInput.type = 'text';
+            } else {
+                passwordInput.type = 'password';
+            }
+        });
+    </script>
 </x-guest-layout>
