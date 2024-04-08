@@ -1,4 +1,4 @@
-<div class="overflow-x-auto">
+<div class="overflow-x-auto w-full">
     @include('livewire.util.crud-component.save-modal')
 
     @include('livewire.util.crud-component.delete-modal')
