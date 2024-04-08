@@ -1,4 +1,4 @@
-<div class="bg-base rounded-lg w-full md:w-5/12 mx-auto shadow-xl pb-8" {{-- x-data="{
+<div class="bg-base rounded-lg w-full max-w-lg  mx-auto shadow-xl pb-8" {{-- x-data="{
     links: [{ url: '', icon: 'default-link' }],
     addLink() {
         this.links.push({ url: '', icon: 'default-link' })
