@@ -42,13 +42,13 @@
     @livewireStyles
 </head>
 
-<body class="font-sans antialiased">
+<body class="font-sans antialiased w-full">
     <x-banner />
 
-    <div class="min-h-screen">
+    <div class="min-h-screen flex flex-col w-full">
         <x-navbar-component />
 
-        <main class="p-1 md:py-2 md:px-5">
+        <main class="p-1 md:py-2 md:px-5 flex-1 flex w-full">
             {{ $slot }}
         </main>
     </div>
