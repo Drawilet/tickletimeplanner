@@ -11,4 +11,5 @@ return [
     'Login' => 'Login',
     'Register'=>'Register',
     'Dashboard'=>'Dashboard',
+    "passwprd"=>"Show password",
 ];

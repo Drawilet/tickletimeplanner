@@ -149,4 +149,6 @@ return [
     'attributes' => [],
 
     "phone" => "El campo :attribute no es un número de teléfono válido.",
+
+    "price" => "El campo :attribute no es un precio válido. (Debe ser un número positivo con un máximo de 6 dígitos y 2 decimales)",
 ];

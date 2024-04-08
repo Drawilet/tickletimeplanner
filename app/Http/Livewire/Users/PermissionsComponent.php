@@ -7,21 +7,22 @@ use Spatie\Permission\Models\Permission;
 
 class PermissionsComponent extends Component
 {
-    protected $listeners =  ["update-data" => "handleData"];
+    protected $listeners = ['update-data' => 'handleData'];
 
     public $data = [
-        "permissions" => [],
+        'permissions' => [],
     ];
     public function handleData($data)
     {
-        if (isset($data["permissions"]))
-            $this->data["permissions"] = $data["permissions"];
+        if (isset ($data['permissions'])) {
+            $this->data['permissions'] = $data['permissions'];
+        }
     }
 
     public $permissions;
     public function mount()
     {
-        $this->permissions = Permission::all();
+        $this->permissions = Permission::where('name', 'like', 'tenant.%')->get();
     }
 
     public function render()
@@ -31,19 +32,18 @@ class PermissionsComponent extends Component
 
     public function togglePermission($permission)
     {
-        if (in_array($permission, $this->data["permissions"])) {
+        if (in_array($permission, $this->data['permissions'])) {
             $this->data['permissions'] = array_diff($this->data['permissions'], [$permission]);
         } else {
             $this->data['permissions'][] = $permission;
         }
 
-        $this->emit("update-data", $this->data);
+        $this->emit('update-data', $this->data);
     }
-
 
     public function parseName($name)
     {
-        $split = explode(".", $name);
-        return $split[1] . " " . $split[0];
+        $split = explode('.', $name);
+        return $split[1] . ' ' . $split[0];
     }
 }

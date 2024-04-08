@@ -2,6 +2,8 @@ const defaultTheme = require("tailwindcss/defaultTheme");
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+    darkMode: ["selector", '[data-theme="dark"]'],
+    //   darkMode: "class",
     content: [
         "./vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php",
         "./vendor/laravel/jetstream/**/*.blade.php",
@@ -13,7 +15,11 @@ module.exports = {
         extend: {
             fontFamily: {
                 sans: ["Figtree", ...defaultTheme.fontFamily.sans],
-            },
+            }, animation: {
+                'bounce-1': 'bounce 1s infinite',
+                'bounce-2': 'bounce 1s infinite 0.2s',
+                'bounce-3': 'bounce 1s infinite 0.4s',
+            }
         },
     },
 

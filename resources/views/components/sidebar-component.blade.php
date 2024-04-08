@@ -47,17 +47,20 @@
                             @endisset
 
                         </li>
+                    @else
                     @endcan
                 @endif
             @endforeach
 
             <label class="divider divider-base-200 mt-auto"></label>
-            <li>
-                <a href="{{ route('tenant.settings.show') }}">
-                    <x-icons.cog-6-tooth />
-                    <span>{{ __('sidebar.Settings') }}</span>
-                </a>
-            </li>
+            @role('tenant.admin')
+                <li>
+                    <a href="{{ route('tenant.settings.show') }}">
+                        <x-icons.cog-6-tooth />
+                        <span>{{ __('sidebar.Settings') }}</span>
+                    </a>
+                </li>
+            @endrole
     </div>
     </ul>
 </div>

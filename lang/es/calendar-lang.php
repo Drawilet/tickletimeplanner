@@ -44,4 +44,6 @@ return [
 
     "show-payments" => "Mostrar pagos",
     "hide-payments" => "Ocultar pagos",
+
+    "event-not-found" => "Evento no encontrado, intenta refrescar la página o volver a crear el evento.",
 ];

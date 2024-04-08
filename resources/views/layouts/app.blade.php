@@ -42,13 +42,13 @@
     @livewireStyles
 </head>
 
-<body class="font-sans antialiased">
+<body class="font-sans antialiased w-full">
     <x-banner />
 
-    <div class="min-h-screen">
+    <div class="min-h-screen flex flex-col w-full">
         <x-navbar-component />
 
-        <main class="p-1 md:py-2 md:px-5">
+        <main class="p-1 md:py-2 md:px-5 flex-1 flex w-full">
             {{ $slot }}
         </main>
     </div>
@@ -63,18 +63,8 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <x-livewire-alert::scripts />
 
-    <script>
-        const savedTheme = localStorage.getItem('theme');
-
-        if (savedTheme) {
-
-            document.documentElement.setAttribute('data-theme', savedTheme);
-        }
-    </script>
-
     @livewire('toaster-component')
-
-
+    @livewire('wizard-component')
 </body>
 
 </html>

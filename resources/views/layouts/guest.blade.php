@@ -18,26 +18,31 @@
 </head>
 
 <body>
-    <header class="navbar bg-base-100">
+    <header id="header" class="transition-colors flex flex-col navbar fixed top-0 z-50 md:flex-row">
         <div class="flex-1">
-            <a class="btn btn-ghost text-xl" href="/">
+            <a class="btn btn-ghost text-xl"
+                @auth
+href="{{ url('/dashboard') }}"
+                @else
+href="{{ url('/') }}" @endauth>
                 <x-application-mark />
             </a>
         </div>
         <nav class="flex-none">
-            <ul class="menu flex-row px-1">
+            <ul class="menu flex-row px-1 -my-3 ">
                 @auth
                     <li>
                         <a href="{{ url('/dashboard') }}" class="text-sm underline">{{ __('login-register.Dashboard') }}</a>
                     </li>
                 @else
                     <li>
-                        <a href="{{ route('login') }}" class="text-sm underline">{{__('login-register.Login')}}</a>
+                        <a href="{{ route('login') }}" class="text-sm underline">{{ __('login-register.Login') }}</a>
                     </li>
 
                     @if (Route::has('register'))
                         <li>
-                            <a href="{{ route('register') }}" class="ml-4 text-sm  underline">{{ __('login-register.Register') }}</a>
+                            <a href="{{ route('register') }}"
+                                class="md:ml-4 text-sm  underline">{{ __('login-register.Register') }}</a>
                         </li>
                     @endif
                 @endauth
@@ -51,7 +56,17 @@
 
     @livewire('accessibility-component')
     @livewireScripts
-</body>
 
+    <script>
+        const header = document.getElementById('header');
+        document.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                header.classList.add('bg-base-100');
+            } else {
+                header.classList.remove('bg-base-100');
+            }
+        });
+    </script>
+</body>
 
 </html>

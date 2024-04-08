@@ -21,7 +21,7 @@ $defaultMiddleware = [
 ];
 
 
-Route::get('lang/{lang}', [\App\Http\Controllers\LanguageControllers::class, 'switchLeng'])->name('lang');
+Route::get('/locale/{locale}', [\App\Http\Controllers\LocaleController::class, 'switchLocale'])->name('locale');
 
 Route
     ::get('/', \App\Http\Livewire\HomeComponent::class)
@@ -38,29 +38,29 @@ Route::middleware($defaultMiddleware)->group(function () {
 
 Route::prefix("tenant")->name("tenant.")->middleware($defaultMiddleware)->group(function () {
     Route
-        ::get("settings", \App\Http\Livewire\Tenant\Settings\ShowComponent::class)
+        ::get("settings", \App\Http\Livewire\Tenant\ShowSettings::class)
         ->name("settings.show");
 
     Route
         ::middleware("permission:tenant.customers.show")
-        ->get('customers', \App\Http\Livewire\Tenant\Customers\ShowComponent::class)
+        ->get('customers', \App\Http\Livewire\Tenant\ShowCustomers::class)
         ->name('customers.show');
 
     Route
         ::middleware("permission:tenant.products.show")
-        ->get('products', \App\Http\Livewire\Tenant\Products\ShowComponent::class)
+        ->get('products', \App\Http\Livewire\Tenant\ShowProducts::class)
         ->name('products.show');
     Route
         ::middleware("permission:tenant.spaces.show")
-        ->get("spaces", \App\Http\Livewire\Tenant\Spaces\ShowComponent::class)
+        ->get("spaces", \App\Http\Livewire\Tenant\ShowSpaces::class)
         ->name("spaces.show");
     Route
         ::middleware("permission:tenant.payments.show")
-        ->get("payments", \App\Http\Livewire\Tenant\Payments\ShowComponent::class)
+        ->get("payments", \App\Http\Livewire\Tenant\ShowPayments::class)
         ->name("payments.show");
     Route
         ::middleware("permission:tenant.users.show")
-        ->get('users', \App\Http\Livewire\Tenant\Users\ShowComponent::class)
+        ->get('users', \App\Http\Livewire\Tenant\ShowUsers::class)
         ->name('users.show');
 });
 

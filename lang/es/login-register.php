@@ -11,4 +11,5 @@ return [
     'Login' => 'Iniciar sesión',
     'Register'=>'Registrarse',
     'Dashboard'=>'Panel de control ',
+    "passwprd"=>"Mostrar contraseña",
 ];

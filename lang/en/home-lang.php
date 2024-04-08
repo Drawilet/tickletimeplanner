@@ -1,16 +1,40 @@
 <?php
 return [
+    "hero" => [
+        "title" => "Organize your events without stress!",
+        "description" => "From managing customers and products to scheduling events and managing payments, all in one place",
+        "cta" => "Start now",
+    ],
 
-    'Instant Reservations' => 'Instant Reservations',
-    'p1' => 'Makes it easy for users to book quickly
-and simple space for events,
-whether for corporate meetings,
-private parties or other occasions',
-    'Ourservices' => 'Our services',
-    'p2' => 'we provide a comprehensive solution for reservation management,
-appointments and events, with a friendly interface and functions that improve efficiency
-and user satisfaction in the planning process.',
+    "event" => [
+        "title" => "Event scheduling",
+        "description" => "Schedule your events easily and efficiently"
+    ],
 
-    'Booknow' => 'Book now',
-    
+    "alert" => [
+        "title" => "Upcoming events alert",
+        "description" => "Receive notifications of upcoming events so you don't miss any"
+    ],
+
+    "product" => [
+        "title" => "Management of customers and products",
+        "description" => "Manage your customers and products easily and efficiently"
+    ],
+
+    "payment" => [
+        "title" => "Payment administration",
+        "description" => "Manage your payments easily and efficiently"
+    ],
+
+    "contact" => [
+        "title" => "Contact",
+        "description" => "If you have any questions, comments or suggestions, do not hesitate to contact us",
+        "name" => "Name",
+        "email" => "Email",
+        "message" => "Message",
+        "submit" => "Send",
+
+        "success" => "Message sent successfully!",
+
+    ]
 ];

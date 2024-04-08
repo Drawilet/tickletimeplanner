@@ -20,28 +20,39 @@ class NewsComponent extends Component
         "news" => false,
     ];
 
-    public $events, $filteredEvents, $products;
+    public $events, $filteredEvents, $products,$offON;
 
     public function mount()
     {
         $this->addCrud(Event::class, ["useItemsKey" => false, "get" => false, "afterUpdate" => "getProducts"]);
         $this->addCrud(Product::class, ["useItemsKey" => false, "get" => true]);
-
+    
         $this->events = Event::whereBetween("date", [
             Carbon::now()->format("Y-m-d"),
             Carbon::now()->addDays(1)->format("Y-m-d")
         ])->get();
+    
+        if ($this->events->isEmpty()) {
+            $this->emit('toggleNews', false);
+        }
     }
 
     public function render()
-    {
-        $this->filteredEvents =
-            $this->events->filter(function ($event) {
-                return count($event->payments) > 0;
-            });
+{
+    $this->filteredEvents =
+        $this->events->filter(function ($event) {
+            return count($event->payments) > 0;
+        });
 
-        return view('livewire.news-component');
+    if ($this->filteredEvents->isEmpty()) {
+        $this->modals["news"] = false;
+        $this->offON = false;
+    }else{
+        $this->offON = true;
     }
+
+    return view('livewire.news-component');
+}
 
     public function getTotal($event)
     {

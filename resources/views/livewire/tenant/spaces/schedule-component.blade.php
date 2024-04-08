@@ -10,7 +10,7 @@
                 $data['schedule'][$day]['closing'] != ''
                     ? 'btn-primary'
                     : '' }} ">
-                {{ substr(__("days-lang.".$day), 0, 1) }}
+                {{ substr(__('days-lang.' . $day), 0, 1) }}
             </button>
         @endforeach
     </div>
@@ -28,7 +28,7 @@
                 wire:change='handleScheduleChange' type="time" />
         </x-form-control>
 
-        <div class="mt-2 flex ">
+        <div class="mt-2 flex gap-2 ">
             <x-button class="btn-primary w-1/2" wire:click="copyDay">
                 @component('components.icons.clipboard')
                 @endcomponent

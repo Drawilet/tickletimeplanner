@@ -180,5 +180,7 @@ return [
     */
 
     'attributes' => [],
-    "phone" => "The :attribute must be a valid phone number."
+    "phone" => "The :attribute must be a valid phone number.",
+
+    "price" => "The :attribute must be a valid price. (Not negative, min 0, max 6 digits and 2 decimal places)",
 ];

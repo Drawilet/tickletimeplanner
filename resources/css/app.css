@@ -3,6 +3,10 @@
 @tailwind utilities;
 
 @layer base {
+    * {
+        @apply scroll-smooth;
+    }
+
     body {
         @apply bg-base-100;
     }
@@ -31,11 +35,28 @@
     color: #ffffff;
 }
 
-@media screen and (max-width: 640px) {
-    .mockup-browser-toolbar::before {
-        content: none !important;
-    }
-    .mockup-browser-toolbar {
-        padding-left: 1rem;
-    }
+.mockup-browser-toolbar::before {
+    content: none !important;
+}
+
+.mockup-browser-toolbar {
+    padding-left: 1rem;
+}
+
+.dots {
+    position: absolute;
+    top: 1%;
+    /* Cambia esto a la posición vertical que desees */
+    left: 1.9%;
+    /* Cambia esto a la posición horizontal que desees */
+}
+
+.dot {
+    display: inline-block;
+    top: 8px;
+    position: relative;
+    transition: all 0.25s;
+    opacity: 0.5;
+    font-size: 34px;
+    float: left;
 }
