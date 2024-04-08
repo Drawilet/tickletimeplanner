@@ -3,7 +3,7 @@
 
     @include('livewire.util.crud-component.delete-modal')
 
-    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+    <div class="w-full mx-auto sm:px-6 lg:px-8">
         <div class="bg-base-100 overflow-hidden shadow-xl sm:rounded-lg px-4 py-4">
             <div class="mockup-browser border border-base-300">
                 <form autocomplete="off" class="mockup-browser-toolbar flex items-center ">

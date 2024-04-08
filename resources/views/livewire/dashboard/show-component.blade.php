@@ -1,4 +1,4 @@
-<div>
+<div class="w-full">
     @include('livewire.dashboard.delete-modal')
 
     @include('livewire.dashboard.save-modal')
