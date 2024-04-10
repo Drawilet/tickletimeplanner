@@ -1,0 +1,44 @@
+<?php
+
+namespace App\Http\Middleware;
+
+use Closure;
+use Illuminate\Http\Request;
+use App\Models\Tenant;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
+
+class restrictedAccess
+{
+    /**
+     * Handle an incoming request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
+     * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
+     */
+    public function handle(Request $request, Closure $next)
+    {
+        $user = Auth::user();
+
+        if (!$user) {
+            return $next($request);
+        }
+
+
+        $tenant = Tenant::where('id', Auth::user()->tenant_id)->first();
+        if (!$tenant) {
+            return $next($request);
+        }
+
+        if ($request->routeIs('suspended') || $request->routeIs('logout')) {
+            return $next($request);
+        }
+
+        if ($tenant->suspended) {
+            return redirect()->route('suspended');
+        }
+
+        return $next($request);
+    }
+}

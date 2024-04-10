@@ -14,6 +14,7 @@ class Tenant extends Model
         'description',
         'phone',
         'email',
+        'suspended',
         'background_image',
         'profile_image',
         /*  'social_nets', */
@@ -37,7 +38,8 @@ class Tenant extends Model
     {
         return $this->hasMany(Product::class);
     }
-    public function spaces(){
+    public function spaces()
+    {
         return $this->hasMany(Space::class);
     }
 }
