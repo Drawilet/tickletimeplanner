@@ -53,9 +53,9 @@
             @endforeach
 
             <label class="divider divider-base-200 mt-auto"></label>
-            @role('tenant.admin')
+            @role('tenant.admin|app.admin')
                 <li>
-                    <a href="{{ route('tenant.settings.show') }}">
+                    <a href="{{ route('settings.show') }}">
                         <x-icons.cog-6-tooth />
                         <span>{{ __('sidebar.Settings') }}</span>
                     </a>

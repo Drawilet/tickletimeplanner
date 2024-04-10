@@ -34,12 +34,14 @@ Route::middleware($defaultMiddleware)->group(function () {
     Route
         ::get('/dashboard', \App\Http\Livewire\Dashboard\DashboardComponent::class)
         ->name('dashboard.show');
+
+    Route
+        ::get("settings", \App\Http\Livewire\SettingsComponent::class)
+        ->name("settings.show");
 });
 
 Route::prefix("tenant")->name("tenant.")->middleware($defaultMiddleware)->group(function () {
-    Route
-        ::get("settings", \App\Http\Livewire\Tenant\ShowSettings::class)
-        ->name("settings.show");
+
 
     Route
         ::middleware("permission:tenant.customers.show")

@@ -1,12 +1,4 @@
-<div class="bg-base rounded-lg w-full max-w-lg  mx-auto shadow-xl pb-8" {{-- x-data="{
-    links: [{ url: '', icon: 'default-link' }],
-    addLink() {
-        this.links.push({ url: '', icon: 'default-link' })
-    },
-    isDefault(cadena, substrings, cantidad) {
-        return substrings.every(substring => cadena.indexOf(substring) === -1) && substrings.length === cantidad;
-    }
-}" --}}>
+<div class="bg-base rounded-lg w-full max-w-lg  mx-auto shadow-xl pb-8">
     <div class="w-full h-[250px]">
         <div class="mx-auto w-full h-[250px] bg-base-300 rounded-md overflow-hidden relative">
             @if ($data['background_image'])
@@ -70,38 +62,6 @@
             </x-form-control>
 
         </div>
-        {{--
-        <template x-for="link in links">
-            <div class="flex space-x-2 space-y-2 items-center w-full">
-                <div x-show="link.url.includes('facebook')">
-                    <x-icons.social-networks.facebook />
-                </div>
-                <div x-show="link.url.includes('instagram')">
-                    <x-icons.social-networks.instagram />
-                </div>
-                <div x-show="link.url.includes('tiktok')">
-                    <x-icons.social-networks.tiktok />
-                </div>
-                <div x-show="link.url.includes('twitter')">
-                    <x-icons.social-networks.twitter />
-                </div>
-                <div x-show="link.url.includes('linkedin')">
-                    <x-icons.social-networks.linkedin />
-                </div>
-                <div x-show="isDefault(link.url, ['facebook','instagram','tiktok', 'twitter', 'linkedin'], 5)">
-                    <x-icons.default-link />
-                </div>
-                <input x-model="link.url" type="text" placeholder="{{ __('setting-lang.Linkhere') }}"
-                    class="input input-bordered w-full" />
-                <x-button x-on:click="addLink">{{ __('setting-lang.add') }}</x-button>
-            </div>
-
-            <x-input-error for="social_nets" />
-        </template> --}}
-
         <x-button class="btn btn-primary mt-4 w-full" wire:click="save">{{ __('setting-lang.save') }}</x-button>
     </div>
-
-
-
 </div>
