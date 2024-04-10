@@ -1,7 +1,14 @@
 <?php
 return [
+    "default" => [
+        "skip" => "Skip",
+        "next" => "Next",
+        "continue" => "Continue",
+    ],
+
     "pre-tenant" => [
         "welcome" => "Welcome to ",
+        "title" => "Excited to have you here! With our application, you'll be able to:",
         "text-1" => "Organizing your events on a dynamic calendar.",
         "text-2" => "Managing spaces for your events",
         "text-3" => "Managing your products/services.",

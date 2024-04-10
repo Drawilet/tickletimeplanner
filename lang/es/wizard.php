@@ -1,7 +1,14 @@
 <?php
 return [
+    "default" => [
+        "skip" => "Omitir",
+        "next" => "Siguiente",
+        "continue" => "Continuar",
+    ],
+
     "pre-tenant" => [
         "welcome" => "Bienvenido a",
+        "title" => "¡Qué emoción tenerte aquí! Con nuestra aplicación, podrás:",
         "text-1" => "Organiza tus eventos en un calendario dinámico.",
         "text-2" => "Gestionar espacios para tus eventos.",
         "text-3" => "Administrar tus productos/servicios.",
