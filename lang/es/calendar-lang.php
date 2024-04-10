@@ -1,7 +1,7 @@
 <?php
 return [
-    "draft" => "Borrador",
-    "sale" => "Venta",
+    "new-event" => "Nuevo evento",
+    "update-event" => "Actualizar evento",
 
     'Eventname' => 'Nombre del evento',
     'Space' => 'Espacio',

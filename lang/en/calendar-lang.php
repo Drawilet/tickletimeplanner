@@ -1,7 +1,7 @@
 <?php
 return [
-    "draft" => "Draft",
-    "sale" => "Sale",
+    "new-event" => "New event",
+    "update-event" => "Update event",
 
     'Eventname' => 'Event name',
     'Space' => 'Space',
