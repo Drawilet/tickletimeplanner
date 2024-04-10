@@ -20,6 +20,7 @@ return new class extends Migration
             $table->text('description');
             $table->string('phone');
             $table->string('email');
+            $table->boolean('suspended')->default(false);
 
             $table->string('background_image')->nullable();
             $table->string('profile_image')->nullable();

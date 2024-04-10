@@ -24,11 +24,17 @@ $defaultMiddleware = [
 Route::get('/locale/{locale}', [\App\Http\Controllers\LocaleController::class, 'switchLocale'])->name('locale');
 
 Route
+    ::get('/suspended', \App\Http\Livewire\SuspendedComponent::class)
+    ->name('suspended');
+
+Route
     ::get('/', \App\Http\Livewire\HomeComponent::class)
     ->name('home');
 Route
     ::get("/spaces", \App\Http\Livewire\SpacesComponent::class)
     ->name("spaces.show");
+
+
 
 Route::middleware($defaultMiddleware)->group(function () {
     Route
@@ -62,6 +68,7 @@ Route::prefix("tenant")->name("tenant.")->middleware($defaultMiddleware)->group(
         ::middleware("permission:tenant.users.show")
         ->get('users', \App\Http\Livewire\Tenant\ShowUsers::class)
         ->name('users.show');
+
 });
 
 Route

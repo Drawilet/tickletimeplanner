@@ -17,5 +17,6 @@ class TenantComponent extends Component
     public function render()
     {
         return view('livewire.app.tenant-component');
+
     }
 }
