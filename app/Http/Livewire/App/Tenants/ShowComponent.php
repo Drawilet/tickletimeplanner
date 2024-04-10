@@ -22,4 +22,15 @@ class ShowComponent extends Component
     {
         return view('livewire.app.tenants.show-component');
     }
+    public function toggleSuspended($id)
+    {
+        $tenant = Tenant::find($id);
+        $tenant->suspended = !$tenant->suspended;
+        $tenant->save();
+    }
+    public function delete($id)
+    {
+        $tenant = Tenant::find($id);
+        $tenant->delete();
+    }
 }
