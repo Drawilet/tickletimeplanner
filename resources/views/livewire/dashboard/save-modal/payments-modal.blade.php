@@ -39,7 +39,7 @@
                     </x-form-control>
 
                     <x-form-control>
-                        <x-label for="payment.notes" value="{{ __('calendar-lang.Notes') }}" />
+                        <x-label for="payment.notes" value="{{ __('calendar-lang.payment-notes') }}" />
                         <textarea class="textarea textarea-bordered" id="payment.notes" name="payment.notes" wire:model="payment.notes"> </textarea>
                         <x-input-error for="notes" class="mt-2" />
                     </x-form-control>

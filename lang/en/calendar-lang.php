@@ -22,6 +22,7 @@ return [
     'balance' => 'Balance',
     'AddPayment' => 'Add payment',
     'Payments' => 'Payments',
+    "payment-notes" => "Payment notes",
     'Opening' => 'Opening',
     'Closing' => 'Closing',
     'Firstname' => 'Firstname',
