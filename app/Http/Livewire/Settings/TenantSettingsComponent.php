@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Tenant;
+namespace App\Http\Livewire\Settings;
 
 use App\Http\Traits\WithValidations;
 use App\Models\Tenant;
@@ -8,7 +8,7 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Validator;
 
-class ShowSettings extends Component
+class TenantSettingsComponent extends Component
 {
     use WithFileUploads, WithValidations;
 
@@ -21,18 +21,7 @@ class ShowSettings extends Component
         'description' => '',
         'phone' => '',
         'email' => '',
-        /*   "social_nets" => [
-        [
-            "url" => "",
-            "icon" => "components/icons/default-link"
-        ]
-    ], */
     ];
-
-    /*   protected $rules = [
-        'image_profile' => 'requiered|image|max:2048',
-        'image_background' => 'required|image|2048'
-    ]; */
 
     public function mount()
     {
@@ -45,22 +34,14 @@ class ShowSettings extends Component
     }
     public function render()
     {
-        return view('livewire.tenant.settings.show-component');
+        return view('livewire.settings.tenant-settings-component');
     }
-
-    /*   public function addSocialNet()
-    {
-        $this->data->social_nets[] = [
-            'url' => '',
-            'icon' => 'components/icons/default-link'
-        ];
-    } */
 
     public function save()
     {
         Validator::make($this->data, [
-            'profile_image' => isset ($this->data['id']) ? '' : 'required|image|max:2048',
-            'background_image' => isset ($this->data['id']) ? '' : 'required|image|max:2048',
+            'profile_image' => isset($this->data['id']) ? '' : 'required|image|max:2048',
+            'background_image' => isset($this->data['id']) ? '' : 'required|image|max:2048',
 
             'name' => $this->validations['text'],
             'description' => $this->validations['textarea'],
