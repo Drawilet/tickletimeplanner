@@ -37,10 +37,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        //     $this->cleanStorageDir();
-
         $this->call(
             [
+                AppSeeder::class,
                 PermissionSeeder::class,
                 UserSeeder::class,
             ]
