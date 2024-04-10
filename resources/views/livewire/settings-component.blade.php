@@ -1,7 +1,5 @@
 @role('app.admin')
     @livewire('settings.app-settings-component')
-@endrole
-
-@role('tenant.admin')
+@else
     @livewire('settings.tenant-settings-component')
 @endrole
