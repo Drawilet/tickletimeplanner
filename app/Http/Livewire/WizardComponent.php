@@ -14,7 +14,7 @@ class WizardComponent extends Component
     public $steps = [
         [
             "name" => "tenant",
-            "route" => "tenant.settings.show"
+            "route" => "settings.show"
         ],
         [
             "name" => "space",
