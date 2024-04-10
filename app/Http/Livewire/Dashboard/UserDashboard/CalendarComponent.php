@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Dashboard;
+namespace App\Http\Livewire\Dashboard\UserDashboard;
 
 use App\Http\Traits\WithCrudActions;
 use App\Models\Event;
@@ -57,7 +57,7 @@ class CalendarComponent extends LivewireCalendar
                         'date' => $event->date,
                         'color' => $event->space->color,
                         'start_time' => $event->start_time,
-                        'isDraft' => isset($event->payments) && count($event->payments) == 0,
+                        'isDraft' => isset ($event->payments) && count($event->payments) == 0,
                     ];
                 })
                 ->sortBy('start_time')

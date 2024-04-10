@@ -23,7 +23,7 @@ class FilterComponent extends Component
 
     public function render()
     {
-        return view('livewire.dashboard.filter-component');
+        return view('livewire.dashboard.user-dashboard.filter-component');
     }
 
     public function toggleSpace($spaceId)

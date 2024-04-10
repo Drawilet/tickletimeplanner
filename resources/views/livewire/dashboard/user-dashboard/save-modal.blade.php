@@ -211,9 +211,9 @@
         </div>
     </div>
 
-    @include('livewire.dashboard.save-modal.products-modal')
-    @include('livewire.dashboard.save-modal.payments-modal')
-    @include('livewire.dashboard.save-modal.new-customer-modal')
+    @include('livewire.dashboard.user-dashboard.save-modal.products-modal')
+    @include('livewire.dashboard.user-dashboard.save-modal.payments-modal')
+    @include('livewire.dashboard.user-dashboard.save-modal.new-customer-modal')
 
     <label class="modal-backdrop" wire:click="Modal('save', false)">Close</label>
 </div>
