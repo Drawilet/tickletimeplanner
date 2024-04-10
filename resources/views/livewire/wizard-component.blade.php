@@ -10,17 +10,19 @@
                     @if ($currentRoute == $step['route'])
                         @if (isset($step['skippable']) && $step['skippable'])
                             <button class="btn btn-secondary" wire:click='skip()'>
-                                Omitir
+                                {{ __('wizard.default.skip') }}
                             </button>
                         @endif
 
 
                         <form method="dialog">
-                            <button class="btn btn-primary">Continuar</button>
+                            <button class="btn btn-primary">
+                                {{ __('wizard.default.continue') }}
+                            </button>
                         </form>
                     @else
                         <a class="btn btn-primary" href="{{ route($step['route']) }}">
-                            Siguiente
+                            {{ __('wizard.default.next') }}
                         </a>
                     @endif
 

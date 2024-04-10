@@ -1,7 +1,7 @@
 <?php
 return [
-    "draft" => "Draft",
-    "sale" => "Sale",
+    "new-event" => "New event",
+    "update-event" => "Update event",
 
     'Eventname' => 'Event name',
     'Space' => 'Space',
@@ -22,6 +22,7 @@ return [
     'balance' => 'Balance',
     'AddPayment' => 'Add payment',
     'Payments' => 'Payments',
+    "payment-notes" => "Payment notes",
     'Opening' => 'Opening',
     'Closing' => 'Closing',
     'Firstname' => 'Firstname',

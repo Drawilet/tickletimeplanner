@@ -47,12 +47,12 @@ class DatabaseSeeder extends Seeder
         );
 
         if (config('app.env') === 'local') {
-            $this->call([
-                ProductSeeder::class,
-                CustomerSeeder::class,
-                SpaceSeeder::class,
-                EventSeeder::class,
-            ]);
+            /*   $this->call([
+                  ProductSeeder::class,
+                  CustomerSeeder::class,
+                  SpaceSeeder::class,
+                  EventSeeder::class,
+              ]); */
         }
     }
 }

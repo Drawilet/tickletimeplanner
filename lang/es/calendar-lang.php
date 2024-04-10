@@ -1,7 +1,7 @@
 <?php
 return [
-    "draft" => "Borrador",
-    "sale" => "Venta",
+    "new-event" => "Nuevo evento",
+    "update-event" => "Actualizar evento",
 
     'Eventname' => 'Nombre del evento',
     'Space' => 'Espacio',
@@ -18,11 +18,12 @@ return [
     'Save' => 'Guardar',
     'Searchproducts' => 'Buscar productos...',
     'event' => 'Evento',
-    'Amount' => 'Cantidad',
+    'Amount' => 'Importe',
     'Concept' => 'Notas',
     'balance' => 'Saldo',
     'AddPayment' => 'Añadir pago',
-    'Payments' => 'Pagos',
+    'Payments' => 'Pagos relacionados al evento',
+    "payment-notes" => "Notas del pago",
     'Opening' => 'Apertura',
     'Closing' => 'Cierre',
     'Firstname' => 'Nombre',
