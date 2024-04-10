@@ -37,31 +37,31 @@
     <div class="p-4">
         <div class="mb-4">
             <x-form-control>
-                <x-label for="name" value="{{ __('setting-lang.Name') }}" />
+                <x-label for="name" value="{{ __('tnenat-settings.Name') }}" />
                 <x-input id="name" name="name" wire:model="data.name" />
                 <x-input-error for="name" />
             </x-form-control>
 
             <x-form-control>
-                <x-label for="description" value="{{ __('setting-lang.Description') }}" />
+                <x-label for="description" value="{{ __('tnenat-settings.Description') }}" />
                 <textarea class="textarea textarea-bordered" name="description" id="description" rows="4"
                     wire:model="data.description"></textarea>
                 <x-input-error for="description" />
             </x-form-control>
 
             <x-form-control>
-                <x-label for="phone" value="{{ __('setting-lang.Phone') }}" />
+                <x-label for="phone" value="{{ __('tnenat-settings.Phone') }}" />
                 <x-input id="phone" name="phone" wire:model="data.phone" type="tel" />
                 <x-input-error for="phone" />
             </x-form-control>
 
             <x-form-control>
-                <x-label for="email" value="{{ __('setting-lang.Email') }}" />
+                <x-label for="email" value="{{ __('tnenat-settings.Email') }}" />
                 <x-input id="email" name="email" wire:model="data.email" type="email" />
                 <x-input-error for="email" />
             </x-form-control>
 
         </div>
-        <x-button class="btn btn-primary mt-4 w-full" wire:click="save">{{ __('setting-lang.save') }}</x-button>
+        <x-button class="btn btn-primary mt-4 w-full" wire:click="save">{{ __('tnenat-settings.save') }}</x-button>
     </div>
 </div>
