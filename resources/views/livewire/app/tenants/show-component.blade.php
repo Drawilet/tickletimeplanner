@@ -52,7 +52,7 @@
 
             </div>
             <div class="w-full flex justify-center items-center mt-4 gap-2">
-                <button class="w-1/2 btn btn-error" wire:click="delete">
+                <button class="w-1/2 btn btn-error" wire:click="delete({{ $tenant->id }})">
                     <x-icons.trash />
                 </button>
                 <button class="w-1/2 btn {{ $tenant->suspended ? 'btn-ghost' : 'btn-secondary' }}"
