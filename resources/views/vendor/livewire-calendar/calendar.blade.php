@@ -28,7 +28,7 @@
 
     <div class="h-full flex flex-col w-full gap-2 flex-1 px-1">
         <div>
-            <h2 class="text-2xl ml-2 text-center" id="title">
+            <h2 class="text-xl ml-2 text-center" id="title">
                 {{ trans('month-lang.' . strtolower($monthGrid[2]->first()->format('F'))) }}
                 {{ $monthGrid[2]->first()->format('Y') }}
             </h2>

@@ -86,7 +86,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
             $user->notifications()->create([
                 "message" => "welcome.setup-tenant",
-                "link" => "/tenant/settings",
+                "link" => "/settings",
                 "image" => "/icon.svg",
                 "icon" => "cog-6-tooth",
                 "color" => "#7ACFFF",
