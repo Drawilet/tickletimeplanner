@@ -9,7 +9,10 @@
     </div>
 
     <div>
-        @livewire('countdown-component')
+        @role('tenant.admin')
+            @livewire('countdown-component')
+        @endrole
+
 
         @livewire('news-component')
 

@@ -38,7 +38,9 @@ Route
 
 Route::middleware($defaultMiddleware)->group(function () {
     Route
-        ::get('/dashboard', \App\Http\Livewire\Dashboard\DashboardComponent::class)
+        ::get('/dashboard', function () {
+            return view('components.dashboard-component');
+        })
         ->name('dashboard.show');
 
     Route

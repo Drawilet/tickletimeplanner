@@ -55,7 +55,7 @@
                 <button class="w-1/2 btn btn-error" wire:click="delete">
                     <x-icons.trash />
                 </button>
-                <button class="w-1/2 btn {{ $tenant->suspended ? 'btn-ghost' : 'btn-secondary' }}"
+                <button class="w-1/2 btn {{ $tenant->suspended ? 'btn-neutral' : 'btn-secondary' }}"
                     wire:click="toggleSuspended({{ $tenant->id }})">
                     @if ($tenant->suspended)
                         </a>Activar</a>
