@@ -6,7 +6,7 @@ use App\Http\Livewire\Util\CrudComponent;
 use App\Models\Product;
 use Auth;
 
-class ShowProducts extends CrudComponent
+class ProductsComponent extends CrudComponent
 {
     public $events = ["afterSave"];
 
