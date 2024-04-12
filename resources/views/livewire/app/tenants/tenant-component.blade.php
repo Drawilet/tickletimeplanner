@@ -58,9 +58,9 @@
                 <button class="w-1/2 btn {{ $tenant->suspended ? 'btn-neutral' : 'btn-secondary' }}"
                     wire:click="toggleSuspended({{ $tenant->id }})">
                     @if ($tenant->suspended)
-                        </a>Activar</a>
+                       {{ __('suspended.Activate') }}
                     @else
-                        </a>Suspender</a>
+                        {{ __('suspended.Suspend') }}
                     @endif
 
                 </button>
