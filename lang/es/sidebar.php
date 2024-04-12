@@ -11,5 +11,6 @@ return [
     'events' => 'Eventos',
 
     'App' => 'Aplicación',
-    'tenants' => "Arrendatarios"
+    'tenants' => "Arrendatarios",
+    'plans' => 'Planes',
 ];

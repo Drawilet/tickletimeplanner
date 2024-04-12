@@ -49,6 +49,12 @@ class SidebarComponent extends Component
             "permission" => "app.tenants.show",
         ],
 
+        "plans" => [
+            "icon" => "credit-card",
+            "route" => "app.plans",
+            "permission" => "app.plans.show",
+        ],
+
     ];
 
     /**
