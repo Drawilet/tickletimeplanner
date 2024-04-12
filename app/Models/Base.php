@@ -25,7 +25,7 @@ class Base extends Model
         });
 
         static::addGlobalScope(function ($query) {
-            if (auth()->check()) {
+            if (auth()->check() && auth()->user()->tenant_id) {
                 $query->where('tenant_id', auth()->user()->tenant_id);
             }
         });
