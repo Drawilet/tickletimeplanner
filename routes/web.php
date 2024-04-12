@@ -42,7 +42,9 @@ Route::middleware($defaultMiddleware)->group(function () {
         ->name('dashboard.show');
 
     Route
-        ::get("settings", \App\Http\Livewire\SettingsComponent::class)
+        ::get("settings", function () {
+            return view('components.settings-component');
+        })
         ->name("settings.show");
 });
 
