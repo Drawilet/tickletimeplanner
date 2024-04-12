@@ -21,12 +21,8 @@ class TenantFactory extends Factory
             "description" => $this->faker->text(),
             "phone" => $this->faker->phoneNumber(),
             "email" => $this->faker->email(),
-            /*   "social_nets" => [
-                [
-                    "url" => $this->faker->url(),
-                    "icon" => "components/icons/default-link"
-                ]
-            ], */
+            "suspended" => false,
+            "plan_id" => 1,
         ];
     }
 }

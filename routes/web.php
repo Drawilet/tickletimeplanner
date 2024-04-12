@@ -80,8 +80,12 @@ Route::prefix("tenant")->name("tenant.")->middleware($defaultMiddleware)->group(
 Route
     ::prefix("app")
     ->name("app.")
-    ->middleware([...$defaultMiddleware, "role:app.admin", "permission:app.tenants.show"])
+    ->middleware([...$defaultMiddleware, "role:app.admin"])
     ->group(function () {
+        Route
+            ::get("plans", \App\Http\Livewire\App\ShowPlans::class)
+            ->name("plans");
+
         Route
             ::get("tenants", \App\Http\Livewire\App\TenantComponent::class)
             ->name("tenants");
