@@ -9,6 +9,8 @@
     </div>
 
     <div>
+        @livewire('countdown-component')
+
         @livewire('news-component')
 
         @livewire('notification-bar-component')
