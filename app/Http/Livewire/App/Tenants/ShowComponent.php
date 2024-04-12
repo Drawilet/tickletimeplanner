@@ -29,6 +29,21 @@ class ShowComponent extends Component
     }
     public function delete($id)
     {
-        $this->tenant->delete();
+        $tenant = Tenant::find($id);
+
+        // Elimina todas las entidades asociadas al Tenant
+        foreach ($tenant->users as $user) {
+            $user->notifications()->delete();
+            $user->delete();
+        }
+        $tenant->customers()->delete();
+        $tenant->spaces()->delete();
+        $tenant->events()->delete();
+        $tenant->products()->delete();
+        $tenant->payments()->delete();
+
+        // Luego elimina el Tenant
+        $tenant->delete();
+        return redirect()->route('app.tenants');
     }
 }

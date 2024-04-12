@@ -31,14 +31,14 @@ class restrictedAccess
             return $next($request);
         }
 
-        if ($request->routeIs('suspended') || $request->routeIs('logout')) {
+        if ($request->routeIs('suspended') || $request->routeIs('logout')|| $request->routeIs('locale')){
             return $next($request);
         }
 
         if ($tenant->suspended) {
             return redirect()->route('suspended');
         }
-
+        
         return $next($request);
     }
 }
