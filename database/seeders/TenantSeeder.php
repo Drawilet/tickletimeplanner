@@ -23,10 +23,13 @@ class TenantSeeder extends Seeder
                 'email' => 'admin@' . $tenant->name . ".com",
                 'password' => bcrypt('password'),
                 "email_verified_at" => now(),
+                "wizard_step" => 1000
             ]);
             $admin->assignRole('tenant.admin');
 
-            Customer::factory()->count(10)->create(['tenant_id' => $tenant->id]);
+            Customer::factory()->count(10)->create([
+                'tenant_id' => $tenant->id,
+            ]);
         }
     }
 }
