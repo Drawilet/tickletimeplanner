@@ -87,10 +87,10 @@ Route
             ->name("plans");
 
         Route
-            ::get("tenants", \App\Http\Livewire\App\TenantComponent::class)
+            ::get("tenants", \App\Http\Livewire\App\TenantsComponent::class)
             ->name("tenants");
 
         Route
-            ::get("tenants/{id}", \App\Http\Livewire\App\Tenants\ShowComponent::class)
+            ::get("tenants/{id}", \App\Http\Livewire\App\Tenants\TenantComponent::class)
             ->name("tenants.show");
     });

@@ -5,7 +5,7 @@ namespace App\Http\Livewire\App;
 use App\Models\Tenant;
 use Livewire\Component;
 
-class TenantComponent extends Component
+class TenantsComponent extends Component
 {
     public $tenants;
 
@@ -16,7 +16,7 @@ class TenantComponent extends Component
 
     public function render()
     {
-        return view('livewire.app.tenant-component');
+        return view('livewire.app.tenants-component');
 
     }
 }
