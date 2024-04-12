@@ -6,7 +6,7 @@ use App\Models\Tenant;
 use App\Models\Customer;
 use Livewire\Component;
 
-class ShowComponent extends Component
+class TenantComponent extends Component
 {
     public $tenant;
     public $customer;
@@ -20,7 +20,7 @@ class ShowComponent extends Component
 
     public function render()
     {
-        return view('livewire.app.tenants.show-component');
+        return view('livewire.app.tenants.tenant-component');
     }
     public function toggleSuspended($id)
     {

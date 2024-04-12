@@ -12,4 +12,5 @@ return [
 
     'App' => 'App',
     'tenants' => 'Tenants',
+    'plans' => 'Plans',
 ];

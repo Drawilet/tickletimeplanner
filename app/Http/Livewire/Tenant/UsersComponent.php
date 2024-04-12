@@ -7,7 +7,7 @@ use App\Http\Livewire\Users\PermissionsComponent;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
-class ShowUsers extends CrudComponent
+class UsersComponent extends CrudComponent
 {
     public $events = ['beforeOpenSaveModal', 'beforeSave', 'afterSave', "additionalSql", "beforeDelete"];
     public function beforeOpenSaveModal($user)

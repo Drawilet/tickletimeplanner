@@ -12,19 +12,13 @@ return new class extends Migration {
      */
     public function up()
     {
-        Schema::create('tenants', function (Blueprint $table) {
+        Schema::create('plans', function (Blueprint $table) {
             $table->id();
 
             $table->string('name');
-            $table->text('description');
-            $table->string('phone');
-            $table->string('email');
-            $table->boolean('suspended')->default(false);
-
-            $table->string('background_image')->nullable();
-            $table->string('profile_image')->nullable();
-
-            $table->foreignId('plan_id')->constrained();
+            $table->decimal('price', 10, 2);
+            $table->integer('duration');
+            $table->string('duration_unit');
 
             $table->timestamps();
         });
@@ -37,6 +31,6 @@ return new class extends Migration {
      */
     public function down()
     {
-        Schema::dropIfExists('tenants');
+        Schema::dropIfExists('plans');
     }
 };

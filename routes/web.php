@@ -55,24 +55,24 @@ Route::prefix("tenant")->name("tenant.")->middleware($defaultMiddleware)->group(
 
     Route
         ::middleware("permission:tenant.customers.show")
-        ->get('customers', \App\Http\Livewire\Tenant\ShowCustomers::class)
+        ->get('customers', \App\Http\Livewire\Tenant\CustomersComponent::class)
         ->name('customers.show');
 
     Route
         ::middleware("permission:tenant.products.show")
-        ->get('products', \App\Http\Livewire\Tenant\ShowProducts::class)
+        ->get('products', \App\Http\Livewire\Tenant\ProductsComponent::class)
         ->name('products.show');
     Route
         ::middleware("permission:tenant.spaces.show")
-        ->get("spaces", \App\Http\Livewire\Tenant\ShowSpaces::class)
+        ->get("spaces", \App\Http\Livewire\Tenant\SpacesComponent::class)
         ->name("spaces.show");
     Route
         ::middleware("permission:tenant.payments.show")
-        ->get("payments", \App\Http\Livewire\Tenant\ShowPayments::class)
+        ->get("payments", \App\Http\Livewire\Tenant\PaymentsComponent::class)
         ->name("payments.show");
     Route
         ::middleware("permission:tenant.users.show")
-        ->get('users', \App\Http\Livewire\Tenant\ShowUsers::class)
+        ->get('users', \App\Http\Livewire\Tenant\UsersComponent::class)
         ->name('users.show');
 
 });
@@ -80,13 +80,17 @@ Route::prefix("tenant")->name("tenant.")->middleware($defaultMiddleware)->group(
 Route
     ::prefix("app")
     ->name("app.")
-    ->middleware([...$defaultMiddleware, "role:app.admin", "permission:app.tenants.show"])
+    ->middleware([...$defaultMiddleware, "role:app.admin"])
     ->group(function () {
         Route
-            ::get("tenants", \App\Http\Livewire\App\TenantComponent::class)
+            ::get("plans", \App\Http\Livewire\App\PlansComponent::class)
+            ->name("plans");
+
+        Route
+            ::get("tenants", \App\Http\Livewire\App\TenantsComponent::class)
             ->name("tenants");
 
         Route
-            ::get("tenants/{id}", \App\Http\Livewire\App\Tenants\ShowComponent::class)
+            ::get("tenants/{id}", \App\Http\Livewire\App\Tenants\TenantComponent::class)
             ->name("tenants.show");
     });
