@@ -19,7 +19,7 @@
 
 
         <div class="dropdown dropdown-end">
-            <div tabindex="0" role="button" class="btn m-1">
+            <div tabindex="0" role="button" class="btn btn-neutral m-1">
                 {{ Auth::user()->name }}
 
                 @isset(Auth::user()->profile_photo_path)
