@@ -5,7 +5,7 @@ namespace App\Http\Livewire\App;
 use App\Http\Livewire\Util\CrudComponent;
 use App\Models\Plan;
 
-class ShowPlans extends CrudComponent
+class PlansComponent extends CrudComponent
 {
     public function mount()
     {

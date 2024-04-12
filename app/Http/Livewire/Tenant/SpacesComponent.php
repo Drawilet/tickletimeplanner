@@ -10,7 +10,7 @@ use App\Models\Space;
 use App\Models\SpacePhoto;
 use Illuminate\Support\Facades\Auth;
 
-class ShowSpaces extends CrudComponent
+class SpacesComponent extends CrudComponent
 {
     public $events = ["afterSave"];
 

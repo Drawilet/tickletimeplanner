@@ -5,7 +5,7 @@ namespace App\Http\Livewire\Tenant;
 use App\Http\Livewire\Util\CrudComponent;
 use App\Models\Customer;
 
-class ShowCustomers extends CrudComponent
+class CustomersComponent extends CrudComponent
 {
     public function mount()
     {

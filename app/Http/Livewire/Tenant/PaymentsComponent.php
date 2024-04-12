@@ -6,7 +6,7 @@ use App\Http\Livewire\Util\CrudComponent;
 use App\Models\Event;
 use App\Models\Payment;
 
-class ShowPayments extends CrudComponent
+class PaymentsComponent extends CrudComponent
 {
     public $events = ['beforeSave', 'specialValidator'];
 
