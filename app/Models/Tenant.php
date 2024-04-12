@@ -42,4 +42,8 @@ class Tenant extends Model
     {
         return $this->hasMany(Space::class);
     }
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
+    }
 }

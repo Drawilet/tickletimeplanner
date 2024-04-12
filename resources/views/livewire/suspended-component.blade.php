@@ -1,13 +1,16 @@
-<div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-    <div class="max-w-md w-full space-y-8">
-      <div>
-        <img class="mx-auto h-12 w-auto" src="/img/logo.svg" alt="Workflow">
-        <h2 class="mt-6 text-center text-3xl font-extrabold text-yellow-50">
-          Su cuenta ha sido suspendida
+<div class="relative w-full flex justify-center items-center h-screen">
+    <div class="bg-base-200 rounded-xl shadow-md p-7 text-center top-10">
+        <h2 class="text-3xl font-extrabold text-red-600">
+            {{ __("suspended.suspended") }}
         </h2>
-        <p class="mt-2 text-center text-sm text-yellow-50">
-          Por favor, póngase en contacto con el soporte para más información.
+        <p class="mt-2 text-sm text-gray-600">
+           {{ __("suspended.suspended_msg") }}
         </p>
-      </div>
+        <p class="mt-5 text-lg text-gray-600">
+            {{ __("suspended.contact") }}
+        </p>
+        <a href="mailto:support@yourwebsite.com" class="mt-2 text-indigo-600 hover:text-indigo-500">
+            support@yourwebsite.com
+        </a>
     </div>
-  </div>
+</div>
