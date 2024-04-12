@@ -17,25 +17,28 @@ class PermissionSeeder extends Seeder
     {
         $roles = [
             "tenant.admin" =>
-            [
-                "tenant.customers.manage",
-                "tenant.customers.show",
+                [
+                    "tenant.customers.manage",
+                    "tenant.customers.show",
 
-                "tenant.products.manage",
-                "tenant.products.show",
+                    "tenant.products.manage",
+                    "tenant.products.show",
 
-                "tenant.spaces.manage",
-                "tenant.spaces.show",
+                    "tenant.spaces.manage",
+                    "tenant.spaces.show",
 
-                "tenant.payments.manage",
-                "tenant.payments.show",
+                    "tenant.payments.manage",
+                    "tenant.payments.show",
 
-                "tenant.users.manage",
-                "tenant.users.show",
-            ],
+                    "tenant.users.manage",
+                    "tenant.users.show",
+                ],
             "app.admin" => [
                 "app.tenants.manage",
                 "app.tenants.show",
+
+                "app.plans.manage",
+                "app.plans.show",
             ]
         ];
 
