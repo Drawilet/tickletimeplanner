@@ -63,6 +63,9 @@ class CrudComponent extends Component
     public $changelog = [];
 
 
+    public $scope;
+
+
     public function setup($Model, array $params)
     {
         $this->Model = $Model;
@@ -106,6 +109,9 @@ class CrudComponent extends Component
         if (isset($params['mobileStyles'])) {
             $this->mobileStyles = $params['mobileStyles'];
         }
+
+        $this->scope = $params['scope'] ?? "tenant";
+
     }
 
     public function render()
