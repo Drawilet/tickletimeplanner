@@ -27,6 +27,8 @@ return new class extends Migration {
             $table->foreignId('plan_id')->constrained();
             $table->foreignId('next_plan_id')->nullable()->constrained('plans');
 
+            $table->timestamp('subscription_ends_at');
+
             $table->timestamps();
         });
     }

@@ -23,6 +23,7 @@ class TenantFactory extends Factory
             "email" => $this->faker->email(),
             "suspended" => false,
             "plan_id" => 1,
+            "subscription_ends_at" => now()->addMonth(),
         ];
     }
 }

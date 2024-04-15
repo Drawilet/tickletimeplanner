@@ -6,6 +6,7 @@
             <path stroke-linecap="round" stroke-linejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
         </svg>
     </a>
+
     <div class="bg-base rounded-lg w-full  max-w-lg mx-auto shadow-xl pb-8">
         <div class="w-full h-[250px]">
             <div class="mx-auto w-full h-[250px] bg-base-300 rounded-md overflow-hidden relative">
@@ -15,6 +16,7 @@
                 @endif
             </div>
         </div>
+
         <div class="flex flex-col items-center -mt-20">
             <div class="mx-auto h-32 w-32 bg-base-300 rounded-full overflow-hidden relative">
                 @if ($tenant['profile_image'])
@@ -23,6 +25,8 @@
                 @endif
             </div>
         </div>
+
+
         <div>
             <div class="text-center px-6 py-4">
                 <h1 class="text-xl font-bold text-white-700 mb-3">{{ $tenant->name }}</h1>
@@ -51,6 +55,14 @@
                 </div>
 
             </div>
+
+
+            <div class="mt-4">
+                <p class="text-sm">
+                    {{ $remainingDays }}d {{ __('countdown.label') }}
+                </p>
+            </div>
+
             <div class="w-full flex justify-center items-center mt-4 gap-2">
                 <button class="w-1/2 btn btn-error" wire:click="delete({{ $tenant->id }})">
                     <x-icons.trash />
@@ -58,12 +70,15 @@
                 <button class="w-1/2 btn {{ $tenant->suspended ? 'btn-neutral' : 'btn-secondary' }}"
                     wire:click="toggleSuspended({{ $tenant->id }})">
                     @if ($tenant->suspended)
-                       {{ __('suspended.Activate') }}
+                        {{ __('suspended.Activate') }}
                     @else
                         {{ __('suspended.Suspend') }}
                     @endif
 
                 </button>
             </div>
+
         </div>
     </div>
+
+</div>

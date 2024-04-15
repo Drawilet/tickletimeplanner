@@ -19,6 +19,7 @@ class Tenant extends Model
         'profile_image',
         'plan_id',
         'next_plan_id',
+        'subscription_ends_at',
     ];
 
     protected $casts = [
