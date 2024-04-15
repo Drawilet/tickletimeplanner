@@ -1,9 +1,21 @@
 <?php
 return [
-    'Name' => 'Name',
-    'Email' => 'Email',
-    'Description' => 'Description',
-    'Phone' => 'Phone',
+    'name' => 'Name',
+    'email' => 'Email',
+    'description' => 'Description',
+    'phone' => 'Phone',
+
+    "choose" => "Choose your plan",
+    "current" => "Current plan",
+    "next" => "Next plan",
+    "suscribe" => "Suscribe",
+
+    "day" => "Day",
+    "week" => "Week",
+    "month" => "Month",
+    "year" => "Year",
+
+    "alert" => " The plan will be updated until the next cut-off date",
+
     'save' => 'Save',
-    'add' => 'Add',
 ];
