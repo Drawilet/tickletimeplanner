@@ -41,7 +41,10 @@ class JetstreamServiceProvider extends ServiceProvider
                 if ($user->tenant_id) {
                     $tenant = $user->tenant;
 
-                    //dump($tenant->name);
+                    if ($tenant->subscription_ends_at && $tenant->subscription_ends_at < now()) {
+                        $tenant->update(['suspended' => true]);
+                    }
+
                 }
 
 
