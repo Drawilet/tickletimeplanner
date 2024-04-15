@@ -4,9 +4,9 @@ namespace App\Http\Livewire\Tenant;
 
 use App\Http\Livewire\Util\CrudComponent;
 use App\Models\Event;
-use App\Models\Payment;
+use App\Models\EventPayment;
 
-class PaymentsComponent extends CrudComponent
+class EventPaymentsComponent extends CrudComponent
 {
     public $events = ['beforeSave', 'specialValidator'];
 
@@ -17,7 +17,7 @@ class PaymentsComponent extends CrudComponent
     }
     public function mount()
     {
-        $this->setup(Payment::class, [
+        $this->setup(EventPayment::class, [
             'mainKey' => 'id',
             'types' => [
                 'event_id' => [

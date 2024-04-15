@@ -26,6 +26,6 @@ class Event extends Base
 
     public function payments()
     {
-        return $this->hasMany(Payment::class);
+        return $this->hasMany(EventPayment::class);
     }
 }

@@ -6,7 +6,7 @@ use App\Http\Traits\WithCrudActions;
 use App\Http\Traits\WithValidations;
 use App\Models\Customer;
 use App\Models\Event;
-use App\Models\Payment;
+use App\Models\EventPayment;
 use App\Models\Product;
 use App\Models\Space;
 use Carbon\Carbon;
@@ -48,7 +48,7 @@ class UserDashboardComponent extends Component
         "product_name" => null,
     ];
 
-    public $payment, $initialPayment = [
+    public $payment, $initialEventPayment = [
         "user_id" => null,
         "event_id" => null,
         "amount" => null,
@@ -80,13 +80,13 @@ class UserDashboardComponent extends Component
     public function mount()
     {
         $this->addCrud(Event::class, ["useItemsKey" => false, "get" => false, "afterUpdate" => "updateEvents"]);
-        $this->addCrud(Payment::class, ["useItemsKey" => false, "get" => true]);
+        $this->addCrud(EventPayment::class, ["useItemsKey" => false, "get" => true]);
         $this->addCrud(Customer::class, ["useItemsKey" => false, "get" => true]);
         $this->addCrud(Space::class, ["useItemsKey" => false, "get" => true]);
         $this->addCrud(Product::class, ["useItemsKey" => false, "get" => true]);
 
         $this->event = $this->initialEvent;
-        $this->payment = $this->initialPayment;
+        $this->payment = $this->initialEventPayment;
         $this->filters = $this->initialFilters;
 
         $this->customers = Customer::take($this->CUSTOMER_PER_PAGE)->get();
@@ -316,7 +316,7 @@ class UserDashboardComponent extends Component
         return $remaining;
     }
 
-    public function addPayment()
+    public function addEventPayment()
     {
         if (!$this->event["id"] || !Event::find($this->event["id"]))
             return $this->emit("toast", "error", __("calendar-lang.event-not-found"));
@@ -330,11 +330,11 @@ class UserDashboardComponent extends Component
         $this->payment["event_id"] = $this->event["id"];
         $this->payment["user_id"] = auth()->user()->id;
 
-        $payment = Payment::create($this->payment);
+        $payment = EventPayment::create($this->payment);
         $this->event["payments"][] = $payment;
-        $this->payment = $this->initialPayment;
+        $this->payment = $this->initialEventPayment;
 
-        $this->emit("toast", "success", "Payment added successfully");
+        $this->emit("toast", "success", "EventPayment added successfully");
 
         $this->handleCrudActions(
             "payment",
