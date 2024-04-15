@@ -41,7 +41,7 @@ class JetstreamServiceProvider extends ServiceProvider
                 if ($user->tenant_id) {
                     $tenant = $user->tenant;
 
-                    dump($tenant->name);
+                    //dump($tenant->name);
                 }
 
 
