@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Settings;
 
 use App\Http\Traits\WithValidations;
+use App\Models\Plan;
 use App\Models\Tenant;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -11,6 +12,7 @@ use Illuminate\Support\Facades\Validator;
 class TenantSettingsComponent extends Component
 {
     use WithFileUploads, WithValidations;
+    public $plans;
 
     public $data,
     $initialData = [
@@ -21,7 +23,12 @@ class TenantSettingsComponent extends Component
         'description' => '',
         'phone' => '',
         'email' => '',
+
+        'plan_id' => '',
+        'next_plan_id' => '',
     ];
+
+    public $oldData = [];
 
     public function mount()
     {
@@ -31,6 +38,10 @@ class TenantSettingsComponent extends Component
         } else {
             $this->data = $this->initialData;
         }
+
+        $this->oldData = $this->data;
+
+        $this->plans = Plan::all();
     }
     public function render()
     {
@@ -39,6 +50,11 @@ class TenantSettingsComponent extends Component
 
     public function save()
     {
+        if ($this->data['plan_id'] == '') {
+            $this->data['plan_id'] = $this->data['next_plan_id'];
+            $this->data['next_plan_id'] = null;
+        }
+
         Validator::make($this->data, [
             'profile_image' => isset($this->data['id']) ? '' : 'required|image|max:2048',
             'background_image' => isset($this->data['id']) ? '' : 'required|image|max:2048',
@@ -47,10 +63,12 @@ class TenantSettingsComponent extends Component
             'description' => $this->validations['textarea'],
             'phone' => $this->validations['tel'],
             'email' => $this->validations['email'],
-            /*    'social_nets' => 'required', */
+            'plan_id' => 'required|exists:plans,id',
+            'next_plan_id' => 'nullable|exists:plans,id',
         ])->validate();
 
         $tenant = Tenant::updateOrCreate(['id' => Auth()->user()->tenant->id ?? null], $this->data);
+        $tenant->save();
 
         foreach (['profile_image', 'background_image'] as $type) {
             if (gettype($this->data[$type]) == 'object') {
