@@ -47,7 +47,7 @@ class Tenant extends Model
     }
     public function payments()
     {
-        return $this->hasMany(Payment::class);
+        return $this->hasMany(EventPayment::class);
     }
 
     public function plan()

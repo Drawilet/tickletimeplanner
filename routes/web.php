@@ -68,7 +68,7 @@ Route::prefix("tenant")->name("tenant.")->middleware($defaultMiddleware)->group(
         ->name("spaces.show");
     Route
         ::middleware("permission:tenant.payments.show")
-        ->get("payments", \App\Http\Livewire\Tenant\PaymentsComponent::class)
+        ->get("payments", \App\Http\Livewire\Tenant\EventPaymentsComponent::class)
         ->name("payments.show");
     Route
         ::middleware("permission:tenant.users.show")

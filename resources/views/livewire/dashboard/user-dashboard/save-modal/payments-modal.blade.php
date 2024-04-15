@@ -45,7 +45,7 @@
                     </x-form-control>
 
 
-                    <button class="btn btn-primary w-full mt-2" wire:click.prevent='addPayment()'>
+                    <button class="btn btn-primary w-full mt-2" wire:click.prevent='addEventPayment()'>
                         <x-icons.plus />{{ __('calendar-lang.AddPayment') }}
                     </button>
                 </form>
