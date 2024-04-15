@@ -5,17 +5,17 @@ namespace App\Http\Livewire\App\Tenants;
 use App\Models\Tenant;
 use App\Models\Customer;
 use Livewire\Component;
+use Carbon\Carbon;
 
 class TenantComponent extends Component
 {
     public $tenant;
-    public $customer;
+    public $remainingDays;
 
     public function mount($id)
     {
         $this->tenant = Tenant::find($id);
-
-        $this->customer = Customer::find($id);
+        $this->remainingDays = Carbon::parse($this->tenant->subscription_ends_at)->diffInDays(now());
     }
 
     public function render()
