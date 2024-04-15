@@ -17,11 +17,13 @@ class Tenant extends Model
         'suspended',
         'background_image',
         'profile_image',
-        /*  'social_nets', */
+        'plan_id',
+        'next_plan_id',
     ];
 
     protected $casts = [
-        /*       'social_nets' => 'array', */];
+        /*       'social_nets' => 'array', */
+    ];
     public function customers()
     {
         return $this->hasMany(Customer::class);
@@ -45,5 +47,15 @@ class Tenant extends Model
     public function payments()
     {
         return $this->hasMany(Payment::class);
+    }
+
+    public function plan()
+    {
+        return $this->belongsTo(Plan::class);
+    }
+
+    public function nextPlan()
+    {
+        return $this->belongsTo(Plan::class);
     }
 }

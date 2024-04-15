@@ -25,6 +25,7 @@ return new class extends Migration {
             $table->string('profile_image')->nullable();
 
             $table->foreignId('plan_id')->constrained();
+            $table->foreignId('next_plan_id')->nullable()->constrained('plans');
 
             $table->timestamps();
         });
