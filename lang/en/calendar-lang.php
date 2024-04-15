@@ -46,4 +46,7 @@ return [
     "hide-payments" => "Hide payments",
 
     "event-not-found" => "Event not found, try to refresh the page or re create the event.",
+    "toast"=> "toast",
+    "success" => "success",
+    "EventPayment" => "EventPayment added successfully",
 ];

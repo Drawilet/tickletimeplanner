@@ -334,7 +334,7 @@ class UserDashboardComponent extends Component
         $this->event["payments"][] = $payment;
         $this->payment = $this->initialEventPayment;
 
-        $this->emit("toast", "success", "EventPayment added successfully");
+        $this->emit(__("calendar-lang.toast"), __("calendar-lang.success"), __("calendar-lang.EventPayment"));
 
         $this->handleCrudActions(
             "payment",
