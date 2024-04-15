@@ -77,8 +77,60 @@
 
                 </button>
             </div>
-
         </div>
+    </div>
+
+    <div class="absolute -top-4 right-0 bg-base-200 shadow-lg rounded-lg p-6 border border-base-100 w-96">
+        <h2 class="text-2xl mb-4 border-b pb-2 text-primary">{{ __('Historial de Pagos') }}</h2>
+        <div class="space-y-1 overflow-auto h-36">
+            <div class="bg-base-300 shadow p-2 rounded-lg flex justify-between items-center">
+                <p class="text-primary">05/04/2024</p>
+                <p class="text-secondary font-semibold">$950</p>
+            </div>
+            <div class="bg-base-300 shadow p-2 rounded-lg flex justify-between items-center">
+                <p class="text-primary">05/04/2024</p>
+                <p class="text-secondary"></p>
+                <p class="text-secondary font-semibold">$950</p>
+            </div>
+            <div class="bg-base-300 shadow p-2 rounded-lg flex justify-between items-center">
+                <p class="text-primary">05/04/2024</p>
+                <p class="text-secondary font-semibold">$950</p>
+            </div>
+            <div class="bg-base-300 shadow p-2 rounded-lg flex justify-between items-center">
+                <p class="text-primary">05/04/2024</p>
+                <p class="text-secondary font-semibold">$950</p>
+            </div>
+            <div class="bg-base-300 shadow p-2 rounded-lg flex justify-between items-center">
+                <p class="text-primary">05/04/2024</p>
+                <p class="text-secondary font-semibold">$950</p>
+            </div>
+            <div class="bg-base-300 shadow p-2 rounded-lg flex justify-between items-center">
+                <p class="text-primary">05/04/2024</p>
+                <p class="text-secondary font-semibold">$950</p>
+            </div>
+            <div class="bg-base-300 shadow p-2 rounded-lg flex justify-between items-center">
+                <p class="text-primary">05/04/2024</p>
+                <p class="text-secondary font-semibold">$950</p>
+            </div>
+        </div>
+        <form class="mt-10">
+            <x-form-control>
+                <x-label value="{{ __('calendar-lang.Amount') }}" />
+                <x-input name="payment.amount" wire:model="" type="number" />
+                <x-input-error for="amount" class="mt-2" />
+            </x-form-control>
+
+            <x-form-control>
+                <x-label  value="{{ __('calendar-lang.payment-notes') }}" />
+                <textarea class="textarea textarea-bordered"  name="payment.notes" wire:model=""> </textarea>
+                <x-input-error for="notes" class="mt-2" />
+            </x-form-control>
+
+
+            <button class="btn btn-primary w-full mt-2">
+                <x-icons.plus />{{ __('calendar-lang.AddPayment') }}
+            </button>
+        </form>
     </div>
 
 </div>
