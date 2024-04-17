@@ -30,11 +30,14 @@ class TenantSettingsComponent extends Component
 
     public $oldData = [];
 
+    public $transactions;
+
     public function mount()
     {
         $data = Auth()->user()->tenant;
         if ($data) {
-            $this->data = $data->toArray();
+            $this->data = $data->load('plan')->toArray();
+            $this->transactions = $data->transactions;
         } else {
             $this->data = $this->initialData;
         }

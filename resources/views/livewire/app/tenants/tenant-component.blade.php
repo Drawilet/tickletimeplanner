@@ -77,7 +77,7 @@
     </div>
 
     <div class="absolute -top-4 right-0 bg-base-200 shadow-lg rounded-lg p-6 border border-base-100 w-96">
-        <h2 class="text-xl mb-4 border-b pb-2 text-primary">{{ __('Historial de Transacciones') }}</h2>
+        <h2 class="text-xl mb-4 border-b pb-2 text-primary">{{ __('Historial de transacciones') }}</h2>
         <div class="space-y-1 overflow-auto h-36">
             @foreach ($transactions as $transaction)
                 <div class="shadow p-2 rounded-lg flex justify-between items-center">
