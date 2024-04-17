@@ -20,10 +20,10 @@ class Tenant extends Model
         'plan_id',
         'next_plan_id',
         'subscription_ends_at',
+        'balance'
     ];
 
     protected $casts = [
-        /*       'social_nets' => 'array', */
     ];
     public function customers()
     {
@@ -45,7 +45,7 @@ class Tenant extends Model
     {
         return $this->hasMany(Space::class);
     }
-    public function payments()
+    public function eventPayments()
     {
         return $this->hasMany(EventPayment::class);
     }
@@ -58,5 +58,10 @@ class Tenant extends Model
     public function nextPlan()
     {
         return $this->belongsTo(Plan::class);
+    }
+
+    public function transactions()
+    {
+        return $this->hasMany(TenantTransaction::class);
     }
 }

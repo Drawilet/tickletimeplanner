@@ -7,7 +7,7 @@
         </svg>
     </a>
 
-    <div class="bg-base rounded-lg w-full  max-w-lg mx-auto shadow-xl pb-8">
+    <div class="relative bg-base rounded-lg w-full  max-w-lg mx-auto shadow-xl pb-8">
         <div class="w-full h-[250px]">
             <div class="mx-auto w-full h-[250px] bg-base-300 rounded-md overflow-hidden relative">
                 @if ($tenant['background_image'])
@@ -25,7 +25,6 @@
                 @endif
             </div>
         </div>
-
 
         <div>
             <div class="text-center px-6 py-4">
@@ -56,13 +55,6 @@
 
             </div>
 
-
-            <div class="mt-4">
-                <p class="text-sm">
-                    {{ $remainingDays }}d {{ __('countdown.label') }}
-                </p>
-            </div>
-
             <div class="w-full flex justify-center items-center mt-4 gap-2">
                 <button class="w-1/2 btn btn-error" wire:click="delete({{ $tenant->id }})">
                     <x-icons.trash />
@@ -78,56 +70,51 @@
                 </button>
             </div>
         </div>
+
+        <div class="absolute top-0 right-0 z-10 mt-2 mr-2 bg-base-100 py-1 px-4 rounded">
+            {{ $tenant->plan->name }} / {{ $remainingDays }}d {{ __('countdown.label') }}
+        </div>
     </div>
 
     <div class="absolute -top-4 right-0 bg-base-200 shadow-lg rounded-lg p-6 border border-base-100 w-96">
-        <h2 class="text-2xl mb-4 border-b pb-2 text-primary">{{ __('Historial de Pagos') }}</h2>
+        <h2 class="text-xl mb-4 border-b pb-2 text-primary">{{ __('Historial de Transacciones') }}</h2>
         <div class="space-y-1 overflow-auto h-36">
-            <div class="bg-base-300 shadow p-2 rounded-lg flex justify-between items-center">
-                <p class="text-primary">05/04/2024</p>
-                <p class="text-secondary font-semibold">$950</p>
-            </div>
-            <div class="bg-base-300 shadow p-2 rounded-lg flex justify-between items-center">
-                <p class="text-primary">05/04/2024</p>
-                <p class="text-secondary"></p>
-                <p class="text-secondary font-semibold">$950</p>
-            </div>
-            <div class="bg-base-300 shadow p-2 rounded-lg flex justify-between items-center">
-                <p class="text-primary">05/04/2024</p>
-                <p class="text-secondary font-semibold">$950</p>
-            </div>
-            <div class="bg-base-300 shadow p-2 rounded-lg flex justify-between items-center">
-                <p class="text-primary">05/04/2024</p>
-                <p class="text-secondary font-semibold">$950</p>
-            </div>
-            <div class="bg-base-300 shadow p-2 rounded-lg flex justify-between items-center">
-                <p class="text-primary">05/04/2024</p>
-                <p class="text-secondary font-semibold">$950</p>
-            </div>
-            <div class="bg-base-300 shadow p-2 rounded-lg flex justify-between items-center">
-                <p class="text-primary">05/04/2024</p>
-                <p class="text-secondary font-semibold">$950</p>
-            </div>
-            <div class="bg-base-300 shadow p-2 rounded-lg flex justify-between items-center">
-                <p class="text-primary">05/04/2024</p>
-                <p class="text-secondary font-semibold">$950</p>
-            </div>
+            @foreach ($transactions as $transaction)
+                <div class="shadow p-2 rounded-lg flex justify-between items-center">
+                    <p class="text-primary">{{ Carbon\Carbon::parse($transaction['created_at'])->format('d/m/Y') }}</p>
+
+                    <p>
+                        {{ $transaction['notes'] }}
+                    </p>
+
+                    <p class="text-secondary font-semibold">${{ number_format($transaction['amount'], 2) }}</p>
+                </div>
+            @endforeach
         </div>
-        <form class="mt-10">
+
+        <h3 class="text-right -mb-1">
+            {{ __('calendar-lang.balance') }}: ${{ number_format($tenant->balance, 2) }}
+        </h3>
+
+        <h3 class="text-right text-sm">
+            {{ __('tenant.next-payment') }}: ${{ number_format($tenant->plan->price, 2) }}
+        </h3>
+
+        <form class="mt-10" wire:submit.prevent='addTransaction'>
             <x-form-control>
                 <x-label value="{{ __('calendar-lang.Amount') }}" />
-                <x-input name="payment.amount" wire:model="" type="number" />
+                <x-input name="transaction.amount" wire:model="transaction.amount" type="number" />
                 <x-input-error for="amount" class="mt-2" />
             </x-form-control>
 
             <x-form-control>
-                <x-label  value="{{ __('calendar-lang.payment-notes') }}" />
-                <textarea class="textarea textarea-bordered"  name="payment.notes" wire:model=""> </textarea>
+                <x-label value="{{ __('calendar-lang.payment-notes') }}" />
+                <textarea class="textarea textarea-bordered" name="notes" wire:model="transaction.notes"> </textarea>
                 <x-input-error for="notes" class="mt-2" />
             </x-form-control>
 
 
-            <button class="btn btn-primary w-full mt-2">
+            <button class="btn btn-primary w-full mt-2" type="submit">
                 <x-icons.plus />{{ __('calendar-lang.AddPayment') }}
             </button>
         </form>
