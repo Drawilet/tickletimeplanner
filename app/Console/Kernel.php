@@ -17,6 +17,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->call(function () {
+            error_log('Running subscription check');
             $tenants = Tenant::whereDate('subscription_ends_at', '=', now()->startOfDay())
                 ->get();
 

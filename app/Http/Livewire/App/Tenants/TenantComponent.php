@@ -3,7 +3,6 @@
 namespace App\Http\Livewire\App\Tenants;
 
 use App\Models\Tenant;
-use App\Models\Customer;
 use Livewire\Component;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
@@ -21,7 +20,7 @@ class TenantComponent extends Component
 
     public function mount($id)
     {
-        $this->tenant = Tenant::find($id)->load('transactions');
+        $this->tenant = Tenant::find($id);
         $this->transactions = $this->tenant->transactions;
         $this->remainingDays = Carbon::parse($this->tenant->subscription_ends_at)->diffInDays(now());
 
