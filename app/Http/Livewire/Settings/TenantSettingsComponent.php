@@ -70,6 +70,10 @@ class TenantSettingsComponent extends Component
             'next_plan_id' => 'nullable|exists:plans,id',
         ])->validate();
 
+        if (!isset($this->data['subscription_ends_at'])) {
+            $this->data['subscription_ends_at'] = now();
+        }
+
         $tenant = Tenant::updateOrCreate(['id' => Auth()->user()->tenant->id ?? null], $this->data);
         $tenant->save();
 
