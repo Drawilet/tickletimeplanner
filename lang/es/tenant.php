@@ -1,4 +1,5 @@
 <?php
 return [
-    "more" => "Más información"
+    "more" => "Más información",
+    "next-payment" => "Próximo pago",
 ];

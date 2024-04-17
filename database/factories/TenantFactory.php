@@ -22,7 +22,7 @@ class TenantFactory extends Factory
             "phone" => $this->faker->phoneNumber(),
             "email" => $this->faker->email(),
             "suspended" => false,
-            "plan_id" => 1,
+            "plan_id" => rand(1, 3),
             "subscription_ends_at" => now()->addMonth(),
         ];
     }

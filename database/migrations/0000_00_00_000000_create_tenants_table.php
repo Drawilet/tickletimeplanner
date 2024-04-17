@@ -24,6 +24,8 @@ return new class extends Migration {
             $table->string('background_image')->nullable();
             $table->string('profile_image')->nullable();
 
+            $table->decimal('balance', 10, 2)->default(0);
+
             $table->foreignId('plan_id')->constrained();
             $table->foreignId('next_plan_id')->nullable()->constrained('plans');
 
